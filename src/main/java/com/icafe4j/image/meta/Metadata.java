@@ -51,7 +51,6 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -550,7 +549,7 @@ public abstract class Metadata implements com.icafe4j.image.meta.MetadataReader,
    */
   public static Map<MetadataType, Metadata> readMetadata(InputStream is) throws IOException {
     // Metadata map for all the Metadata read
-    Map<MetadataType, Metadata> metadataMap = new HashMap<MetadataType, Metadata>();
+    Map<MetadataType, Metadata> metadataMap;
     // ImageIO.IMAGE_MAGIC_NUMBER_LEN bytes as image magic number
     PeekHeadInputStream peekHeadInputStream =
         new PeekHeadInputStream(is, ImageIO.IMAGE_MAGIC_NUMBER_LEN);

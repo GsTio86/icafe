@@ -14,42 +14,41 @@
  * Who   Date       Description ====  =======    =====================================================================
  * WY    21Jun2019  Added code for removeMetadata to return the removed metadata as a map WY
  * 21Jun2019  Re-factored APPn related code to extractMetadataFromAPPn() WY    18Jun2019  Move all
- * constants to JPGConsts class WY    06Apr2018  Added extractThumbnails(InputStream) WY
- * 02Mar2017  Added insertMetadata(Collection<Metadata>, InputStream, OutputStream) WY    13Feb2017
- * Fixed bug with APP1 segment length too small WY    06Nov2016  Added support for Cardboard Camera
- * image and audio WY    03Apr2016  Rewrite insertXMP() to leverage new JpegXMP write() WY
- * 27Mar2016  Rewrite writeComment() to leverage COMBuilder WY    28Sep2015  Fixed
- * "unsupportedOperationException" with insertExif() WY    26Sep2015  Added
- * insertComments(InputStream, OutputStream, List<String>) WY    06Jul2015  Added
- * insertXMP(InputSream, OutputStream, XMP) WY    02Jul2015  Added support for APP14 segment reading
- * WY    02Jul2015  Added support for APP12 segment reading WY    01Jul2015  Added support for
- * non-standard XMP identifier WY    15Apr2015  Changed the argument type for insertIPTC() and
- * insertIRB() WY    07Apr2015  Revised insertExif() WY    01Apr2015  Extract IPTC as stand-alone
- * meta data from IRB if any WY    18Mar2015  Revised readAPP13(), insertIPTC() and insertIRB() to
- * work with multiple APP13 segments WY    18Mar2015  Removed a few unused readAPPn methods WY
- * 17Mar2015  Revised meta data insertion code to conform to EXIF and JPEG specifications WY
- * 10Mar2015  Added code to read and merge multiple APP13 segments WY    05Mar2015  Combined
+ * constants to JPGConsts class WY    06Apr2018  Added extractThumbnails(InputStream) WY 02Mar2017
+ * Added insertMetadata(Collection<Metadata>, InputStream, OutputStream) WY    13Feb2017 Fixed bug
+ * with APP1 segment length too small WY    06Nov2016  Added support for Cardboard Camera image and
+ * audio WY    03Apr2016  Rewrite insertXMP() to leverage new JpegXMP write() WY 27Mar2016  Rewrite
+ * writeComment() to leverage COMBuilder WY    28Sep2015  Fixed "unsupportedOperationException" with
+ * insertExif() WY    26Sep2015  Added insertComments(InputStream, OutputStream, List<String>) WY
+ * 06Jul2015  Added insertXMP(InputSream, OutputStream, XMP) WY    02Jul2015  Added support for
+ * APP14 segment reading WY    02Jul2015  Added support for APP12 segment reading WY    01Jul2015
+ * Added support for non-standard XMP identifier WY    15Apr2015  Changed the argument type for
+ * insertIPTC() and insertIRB() WY    07Apr2015  Revised insertExif() WY    01Apr2015  Extract IPTC
+ * as stand-alone meta data from IRB if any WY    18Mar2015  Revised readAPP13(), insertIPTC() and
+ * insertIRB() to work with multiple APP13 segments WY    18Mar2015  Removed a few unused readAPPn
+ * methods WY 17Mar2015  Revised meta data insertion code to conform to EXIF and JPEG specifications
+ * WY 10Mar2015  Added code to read and merge multiple APP13 segments WY    05Mar2015  Combined
  * insertXMP() and insertExtendedXMP() to one WY    04Mar2015  Added insertExtendedXMP() to insert
  * ExtendedXMP data WY    28Feb2015  Added code to extract Google depthMap from JPEG images WY
  * 27Feb2015  Added code to read XMP extension segment WY    24Feb2015  Added code to remove XMP
  * extension segment WY    18Feb2015  Replaced removeExif() with a generic removeMetadata() WY
  * 14Feb2015  Added insertXMP() to add XMP meta data WY    04Feb2015  Revised insertExif() to keep
  * existing EXIF data if needed WY    29Jan2015  Revised insertIPTC() and insertIRB() to keep old
- * data WY    27Jan2015  Added insertIRBThumbnail() to insert Photoshop IRB thumbnail WY
- * 27Jan2015  Added insertIRB() to insert Photoshop IRB into APP13 WY    26Jan2015  Added
- * insertIPTC() to insert IPTC with APP13 WY    19Jan2015  Renamed snoop() to readMetadata() and
- * revised readAPPn() WY    10Jan2015  Revised extractThumbnails() to use IRBReader and IRBThumbnail
- * WY    05Jan2015  Enhanced to show information for all SOFX and SOS segments WY    07Oct2014
- * Revised readAPP1() to show Adobe XMP information WY    02Oct2014  Renamed extractExifThumbnail()
- * to extractThumbnails() WY    02Oct2014  Removed readExif() WY    01Oct2014  Added code to read
- * APP13 thumbnail WY    29Sep2014  Added insertICCProfile(InputStream, OutputStream, ICCProfile) WY
- *    29Sep2014  Added writeICCProfile(OutputStream, ICCProfile) WY    29Sep2014  Added
- * getICCProfile(InputStream) WY    29Sep2014  Removed showICCProfile(byte[]) WY    14Sep2014  Added
- * removeExif() to remove EXIF data WY    14Sep2014  Changed insertICCProfile() to remove old
- * profile WY    29Aug2014  Changed removeAPP1() to more general removeAPPn() WY    07Jun2014  Added
- * extractExifThumbnail() to extract thumbnail WY    07Jun2014  Added insertICCProfile() to insert
- * ICC_Profile WY    06Jun2014  Added extractICCProfile() to extract ICC_Profile WY    03Apr2014
- * Added snoop() as a result of delete JPEGSnoop
+ * data WY    27Jan2015  Added insertIRBThumbnail() to insert Photoshop IRB thumbnail WY 27Jan2015
+ * Added insertIRB() to insert Photoshop IRB into APP13 WY    26Jan2015  Added insertIPTC() to
+ * insert IPTC with APP13 WY    19Jan2015  Renamed snoop() to readMetadata() and revised readAPPn()
+ * WY    10Jan2015  Revised extractThumbnails() to use IRBReader and IRBThumbnail WY    05Jan2015
+ * Enhanced to show information for all SOFX and SOS segments WY    07Oct2014 Revised readAPP1() to
+ * show Adobe XMP information WY    02Oct2014  Renamed extractExifThumbnail() to extractThumbnails()
+ * WY    02Oct2014  Removed readExif() WY    01Oct2014  Added code to read APP13 thumbnail WY
+ * 29Sep2014  Added insertICCProfile(InputStream, OutputStream, ICCProfile) WY 29Sep2014  Added
+ * writeICCProfile(OutputStream, ICCProfile) WY    29Sep2014  Added getICCProfile(InputStream) WY
+ * 29Sep2014  Removed showICCProfile(byte[]) WY    14Sep2014  Added removeExif() to remove EXIF data
+ * WY    14Sep2014  Changed insertICCProfile() to remove old profile WY    29Aug2014  Changed
+ * removeAPP1() to more general removeAPPn() WY    07Jun2014  Added extractExifThumbnail() to
+ * extract thumbnail WY    07Jun2014  Added insertICCProfile() to insert ICC_Profile WY    06Jun2014
+ *  Added extractICCProfile() to extract ICC_Profile WY    03Apr2014 Added snoop() as a result of
+ * delete JPEGSnoop
  */
 
 package com.icafe4j.image.jpeg;
@@ -361,7 +360,7 @@ public class JPGTweaker {
     byte[] extendedXMP = null;
     String xmpGUID = ""; // 32 byte ASCII hex string
 
-    Map<String, Thumbnail> thumbnails = new HashMap<String, Thumbnail>();
+    Map<String, Thumbnail> thumbnails = new HashMap<>();
 
     for (Segment segment : appnSegments) {
       byte[] data = segment.getData();
@@ -523,7 +522,7 @@ public class JPGTweaker {
     short marker;
     Marker emarker;
 
-    Collection<BufferedImage> thumbnails = new ArrayList<BufferedImage>();
+    Collection<BufferedImage> thumbnails = new ArrayList<>();
 
     // The very first marker should be the start_of_image marker!
     if (Marker.fromShort(IOUtils.readShortMM(is)) != Marker.SOI) {
@@ -899,7 +898,7 @@ public class JPGTweaker {
     marker = IOUtils.readShortMM(is);
 
     // Create a list to hold the temporary Segments
-    List<Segment> segments = new ArrayList<Segment>();
+    List<Segment> segments = new ArrayList<>();
 
     while (!finished) { // Read through and add the segments to a list until SOS
       if (Marker.fromShort(marker) == Marker.SOS) {
@@ -1064,7 +1063,7 @@ public class JPGTweaker {
     marker = IOUtils.readShortMM(is);
 
     // Create a list to hold the temporary Segments
-    List<Segment> segments = new ArrayList<Segment>();
+    List<Segment> segments = new ArrayList<>();
 
     while (!finished) {
       if (Marker.fromShort(marker) == Marker.SOS) {
@@ -1182,20 +1181,20 @@ public class JPGTweaker {
     marker = IOUtils.readShortMM(is);
 
     // Create a list to hold the temporary Segments
-    List<Segment> segments = new ArrayList<Segment>();
+    List<Segment> segments = new ArrayList<>();
 
     while (!finished) {
       if (Marker.fromShort(marker) == Marker.SOS) {
         if (eightBIMStream != null) {
           IRB irb = new IRB(eightBIMStream.toByteArray());
           // Shallow copy the map.
-          bimMap = new HashMap<Short, _8BIM>(irb.get8BIM());
+          bimMap = new HashMap<>(irb.get8BIM());
           _8BIM iptcBIM = bimMap.remove(ImageResourceID.IPTC_NAA.getValue());
           if (iptcBIM != null && update) { // Keep the original values
             IPTC iptc = new IPTC(iptcBIM.getData());
             // Shallow copy the map
             Map<IPTCTag, List<IPTCDataSet>> dataSetMap =
-                new HashMap<IPTCTag, List<IPTCDataSet>>(iptc.getDataSets());
+                new HashMap<>(iptc.getDataSets());
             for (IPTCDataSet set : iptcs) {
               if (!set.allowMultiple()) {
                 dataSetMap.remove(set.getTagEnum());
@@ -1213,7 +1212,7 @@ public class JPGTweaker {
         }
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         // Sort the IPTCDataSet collection
-        List<IPTCDataSet> iptcList = new ArrayList<IPTCDataSet>(iptcs);
+        List<IPTCDataSet> iptcList = new ArrayList<>(iptcs);
         Collections.sort(iptcList);
         // Insert IPTC data as one of IRB 8BIM block
         for (IPTCDataSet iptc : iptcList) {
@@ -1306,14 +1305,14 @@ public class JPGTweaker {
     marker = IOUtils.readShortMM(is);
 
     // Create a list to hold the temporary Segments
-    List<Segment> segments = new ArrayList<Segment>();
+    List<Segment> segments = new ArrayList<>();
 
     while (!finished) {
       if (Marker.fromShort(marker) == Marker.SOS) {
         if (eightBIMStream != null) {
           IRB irb = new IRB(eightBIMStream.toByteArray());
           // Shallow copy the map.
-          Map<Short, _8BIM> bimMap = new HashMap<Short, _8BIM>(irb.get8BIM());
+          Map<Short, _8BIM> bimMap = new HashMap<>(irb.get8BIM());
           for (_8BIM bim : bims) // Replace the original data
           {
             bimMap.put(bim.getID(), bim);
@@ -1413,7 +1412,7 @@ public class JPGTweaker {
     ByteArrayOutputStream eightBIMStream = null;
 
     // Create a map to hold all the metadata
-    Map<MetadataType, Metadata> metadataMap = new HashMap<MetadataType, Metadata>();
+    Map<MetadataType, Metadata> metadataMap = new HashMap<>();
     for (Metadata meta : metadata) {
       metadataMap.put(meta.getType(), meta);
     }
@@ -1423,7 +1422,7 @@ public class JPGTweaker {
       IRB irb = (IRB) metadataMap.get(MetadataType.PHOTOSHOP_IRB);
       if (irb != null) {
         // Shallow copy the map.
-        Map<Short, _8BIM> bimMap = new HashMap<Short, _8BIM>(irb.get8BIM());
+        Map<Short, _8BIM> bimMap = new HashMap<>(irb.get8BIM());
         bimMap.remove(ImageResourceID.IPTC_NAA.getValue());
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         for (_8BIM bim : bimMap.values()) {
@@ -1434,7 +1433,7 @@ public class JPGTweaker {
     }
 
     // Create a list to hold the temporary Segments
-    List<Segment> segments = new ArrayList<Segment>();
+    List<Segment> segments = new ArrayList<>();
 
     // Before we actually read anything, see if we want to generate a thumbnail from the input first
     // We need thumbnail image but don't have one, create one from the current image input stream
@@ -1472,7 +1471,7 @@ public class JPGTweaker {
         }
         // Insert all the other items from the segment until we come to EXIF
         int index = Math.max(app0Index, exifIndex);
-        for (int i = (app0Index < 0 ? 0 : app0Index); i < index; i++) {
+        for (int i = (Math.max(app0Index, 0)); i < index; i++) {
           segments.get(i).write(os);
         }
         if (exif != null) {
@@ -1494,7 +1493,7 @@ public class JPGTweaker {
           if (eightBIMStream != null) {
             IRB irb = new IRB(eightBIMStream.toByteArray());
             // Shallow copy the map.
-            bimMap = new HashMap<Short, _8BIM>(irb.get8BIM());
+            bimMap = new HashMap<>(irb.get8BIM());
             bimMap.remove(ImageResourceID.IPTC_NAA.getValue());
             // Reset stream for further use
             eightBIMStream.reset();
@@ -1648,7 +1647,7 @@ public class JPGTweaker {
     marker = IOUtils.readShortMM(is);
 
     // Create a list to hold the temporary Segments
-    List<Segment> segments = new ArrayList<Segment>();
+    List<Segment> segments = new ArrayList<>();
 
     while (!finished) {
       if (Marker.fromShort(marker) == Marker.SOS) {
@@ -1908,7 +1907,7 @@ public class JPGTweaker {
    */
   public static Map<MetadataType, Metadata> readMetadata(InputStream is) throws IOException {
     // Create a map to hold all the metadata and thumbnails
-    Map<MetadataType, Metadata> metadataMap = new HashMap<MetadataType, Metadata>();
+    Map<MetadataType, Metadata> metadataMap = new HashMap<>();
     // Need to wrap the input stream with a BufferedInputStream to
     // speed up reading SOS
     if (!(is instanceof BufferedInputStream)) {
@@ -1916,19 +1915,19 @@ public class JPGTweaker {
     }
 
     // Used to read Quantization and Huffman tables
-    List<QTable> m_qTables = new ArrayList<QTable>(4);
-    List<HTable> m_acTables = new ArrayList<HTable>(4);
-    List<HTable> m_dcTables = new ArrayList<HTable>(4);
+    List<QTable> m_qTables = new ArrayList<>(4);
+    List<HTable> m_acTables = new ArrayList<>(4);
+    List<HTable> m_dcTables = new ArrayList<>(4);
 
     /* Each SOFReader is associated with a single SOF segment
      * Usually there is only one SOF segment, but for hierarchical
      * JPEG, there could be more than one SOF
      */
-    List<SOFReader> readers = new ArrayList<SOFReader>();
+    List<SOFReader> readers = new ArrayList<>();
 
     Comments comments = null;
 
-    List<Segment> appnSegments = new ArrayList<Segment>();
+    List<Segment> appnSegments = new ArrayList<>();
 
     boolean finished = false;
     int length = 0;
@@ -2191,7 +2190,7 @@ public class JPGTweaker {
    */
   public static Map<MetadataType, Metadata> removeMetadata(InputStream is, OutputStream os,
       MetadataType... metadataTypes) throws IOException {
-    return removeMetadata(new HashSet<MetadataType>(Arrays.asList(metadataTypes)), is, os);
+    return removeMetadata(new HashSet<>(Arrays.asList(metadataTypes)), is, os);
   }
 
   /**
@@ -2206,13 +2205,13 @@ public class JPGTweaker {
   public static Map<MetadataType, Metadata> removeMetadata(Set<MetadataType> metadataTypes,
       InputStream is, OutputStream os) throws IOException {
     // Create a map to hold all the metadata and thumbnails
-    Map<MetadataType, Metadata> metadataMap = new HashMap<MetadataType, Metadata>();
+    Map<MetadataType, Metadata> metadataMap = new HashMap<>();
     // In case IRB data are partially removed, we keep removed metadata here
-    Map<MetadataType, Metadata> extraMetadataMap = new HashMap<MetadataType, Metadata>();
+    Map<MetadataType, Metadata> extraMetadataMap = new HashMap<>();
 
     Comments comments = null;
 
-    List<Segment> appnSegments = new ArrayList<Segment>();
+    List<Segment> appnSegments = new ArrayList<>();
 
     // Flag when we are done
     boolean finished = false;
@@ -2368,7 +2367,7 @@ public class JPGTweaker {
                 IRB irb = new IRB(ArrayUtils.subArray(temp, PHOTOSHOP_IRB_ID.length(),
                     temp.length - PHOTOSHOP_IRB_ID.length()));
                 // Shallow copy the map.
-                Map<Short, _8BIM> bimMap = new HashMap<Short, _8BIM>(irb.get8BIM());
+                Map<Short, _8BIM> bimMap = new HashMap<>(irb.get8BIM());
                 if (!metadataTypes.contains(MetadataType.PHOTOSHOP_IRB)) {
                   if (metadataTypes.contains(MetadataType.IPTC)) {
                     // We only remove IPTC_NAA and keep the other IRB data untouched.
