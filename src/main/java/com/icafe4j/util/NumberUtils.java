@@ -40,7 +40,7 @@ public class NumberUtils {
    */
   public static String changeToRequiredDecimals(String bigDecimalString,
       int precision) {
-    String newFormattedString = null;
+    StringBuilder newFormattedString = null;
     String afterDecimal = null;
     if (bigDecimalString == null || bigDecimalString.length() == 0) {
       return "0.0";
@@ -50,38 +50,38 @@ public class NumberUtils {
           .indexOf(".") + 1);
       int length = Math.abs((afterDecimal.length() - precision));
       if (afterDecimal.length() < precision) {
-        newFormattedString = bigDecimalString;
+        newFormattedString = new StringBuilder(bigDecimalString);
         for (int i = 0; i < length; i++) {
-          newFormattedString = newFormattedString + "0";
+          newFormattedString.append("0");
         }
       } else if (afterDecimal.length() > precision) {
-        newFormattedString = bigDecimalString.substring(0,
-            bigDecimalString.length() - length);
+        newFormattedString = new StringBuilder(bigDecimalString.substring(0,
+            bigDecimalString.length() - length));
         if (precision == 0) {
-          newFormattedString = newFormattedString.substring(0,
-              newFormattedString.indexOf("."));
+          newFormattedString = new StringBuilder(newFormattedString.substring(0,
+              newFormattedString.indexOf(".")));
         } else {
-          newFormattedString = bigDecimalString;
+          newFormattedString = new StringBuilder(bigDecimalString);
         }
 
       } else {
         if (precision > 0) {
-          newFormattedString = bigDecimalString + ".";
+          newFormattedString = new StringBuilder(bigDecimalString + ".");
         } else {
-          newFormattedString = bigDecimalString;
+          newFormattedString = new StringBuilder(bigDecimalString);
         }
         for (int i = 0; i < precision; i++) {
-          newFormattedString = newFormattedString + "0";
+          newFormattedString.append("0");
         }
       }
     }
-    return newFormattedString;
+    return newFormattedString.toString();
   }
 
   /* Method takes Object as parameter and removes commas from the parameter */
   public static double removeCommasFromNumber(Object number) {
     try {
-      StringBuffer inputNo = new StringBuffer(number.toString());
+      StringBuilder inputNo = new StringBuilder(number.toString());
       if (inputNo.length() > 0) {
         while (inputNo.indexOf(",") != -1) {
           inputNo.deleteCharAt(inputNo.indexOf(","));

@@ -37,7 +37,7 @@ public class Ducky extends Metadata {
 
   public Ducky() {
     super(MetadataType.JPG_DUCKY);
-    datasetMap = new EnumMap<DuckyTag, DuckyDataSet>(DuckyTag.class);
+    datasetMap = new EnumMap<>(DuckyTag.class);
     isDataRead = true;
   }
 
@@ -68,7 +68,7 @@ public class Ducky extends Metadata {
   public Iterator<MetadataEntry> iterator() {
     ensureDataRead();
 
-    List<MetadataEntry> entries = new ArrayList<MetadataEntry>();
+    List<MetadataEntry> entries = new ArrayList<>();
 
     for (DuckyDataSet dataset : datasetMap.values()) {
       entries.add(dataset.getMetadataEntry());
@@ -77,15 +77,12 @@ public class Ducky extends Metadata {
     return Collections.unmodifiableCollection(entries).iterator();
   }
 
-  public void read() throws IOException {
+  public void read() {
     if (!isDataRead) {
       int i = 0;
-      datasetMap = new EnumMap<DuckyTag, DuckyDataSet>(DuckyTag.class);
+      datasetMap = new EnumMap<>(DuckyTag.class);
 
-      for (; ; ) {
-        if (i + 4 > data.length) {
-          break;
-        }
+      while (i + 4 <= data.length) {
         int tag = IOUtils.readUnsignedShortMM(data, i);
         i += 2;
         int size = IOUtils.readUnsignedShortMM(data, i);

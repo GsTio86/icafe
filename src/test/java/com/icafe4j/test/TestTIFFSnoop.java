@@ -9,7 +9,6 @@ import com.icafe4j.io.RandomAccessInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 
 public class TestTIFFSnoop extends TestBase {
@@ -27,9 +26,7 @@ public class TestTIFFSnoop extends TestBase {
     int i = 0;
     for (Map.Entry<MetadataType, Metadata> entry : metadataMap.entrySet()) {
       logger.info("Metadata entry {} - {}", i, entry.getKey());
-      Iterator<MetadataEntry> itr = entry.getValue().iterator();
-      while (itr.hasNext()) {
-        MetadataEntry item = itr.next();
+      for (MetadataEntry item : entry.getValue()) {
         logger.info(item.getKey() + ": " + item.getValue());
         if (item.isMetadataEntryGroup()) {
           String indent = "    ";

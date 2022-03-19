@@ -28,7 +28,6 @@ public class HuffmanEncoder implements ImageEncoder {
   private final byte[] bytes_buf;
   private final int buf_length;
   private final int[] PREDICTION = new int[4];
-  private final boolean extraFlush = true;
   private final OutputStream os;
   int totalBytes = 0;
   // Fields
@@ -112,7 +111,7 @@ public class HuffmanEncoder implements ImageEncoder {
     AC_EHUFSI[3] = huffTbl.getEncoderSizeTable();
   }
 
-  public void encode(byte[] pixels, int start, int len) throws Exception {
+  public void encode(byte[] pixels, int start, int len) {
     throw new UnsupportedOperationException("Call encode(int[] ZZ, int component_id) instead.");
   }
 
@@ -160,6 +159,7 @@ public class HuffmanEncoder implements ImageEncoder {
 
   public void finish() throws Exception {
     // Cleanup
+    boolean extraFlush = true;
     if (extraFlush) {
       flush_buf(bufIndex + 1);
     }

@@ -38,7 +38,7 @@ public class CollectionUtils {
   }
 
   public static <T, E> Set<T> getKeysByValue(Map<T, E> map, E value) {
-    Set<T> keys = new HashSet<T>();
+    Set<T> keys = new HashSet<>();
     for (Map.Entry<T, E> entry : map.entrySet()) {
       if (value.equals(entry.getValue())) {
         keys.add(entry.getKey());
@@ -52,7 +52,7 @@ public class CollectionUtils {
     Iterator<Integer> iterator = integers.iterator();
 
     for (int i = 0; i < ret.length; i++) {
-      ret[i] = iterator.next().intValue();
+      ret[i] = iterator.next();
     }
 
     return ret;

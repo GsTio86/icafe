@@ -204,7 +204,7 @@ public enum ImageResourceID {
   // unknown tag
   UNKNOWN("Unknown ImageResourceID", (short) 0xffff);
 
-  private static final Map<Short, ImageResourceID> idMap = new HashMap<Short, ImageResourceID>();
+  private static final Map<Short, ImageResourceID> idMap = new HashMap<>();
 
   static {
     for (ImageResourceID id : values()) {

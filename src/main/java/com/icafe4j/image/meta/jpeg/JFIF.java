@@ -147,7 +147,7 @@ public class JFIF extends Metadata {
 
   public Iterator<MetadataEntry> iterator() {
     ensureDataRead();
-    List<MetadataEntry> entries = new ArrayList<MetadataEntry>();
+    List<MetadataEntry> entries = new ArrayList<>();
     String[] densityUnits =
         {"No units, aspect ratio only specified", "Dots per inch", "Dots per centimeter"};
     entries.add(new MetadataEntry("Version", majorVersion + "." + minorVersion));
@@ -161,7 +161,7 @@ public class JFIF extends Metadata {
     return Collections.unmodifiableCollection(entries).iterator();
   }
 
-  public void read() throws IOException {
+  public void read() {
     if (!isDataRead) {
       int expectedLen = 9;
       int offset = 0;

@@ -52,7 +52,7 @@ public enum IPTCNewsPhotoTag implements IPTCTag {
   UNKNOWN(999, "Unknown IPTCNewsPhotoTag");
 
   private static final Map<Integer, IPTCNewsPhotoTag> recordMap =
-      new HashMap<Integer, IPTCNewsPhotoTag>();
+      new HashMap<>();
 
   static {
     for (IPTCNewsPhotoTag record : values()) {

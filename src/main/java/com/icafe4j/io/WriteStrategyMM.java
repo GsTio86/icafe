@@ -28,8 +28,7 @@ public class WriteStrategyMM implements WriteStrategy {
     return instance;
   }
 
-  public void writeInt(byte[] buf, int start_idx, int value)
-      throws IOException {
+  public void writeInt(byte[] buf, int start_idx, int value) {
 
     byte[] tmp = {(byte) (value >>> 24), (byte) (value >>> 16), (byte) (value >>> 8), (byte) value};
 
@@ -44,8 +43,7 @@ public class WriteStrategyMM implements WriteStrategy {
         (byte) value});
   }
 
-  public void writeLong(byte[] buf, int start_idx, long value)
-      throws IOException {
+  public void writeLong(byte[] buf, int start_idx, long value) {
 
     byte[] tmp = new byte[] {(byte) (value >>> 56), (byte) (value >>> 48),
         (byte) (value >>> 40), (byte) (value >>> 32), (byte) (value >>> 24),
@@ -106,8 +104,7 @@ public class WriteStrategyMM implements WriteStrategy {
     }
   }
 
-  public void writeShort(byte[] buf, int start_idx, int value)
-      throws IOException {
+  public void writeShort(byte[] buf, int start_idx, int value) {
     buf[start_idx] = (byte) (value >>> 8);
     buf[start_idx + 1] = (byte) value;
   }

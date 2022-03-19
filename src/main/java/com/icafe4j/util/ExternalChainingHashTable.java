@@ -109,7 +109,7 @@ public class ExternalChainingHashTable<K, V> {
   // Test program
   public static void main(String[] args) {
     ExternalChainingHashTable<Integer, Integer> H =
-        new ExternalChainingHashTable<Integer, Integer>();
+        new ExternalChainingHashTable<>();
 
     final int NUMS = 4000;
     final int GAP = 37;
@@ -124,7 +124,7 @@ public class ExternalChainingHashTable<K, V> {
     }
 
     for (int i = 2; i < NUMS; i += 2) {
-      if (H.get(i).intValue() != i) {
+      if (H.get(i) != i) {
         System.out.println("Find fails " + i);
       }
     }
@@ -154,7 +154,7 @@ public class ExternalChainingHashTable<K, V> {
       }
     }
     // Creates the new entry.
-    e = new HashEntry<K, V>(hash, key, value, entries[currentPos]);
+    e = new HashEntry<>(hash, key, value, entries[currentPos]);
     entries[currentPos] = e;
 
     if (++currentSize > entries.length / 2) {
@@ -236,8 +236,8 @@ public class ExternalChainingHashTable<K, V> {
     entries = new HashEntry[nextPrime(2 * oldEntries.length)];
 
     // Copy table over
-    for (int i = 0; i < oldEntries.length; i++) {
-      HashEntry<K, V> cursor, e = oldEntries[i];
+    for (HashEntry<K, V> oldEntry : oldEntries) {
+      HashEntry<K, V> cursor, e = oldEntry;
       int currentPos;
 
       while (e != null) {
@@ -253,9 +253,9 @@ public class ExternalChainingHashTable<K, V> {
 
   private static class HashEntry<K, V> {
 
-    int hash;
-    K key;
-    V value;
+    final int hash;
+    final K key;
+    final V value;
     HashEntry<K, V> next;
 
     HashEntry(int hash, K key, V value, HashEntry<K, V> next) {

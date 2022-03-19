@@ -11,7 +11,6 @@
 package com.icafe4j.image.meta.tiff;
 
 import com.icafe4j.image.meta.xmp.XMP;
-import java.io.IOException;
 import java.io.OutputStream;
 
 public class TiffXMP extends XMP {
@@ -21,7 +20,7 @@ public class TiffXMP extends XMP {
     // TODO Auto-generated constructor stub
   }
 
-  public void write(OutputStream os) throws IOException {
+  public void write(OutputStream os) {
     // TODO: add code to write XMP to TIFF image
     throw new UnsupportedOperationException("TiffXMP.write() is not implemented.");
   }

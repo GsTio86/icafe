@@ -59,7 +59,7 @@ public final class Base64 {
         count += 3;
       } else if (ichar >= 0x0000
           && ichar <= 0x007F) { // Determine the bytes for a specific character
-        buffer[index++] = (byte) ((0 << 7) | (ichar & 127));
+        buffer[index++] = (byte) ((0) | (ichar & 127));
         count += 1;
       } else
       // Longer than 16 bit Unicode is not supported
@@ -76,7 +76,7 @@ public final class Base64 {
   }
 
   public static String encode(byte[] buf) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     String padding = "";
 
     if (buf.length == 0) {
@@ -142,7 +142,7 @@ public final class Base64 {
     return new String(decodeToByteArray(s), StandardCharsets.UTF_8);
   }
 
-  public static byte[] decodeToByteArray(String s) throws Exception {
+  public static byte[] decodeToByteArray(String s) {
     if (s.length() == 0) {
       return null;
     }
@@ -157,22 +157,22 @@ public final class Base64 {
     int count1 = 0;
 
     // Decode to byte array
-    for (int i = 0; i < buf.length; i++) {
-      if (buf[i] >= 65 && buf[i] < 91) {
-        tempBuf[index++] = (byte) (buf[i] - 65);
-      } else if (buf[i] >= 97 && buf[i] < 123) {
-        tempBuf[index++] = (byte) (buf[i] - 71);
-      } else if (buf[i] >= 48 && buf[i] < 58) {
-        tempBuf[index++] = (byte) (buf[i] + 4);
-      } else if (buf[i] == '+') {
+    for (byte b : buf) {
+      if (b >= 65 && b < 91) {
+        tempBuf[index++] = (byte) (b - 65);
+      } else if (b >= 97 && b < 123) {
+        tempBuf[index++] = (byte) (b - 71);
+      } else if (b >= 48 && b < 58) {
+        tempBuf[index++] = (byte) (b + 4);
+      } else if (b == '+') {
         tempBuf[index++] = 62;
-      } else if (buf[i] == '/') {
+      } else if (b == '/') {
         tempBuf[index++] = 63;
-      } else if (buf[i] == '=') {
+      } else if (b == '=') {
         tempBuf[index++] = 0;
         count1++;
       } else { // Discard line breaks and other non-significant characters
-        if (buf[i] == '\n' || buf[i] == '\r' || buf[i] == ' ' || buf[i] == '\t') {
+        if (b == '\n' || b == '\r' || b == ' ' || b == '\t') {
           continue;
         } else {
           continue; // Ignore all the other characters not in the base64Map too

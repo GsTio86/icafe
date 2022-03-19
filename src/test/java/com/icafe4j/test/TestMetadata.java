@@ -75,7 +75,7 @@ public class TestMetadata extends TestBase {
     iptc.addDataSet(new IPTCDataSet(IPTCApplicationTag.KEY_WORDS, "Welcome 'icafe' user!"));
     iptc.addDataSet(new IPTCDataSet(IPTCApplicationTag.CATEGORY, "ICAFE"));
 
-    return new ArrayList<_8BIM>(Arrays.asList(iptc));
+    return new ArrayList<>(List.of(iptc));
   }
 
   private static BufferedImage createThumbnail(String filePath) throws IOException {
@@ -94,7 +94,7 @@ public class TestMetadata extends TestBase {
   }
 
   // This method is for testing only
-  private static Exif populateExif(Exif exif) throws IOException {
+  private static Exif populateExif(Exif exif) {
     exif.addImageField(TiffTag.WINDOWS_XP_AUTHOR, FieldType.WINDOWSXP, "Author");
     exif.addImageField(TiffTag.WINDOWS_XP_KEYWORDS, FieldType.WINDOWSXP, "Copyright;Author");
     DateFormat formatter = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
@@ -125,10 +125,8 @@ public class TestMetadata extends TestBase {
       if (meta instanceof XMP) {
         XMP.showXMP((XMP) meta);
       } else {
-        Iterator<MetadataEntry> iterator = entry.getValue().iterator();
 
-        while (iterator.hasNext()) {
-          MetadataEntry item = iterator.next();
+        for (MetadataEntry item : entry.getValue()) {
           printMetadata(item, "", "     ");
         }
       }
@@ -222,7 +220,7 @@ public class TestMetadata extends TestBase {
     fin = new FileInputStream("images/exif.tif");
     fout = new FileOutputStream("exif-exif-iptc-comment-inserted.tif");
 
-    List<Metadata> metaList = new ArrayList<Metadata>();
+    List<Metadata> metaList = new ArrayList<>();
     exif = new TiffExif();
     metaList.add(populateExif(exif));
     metaList.add(createIPTC());

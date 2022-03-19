@@ -11,7 +11,6 @@
 package com.icafe4j.util;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +79,7 @@ public class FileUtils {
   // List all files in a directory with the specified extension
   public static List<String> list(File dir, final String fileExt) {
     //
-    List<String> fileList = new ArrayList<String>();
+    List<String> fileList = new ArrayList<>();
 
     //For all files and folders in directory
     if (dir.isDirectory()) {
@@ -113,10 +112,6 @@ public class FileUtils {
       throw new IllegalArgumentException(root + " is not a directory.");
     }
     final Pattern p = Pattern.compile(regex);
-    return root.listFiles(new FileFilter() {
-      public boolean accept(File file) {
-        return p.matcher(file.getName()).matches();
-      }
-    });
+    return root.listFiles(file -> p.matcher(file.getName()).matches());
   }
 }

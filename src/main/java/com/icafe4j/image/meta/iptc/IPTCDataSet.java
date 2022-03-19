@@ -78,7 +78,7 @@ public class IPTCDataSet implements Comparable<IPTCDataSet> {
     this(record, tag, IPTCDataSet.getBytes(value));
   }
 
-  private static final byte[] getBytes(String str) {
+  private static byte[] getBytes(String str) {
     return str.getBytes(StandardCharsets.UTF_8);
   }
 
@@ -103,13 +103,7 @@ public class IPTCDataSet implements Comparable<IPTCDataSet> {
       return AFTER;
     }
     if (this.getRecordNumber() == other.getRecordNumber()) {
-      if (this.getTag() < other.getTag()) {
-        return BEFORE;
-      }
-      if (this.getTag() > other.getTag()) {
-        return AFTER;
-      }
-      return EQUAL;
+      return Integer.compare(this.getTag(), other.getTag());
     }
 
     return EQUAL;

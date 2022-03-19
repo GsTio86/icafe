@@ -95,7 +95,7 @@ public enum Marker {
   // Special case of unknown segment identifier.
   UNKNOWN("Unknown", (short) 0x0000);
 
-  private static final Map<Short, Marker> markerMap = new HashMap<Short, Marker>();
+  private static final Map<Short, Marker> markerMap = new HashMap<>();
 
   static {
     for (Marker marker : values()) {

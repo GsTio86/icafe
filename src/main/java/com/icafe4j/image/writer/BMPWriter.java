@@ -35,10 +35,6 @@ public class BMPWriter extends ImageWriter {
    * 2 = BI_RLE4: 4 bit RLE Compression (4 bit only)
    * 3 = BI_BITFIELDS: No compression (16 & 32 bit only)
    */
-  //private static int BI_RGB       = 0;
-  //private static int BI_RLE8      = 1;
-  //private static int BI_RLE4      = 2;
-  //private static int BI_BITFIELDS = 3;
 
   private BitmapHeader bitmapHeader;
 
@@ -230,8 +226,8 @@ public class BMPWriter extends ImageWriter {
      * where int(x) returns the integral part of x.
      */
     int imageSize; // To be set
-    int xResolution = 0x00;
-    int yResolution = 0x00;
+    final int xResolution = 0x00;
+    final int yResolution = 0x00;
     /**
      * The number of color indexes in the color table used
      * by the bitmap. If set to zero, the bitmap uses maximum

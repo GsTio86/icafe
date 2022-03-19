@@ -107,7 +107,7 @@ public class ExifThumbnail extends Thumbnail {
       randOS.writeInt(offset);
     } else if (getDataType() == Thumbnail.DATA_TYPE_TIFF) { // Uncompressed TIFF format
       // Read the IFDs into a list first
-      List<IFD> list = new ArrayList<IFD>();
+      List<IFD> list = new ArrayList<>();
       RandomAccessInputStream tiffIn =
           new FileCacheRandomAccessInputStream(new ByteArrayInputStream(getCompressedImage()));
       TIFFTweaker.readIFDs(list, tiffIn);

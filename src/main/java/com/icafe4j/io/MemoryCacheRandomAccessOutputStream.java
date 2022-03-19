@@ -37,7 +37,7 @@ public class MemoryCacheRandomAccessOutputStream extends RandomAccessOutputStrea
 
   public MemoryCacheRandomAccessOutputStream(OutputStream dist) {
     super(dist);
-    cache = new ArrayList<byte[]>(10);
+    cache = new ArrayList<>(10);
   }
 
   public void close() throws IOException {
@@ -71,8 +71,8 @@ public class MemoryCacheRandomAccessOutputStream extends RandomAccessOutputStrea
 
     long numBlocks = Math.min(index - cacheStart, cache.size());
 
-    for (long i = 0; i < numBlocks; i++) {
-      cache.remove(0);
+    if (numBlocks > 0) {
+      cache.subList(0, (int) numBlocks).clear();
     }
 
     this.cacheStart = index;

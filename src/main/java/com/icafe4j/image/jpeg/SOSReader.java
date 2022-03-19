@@ -41,7 +41,7 @@ public class SOSReader implements Reader {
     read();
   }
 
-  public void read() throws IOException {
+  public void read() {
     //
     byte[] data = segment.getData();
     int count = 0;

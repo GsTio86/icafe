@@ -22,7 +22,7 @@ public class TestJPGTweaker extends TestBase {
   }
 
   // This method is for testing only
-  private static Exif populateExif() throws Exception {
+  private static Exif populateExif() {
     // Create an EXIF wrapper
     Exif exif = new JpegExif();
     DateFormat formatter = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");

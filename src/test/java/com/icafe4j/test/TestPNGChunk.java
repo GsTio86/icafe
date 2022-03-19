@@ -14,7 +14,7 @@ public class TestPNGChunk extends TestBase {
   }
 
   public void test(String... args) {
-    List<Chunk> list = new ArrayList<Chunk>();
+    List<Chunk> list = new ArrayList<>();
     list.add(new Chunk(ChunkType.UNKNOWN, 0, null, 0));
     list.add(new Chunk(ChunkType.IEND, 0, null, 0));
     list.add(new Chunk(ChunkType.IHDR, 0, null, 0));

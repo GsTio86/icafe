@@ -202,7 +202,7 @@ public enum ImageType {
     }
   };
 
-  private static final Map<String, ImageType> stringMap = new HashMap<String, ImageType>();
+  private static final Map<String, ImageType> stringMap = new HashMap<>();
 
   static {
     for (ImageType type : values()) {

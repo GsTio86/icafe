@@ -18,7 +18,7 @@ package com.icafe4j.util;
  */
 class SinglyLinkedListNode<E> {
 
-  int freq;
+  final int freq;
   E content;
   SinglyLinkedListNode<E> next;
 

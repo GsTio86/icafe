@@ -19,7 +19,7 @@ public class TestTIFFField extends TestBase {
   }
 
   public void test(String... args) {
-    List<TiffField<?>> tiffFields = new ArrayList<TiffField<?>>();
+    List<TiffField<?>> tiffFields = new ArrayList<>();
     tiffFields.add(new ShortField(TiffTag.ROWS_PER_STRIP.getValue(), new short[] {2}));
     tiffFields.add(new LongField(TiffTag.SUBFILE_TYPE.getValue(), new int[] {0}));
     tiffFields.add(new ASCIIField(TiffTag.SOFTWARE.getValue(), "ImageMagick\0"));

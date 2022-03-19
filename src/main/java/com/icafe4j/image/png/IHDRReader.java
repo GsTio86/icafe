@@ -12,7 +12,6 @@ package com.icafe4j.image.png;
 
 import com.icafe4j.io.IOUtils;
 import com.icafe4j.util.Reader;
-import java.io.IOException;
 
 /**
  * PNG IHDR chunk reader
@@ -42,11 +41,7 @@ public class IHDRReader implements Reader {
 
     this.chunk = chunk;
 
-    try {
-      read();
-    } catch (IOException e) {
-      throw new RuntimeException("IHDRReader: error reading chunk");
-    }
+    read();
   }
 
   public int getWidth() {
@@ -77,7 +72,7 @@ public class IHDRReader implements Reader {
     return interlaceMethod;
   }
 
-  public void read() throws IOException {
+  public void read() {
     //
     byte[] data = chunk.getData();
 

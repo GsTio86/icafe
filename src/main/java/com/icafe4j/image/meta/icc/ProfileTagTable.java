@@ -24,7 +24,7 @@ import java.util.Map;
  */
 public class ProfileTagTable {
 
-  private final Map<Integer, TagEntry> tagEntries = new HashMap<Integer, TagEntry>();
+  private final Map<Integer, TagEntry> tagEntries = new HashMap<>();
   private int tagCount;
 
   public ProfileTagTable() {
@@ -64,7 +64,7 @@ public class ProfileTagTable {
   }
 
   public List<TagEntry> getTagEntries() {
-    return new ArrayList<TagEntry>(tagEntries.values());
+    return new ArrayList<>(tagEntries.values());
   }
 
   public static class TagEntry implements Comparable<TagEntry> {

@@ -21,7 +21,7 @@ public class LinkedListQueue<E> {
   private final SinglyLinkedList<E> list;
 
   public LinkedListQueue() {
-    list = new SinglyLinkedList<E>();
+    list = new SinglyLinkedList<>();
   }
 
   public void enqueue(E value) {

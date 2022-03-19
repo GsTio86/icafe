@@ -20,7 +20,6 @@ package com.icafe4j.image.meta.tiff;
 
 import com.icafe4j.image.meta.exif.Exif;
 import com.icafe4j.image.tiff.IFD;
-import java.io.IOException;
 import java.io.OutputStream;
 
 public class TiffExif extends Exif {
@@ -36,10 +35,9 @@ public class TiffExif extends Exif {
    * Write the EXIF data to the OutputStream
    *
    * @param os OutputStream
-   * @throws Exception
    */
   @Override
-  public void write(OutputStream os) throws IOException {
+  public void write(OutputStream os) {
     ensureDataRead();
     // We won't write anything here
   }

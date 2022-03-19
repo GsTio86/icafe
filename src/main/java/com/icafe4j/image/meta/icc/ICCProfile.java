@@ -57,25 +57,19 @@ public class ICCProfile extends Metadata {
     this(IOUtils.inputStreamToByteArray(is));
   }
 
-  public static void showProfile(byte[] data) {
+  public static void showProfile(byte[] data) throws IOException {
     if (data != null && data.length > 0) {
       ICCProfile icc_profile = new ICCProfile(data);
-      try {
-        icc_profile.read();
-        Iterator<MetadataEntry> iterator = icc_profile.iterator();
-        while (iterator.hasNext()) {
-          MetadataEntry item = iterator.next();
-          LOGGER.info(item.getKey() + ": " + item.getValue());
-          if (item.isMetadataEntryGroup()) {
-            String indent = "    ";
-            Collection<MetadataEntry> entries = item.getMetadataEntries();
-            for (MetadataEntry e : entries) {
-              LOGGER.info(indent + e.getKey() + ": " + e.getValue());
-            }
+      icc_profile.read();
+      for (MetadataEntry item : icc_profile) {
+        LOGGER.info(item.getKey() + ": " + item.getValue());
+        if (item.isMetadataEntryGroup()) {
+          String indent = "    ";
+          Collection<MetadataEntry> entries = item.getMetadataEntries();
+          for (MetadataEntry e : entries) {
+            LOGGER.info(indent + e.getKey() + ": " + e.getValue());
           }
         }
-      } catch (IOException e) {
-        e.printStackTrace();
       }
     }
   }
@@ -92,7 +86,7 @@ public class ICCProfile extends Metadata {
     return (((header.profileFlags[0] >> 6) & 0x01) == 0);
   }
 
-  public String getAsString(ProfileTag tag) {
+  public String getAsString() {
     throw new UnsupportedOperationException("getAsString() is not implemented for ICCProfile");
   }
 
@@ -266,7 +260,7 @@ public class ICCProfile extends Metadata {
 
   public Iterator<MetadataEntry> iterator() {
     ensureDataRead();
-    List<MetadataEntry> entries = new ArrayList<MetadataEntry>();
+    List<MetadataEntry> entries = new ArrayList<>();
     MetadataEntry header = new MetadataEntry("ICC Profile", "Header", true);
     header.addEntry(new MetadataEntry("Profile Size", getProfileSize() + ""));
     header.addEntry(new MetadataEntry("CMM Type", getPreferredCMMType()));

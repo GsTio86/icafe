@@ -29,7 +29,7 @@ public enum BmpCompression {
   UNKNOWN("Unknown", 9999);
 
   private static final Map<Integer, BmpCompression> typeMap =
-      new HashMap<Integer, BmpCompression>();
+      new HashMap<>();
 
   static {
     for (BmpCompression compression : values()) {

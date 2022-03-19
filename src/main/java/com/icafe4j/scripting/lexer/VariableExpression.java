@@ -39,7 +39,7 @@ class VariableExpression extends Expression {
     if (dd == null) {
       throw new ExecError(v + " is undefined");
     }
-    return (dd.doubleValue());
+    return (dd);
   }
 
   String unparse() {

@@ -34,33 +34,33 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 
   // Test program
   public static void main(String[] args) {
-    BinarySearchTree<Integer> t = new BinarySearchTree<Integer>();
+    BinarySearchTree<Integer> t = new BinarySearchTree<>();
     final int NUMS = 4000;
     final int GAP = 37;
 
     System.out.println("Checking... (no more output means success)");
 
     for (int i = GAP; i != 0; i = (i + GAP) % NUMS) {
-      t.insert(new Integer(i));
+      t.insert(i);
     }
 
     for (int i = 1; i < NUMS; i += 2) {
-      t.remove(new Integer(i));
+      t.remove(i);
     }
 
-    if ((t.findMinItem()).intValue() != 2 ||
-        (t.findMaxItem()).intValue() != NUMS - 2) {
+    if (t.findMinItem() != 2 ||
+        t.findMaxItem() != NUMS - 2) {
       System.out.println("FindMin or FindMax error!");
     }
 
     for (int i = 2; i < NUMS; i += 2) {
-      if ((t.find(new Integer(i))).intValue() != i) {
+      if (t.find(new Integer(i)) != i) {
         System.out.println("Find error1!");
       }
     }
 
     for (int i = 1; i < NUMS; i += 2) {
-      if (t.find(new Integer(i)) != null) {
+      if (t.find(i) != null) {
         System.out.println("Find error2!");
       }
     }
@@ -146,7 +146,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
    */
   BinaryTreeNode<E> insert(E val, BinaryTreeNode<E> n) {
     if (n == null) {
-      n = new BinaryTreeNode<E>(val);
+      n = new BinaryTreeNode<>(val);
     } else {
       BinaryTreeNode<E> parent, curr;
       for (parent = null, curr = n;
@@ -158,9 +158,9 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
       {
         curr.freq++;
       } else if (val.compareTo(parent.val) < 0) {
-        parent.left = new BinaryTreeNode<E>(val);
+        parent.left = new BinaryTreeNode<>(val);
       } else {
-        parent.right = new BinaryTreeNode<E>(val);
+        parent.right = new BinaryTreeNode<>(val);
       }
     }
     return n;
@@ -206,8 +206,8 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
         parent.right = (curr.left != null) ? curr.left : curr.right;
       }
     }
-    /** The matching item is the root of this subtree,
-     *  remove it and return the new root
+    /* The matching item is the root of this subtree,
+       remove it and return the new root
      */
     else {
       return (curr.left != null) ? curr.left : curr.right;

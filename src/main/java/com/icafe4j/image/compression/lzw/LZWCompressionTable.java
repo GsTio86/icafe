@@ -16,9 +16,9 @@ public class LZWCompressionTable {
   private final static short HASHSIZE = 9973;
   private final static short HASHSTEP = 2039;
 
-  byte[] strChr_;
-  short[] strPref_;
-  short[] strHsh_;
+  final byte[] strChr_;
+  final short[] strPref_;
+  final short[] strHsh_;
   short numStrings_;
 
   public LZWCompressionTable() {

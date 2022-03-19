@@ -235,9 +235,7 @@ public class DateUtils {
           input = input.replace(secondFractionStr, input.substring(indexOfDot, indexOfDot + 4));
         }
 
-        for (int j = secondFractionLen; j > 0; j--) {
-          sb.append("S");
-        }
+        sb.append("S".repeat(Math.max(0, secondFractionLen)));
       }
       if (hasTimeZone) {
         sb.append("Z");

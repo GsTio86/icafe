@@ -379,9 +379,9 @@ public class Scalr {
    */
   public static final int THRESHOLD_QUALITY_BALANCED = 800;
 
-  /**
-   * Static initializer used to prepare some of the variables used by this
-   * class.
+  /*
+    Static initializer used to prepare some of the variables used by this
+    class.
    */
   static {
     log(0, "Debug output ENABLED");
@@ -494,9 +494,9 @@ public class Scalr {
 
     boolean hasReassignedSrc = false;
 
-    for (int i = 0; i < ops.length; i++) {
+    for (BufferedImageOp bufferedImageOp : ops) {
       long subT = System.currentTimeMillis();
-      BufferedImageOp op = ops[i];
+      BufferedImageOp op = bufferedImageOp;
 
       // Skip null ops instead of throwing an exception.
       if (op == null) {
@@ -760,11 +760,6 @@ public class Scalr {
    *            The number of pixels of padding to add to each side in the
    *            resulting image. If this value is <code>0</code> then
    *            <code>src</code> is returned unmodified.
-   * @param ops
-   *            <code>0</code> or more ops to apply to the image. If
-   *            <code>null</code> or empty then <code>src</code> is return
-   *            unmodified.
-   *
    * @return a new {@link BufferedImage} representing <code>src</code> with
    *         the given padding applied to it.
    *
@@ -783,8 +778,7 @@ public class Scalr {
    *             to fail, even when using straight forward JDK-image
    *             operations.
    */
-  public static BufferedImage pad(BufferedImage src, int padding,
-      BufferedImageOp... ops) throws IllegalArgumentException,
+  public static BufferedImage pad(BufferedImage src, int padding) throws IllegalArgumentException,
       ImagingOpException {
     return pad(src, padding, Color.BLACK);
   }

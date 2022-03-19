@@ -50,7 +50,7 @@ public enum IPTCEnvelopeTag implements IPTCTag {
   UNKNOWN(999, "Unknown IPTCEnvelopeTag");
 
   private static final Map<Integer, IPTCEnvelopeTag> recordMap =
-      new HashMap<Integer, IPTCEnvelopeTag>();
+      new HashMap<>();
 
   static {
     for (IPTCEnvelopeTag record : values()) {

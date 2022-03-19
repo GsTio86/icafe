@@ -30,10 +30,6 @@ public class G32DEncoder extends G31DEncoder implements ImageEncoder {
    * element situated just before the first element on the line.
    */
   private int a0 = -1;
-  private int a1;
-  private int a2;
-  private int b1;
-  private int b2;
 
   // K should be greater than 1
   public G32DEncoder(OutputStream os, int scanLineWidth, int buf_length, int k,
@@ -126,6 +122,7 @@ public class G32DEncoder extends G31DEncoder implements ImageEncoder {
       // Offset within the scan line
       int offset = a0 + 1;
       int begin = start + (offset - currRefPos + 7) / 8;
+      int a1;
       if (offset >= scanLineWidth) {
         a1 = scanLineWidth;
       } else {
@@ -151,6 +148,7 @@ public class G32DEncoder extends G31DEncoder implements ImageEncoder {
       offset = a0 + 1;
       begin = prevStart + (offset - preRefPos + 7) / 8;
 
+      int b1;
       if (begin < 0) {
         b1 = scanLineWidth;
       } else if (offset >= scanLineWidth) {
@@ -170,6 +168,7 @@ public class G32DEncoder extends G31DEncoder implements ImageEncoder {
       offset = b1 + 1;
       begin = prevStart + (offset - preRefPos + 7) / 8;
       //begin += (offset - preRefPos + 7)/8;
+      int b2;
       if (offset >= scanLineWidth) {
         b2 = scanLineWidth;
       } else {
@@ -226,6 +225,7 @@ public class G32DEncoder extends G31DEncoder implements ImageEncoder {
           // Then a1a2
           offset = a1 + 1;
           begin = start + (offset - currRefPos + 7) / 8;
+          int a2;
           if (offset >= scanLineWidth) {
             a2 = scanLineWidth;
           } else {

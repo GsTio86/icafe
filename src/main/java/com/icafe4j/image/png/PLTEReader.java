@@ -11,7 +11,6 @@
 package com.icafe4j.image.png;
 
 import com.icafe4j.util.Reader;
-import java.io.IOException;
 
 /**
  * PNG PLTE chunk reader
@@ -37,11 +36,7 @@ public class PLTEReader implements Reader {
 
     this.chunk = chunk;
 
-    try {
-      read();
-    } catch (IOException e) {
-      throw new RuntimeException("PLTEReader: error reading chunk");
-    }
+    read();
   }
 
   public byte[] getRedMap() {
@@ -56,7 +51,7 @@ public class PLTEReader implements Reader {
     return blueMap;
   }
 
-  public void read() throws IOException {
+  public void read() {
 
     byte[] colorMap = chunk.getData();
     int mapLen = colorMap.length;

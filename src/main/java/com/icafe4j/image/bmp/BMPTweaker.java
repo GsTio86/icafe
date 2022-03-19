@@ -52,7 +52,7 @@ public class BMPTweaker {
   }
 
   public static Map<MetadataType, Metadata> readMetadata(InputStream is) throws IOException {
-    Map<MetadataType, Metadata> metadataMap = new HashMap<MetadataType, Metadata>();
+    Map<MetadataType, Metadata> metadataMap = new HashMap<>();
     ImageMetadata imageMeta = new ImageMetadata();
     // Create a new data transfer object to hold data
     DataTransferObject DTO = new DataTransferObject();

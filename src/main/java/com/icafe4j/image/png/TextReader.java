@@ -101,16 +101,16 @@ public class TextReader implements Reader {
       }
       case ITXT: {
         // System.setOut(new PrintStream(new File("TextChunk.txt"),"UTF-8"));
-        /**
-         * Keyword:             1-79 bytes (character string)
-         * Null separator:      1 byte
-         * Compression flag:    1 byte
-         * Compression method:  1 byte
-         * Language tag:        0 or more bytes (character string)
-         * Null separator:      1 byte
-         * Translated keyword:  0 or more bytes
-         * Null separator:      1 byte
-         * Text:                0 or more bytes
+        /*
+          Keyword:             1-79 bytes (character string)
+          Null separator:      1 byte
+          Compression flag:    1 byte
+          Compression method:  1 byte
+          Language tag:        0 or more bytes (character string)
+          Null separator:      1 byte
+          Translated keyword:  0 or more bytes
+          Null separator:      1 byte
+          Text:                0 or more bytes
          */
         int keyword_len = 0;
         int trans_keyword_len = 0;

@@ -78,7 +78,6 @@ public class LZWTreeDecoder implements ImageDecoder {
   private int temp_byte = 0;
   private int bufIndex = 0;
   private int oldcode = 0;
-  private int code = 0;
   // Variables to clear table
   private int codeLen;
   private int codeIndex;
@@ -135,7 +134,7 @@ public class LZWTreeDecoder implements ImageDecoder {
     label:
     do {
       i = 0;
-      code = readLZWCode();
+      int code = readLZWCode();
       tempcode = code;
 
       if (code == clearCode) {

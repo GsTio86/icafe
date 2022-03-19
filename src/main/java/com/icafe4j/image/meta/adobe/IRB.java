@@ -41,7 +41,7 @@ public class IRB extends Metadata {
 
   // Obtain a logger instance
   private static final Logger LOGGER = LoggerFactory.getLogger(IRB.class);
-  Map<Short, _8BIM> _8bims = new HashMap<Short, _8BIM>();
+  final Map<Short, _8BIM> _8bims = new HashMap<>();
   private boolean containsThumbnail;
   private ThumbnailResource thumbnail;
 
@@ -49,25 +49,19 @@ public class IRB extends Metadata {
     super(MetadataType.PHOTOSHOP_IRB, data);
   }
 
-  public static void showIRB(byte[] data) {
+  public static void showIRB(byte[] data) throws IOException {
     if (data != null && data.length > 0) {
       IRB irb = new IRB(data);
-      try {
-        irb.read();
-        Iterator<MetadataEntry> iterator = irb.iterator();
-        while (iterator.hasNext()) {
-          MetadataEntry item = iterator.next();
-          LOGGER.info(item.getKey() + ": " + item.getValue());
-          if (item.isMetadataEntryGroup()) {
-            String indent = "    ";
-            Collection<MetadataEntry> entries = item.getMetadataEntries();
-            for (MetadataEntry e : entries) {
-              LOGGER.info(indent + e.getKey() + ": " + e.getValue());
-            }
+      irb.read();
+      for (MetadataEntry item : irb) {
+        LOGGER.info(item.getKey() + ": " + item.getValue());
+        if (item.isMetadataEntryGroup()) {
+          String indent = "    ";
+          Collection<MetadataEntry> entries = item.getMetadataEntries();
+          for (MetadataEntry e : entries) {
+            LOGGER.info(indent + e.getKey() + ": " + e.getValue());
           }
         }
-      } catch (IOException e) {
-        e.printStackTrace();
       }
     }
   }
@@ -89,10 +83,10 @@ public class IRB extends Metadata {
     if (bim != null) {
       StringBuilder strBuilder = new StringBuilder();
       MetadataEntry item = bim.getMetadataEntry();
-      strBuilder.append(item.getKey() + ":" + item.getValue() + ";");
+      strBuilder.append(item.getKey()).append(":").append(item.getValue()).append(";");
       if (item.isMetadataEntryGroup()) {
         for (MetadataEntry entry : item.getMetadataEntries()) {
-          strBuilder.append(entry.getKey() + ":" + entry.getValue() + ";");
+          strBuilder.append(entry.getKey()).append(":").append(entry.getValue()).append(";");
         }
       }
       // Return a string representation of the 8BIM block with ImageResourceID id
@@ -105,7 +99,7 @@ public class IRB extends Metadata {
 
   public Iterator<MetadataEntry> iterator() {
     ensureDataRead();
-    List<MetadataEntry> items = new ArrayList<MetadataEntry>();
+    List<MetadataEntry> items = new ArrayList<>();
 
     for (_8BIM _8bim : _8bims.values()) {
       items.add(_8bim.getMetadataEntry());

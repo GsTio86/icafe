@@ -79,8 +79,8 @@ public class LeftistHeap<E extends Comparable<? super E>> {
   // Test program
   public static void main(String[] args) {
     int numItems = 100;
-    LeftistHeap<Integer> h = new LeftistHeap<Integer>();
-    LeftistHeap<Integer> h1 = new LeftistHeap<Integer>();
+    LeftistHeap<Integer> h = new LeftistHeap<>();
+    LeftistHeap<Integer> h1 = new LeftistHeap<>();
     int i = 37;
 
     System.out.println("Checking... (no more output means success)");
@@ -96,7 +96,7 @@ public class LeftistHeap<E extends Comparable<? super E>> {
     h.merge(h1);
 
     for (i = 1; i < numItems; i++) {
-      if (h.deleteMin().intValue() != i) {
+      if (h.deleteMin() != i) {
         System.out.println("Oops! " + i);
       }
     }
@@ -123,7 +123,7 @@ public class LeftistHeap<E extends Comparable<? super E>> {
    * @param x the item to insert.
    */
   public synchronized void insert(E x) {
-    root = merge(root, new LeftHeapNode<E>(x));
+    root = merge(root, new LeftHeapNode<>(x));
     size++;
   }
 

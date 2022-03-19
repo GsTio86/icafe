@@ -88,12 +88,12 @@ public class InverseColorMap {
       red = ((colorPalette[i] >> 16) & 0xff);
       green = ((colorPalette[i] >> 8) & 0xff);
       blue = (colorPalette[i] & 0xff);
-      /**
-       * We start from the origin (0,0,0) of the quantized colors, calculate
-       * the distance between the cell center of the quantized colors and
-       * the current color map entry as follows:
-       * (rcenter * x + x/2) - red, where rcenter is the center of the
-       * Quantized red color map entry which is 0 since we start from 0.
+      /*
+        We start from the origin (0,0,0) of the quantized colors, calculate
+        the distance between the cell center of the quantized colors and
+        the current color map entry as follows:
+        (rcenter * x + x/2) - red, where rcenter is the center of the
+        Quantized red color map entry which is 0 since we start from 0.
        */
       rdist = (x >> 1) - red;// Red distance
       gdist = (x >> 1) - green;// Green distance
@@ -145,12 +145,12 @@ public class InverseColorMap {
       red = (redPalette[i] & 0xff);
       green = (greenPalette[i] & 0xff);
       blue = (bluePalette[i] & 0xff);
-      /**
-       * We start from the origin (0,0,0) of the quantized colors, calculate
-       * the distance between the cell center of the quantized colors and
-       * the current color map entry as follows:
-       * (rcenter * x + x/2) - red, where rcenter is the center of the
-       * Quantized red color map entry which is 0 since we start from 0.
+      /*
+        We start from the origin (0,0,0) of the quantized colors, calculate
+        the distance between the cell center of the quantized colors and
+        the current color map entry as follows:
+        (rcenter * x + x/2) - red, where rcenter is the center of the
+        Quantized red color map entry which is 0 since we start from 0.
        */
       rdist = (x >> 1) - red;// Red distance
       gdist = (x >> 1) - green;// Green distance

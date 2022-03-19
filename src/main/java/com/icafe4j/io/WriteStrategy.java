@@ -20,11 +20,11 @@ import java.io.OutputStream;
 public interface WriteStrategy {
 
   //
-  void writeInt(byte[] buf, int start_idx, int value) throws IOException;
+  void writeInt(byte[] buf, int start_idx, int value);
 
   void writeInt(OutputStream os, int value) throws IOException;
 
-  void writeLong(byte[] buf, int start_idx, long value) throws IOException;
+  void writeLong(byte[] buf, int start_idx, long value);
 
   void writeLong(OutputStream os, long value) throws IOException;
 
@@ -32,7 +32,7 @@ public interface WriteStrategy {
 
   void writeS15Fixed16Number(OutputStream os, float value) throws IOException;
 
-  void writeShort(byte[] buf, int start_idx, int value) throws IOException;
+  void writeShort(byte[] buf, int start_idx, int value);
 
   void writeShort(OutputStream os, int value) throws IOException;
 

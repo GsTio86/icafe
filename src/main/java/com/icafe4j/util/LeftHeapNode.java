@@ -19,7 +19,7 @@ package com.icafe4j.util;// Temporarily put in this package
 class LeftHeapNode<E> {
 
   // Friendly data; accessible by other package routines
-  E element;               // The data in the node
+  final E element;               // The data in the node
   LeftHeapNode<E> left;         // Left child
   LeftHeapNode<E> right;        // Right child
   int npl;          // null path length

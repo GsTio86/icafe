@@ -171,7 +171,7 @@ public enum GPSTag implements Tag {
   UNKNOWN("Unknown", (short) 0xffff);
   // End of EXIF GPSSubIFD tags
 
-  private static final Map<Short, GPSTag> tagMap = new HashMap<Short, GPSTag>();
+  private static final Map<Short, GPSTag> tagMap = new HashMap<>();
 
   static {
     for (GPSTag tag : values()) {

@@ -34,7 +34,7 @@ public class LinkedList<E> {
    * Construct the list
    */
   public LinkedList() {
-    header = new ListNode<E>(null);
+    header = new ListNode<>(null);
   }
 
   // Simple print method
@@ -52,7 +52,7 @@ public class LinkedList<E> {
   }
 
   public static void main(String[] args) {
-    LinkedList<Integer> theList = new LinkedList<Integer>();
+    LinkedList<Integer> theList = new LinkedList<>();
     LinkedListItr<Integer> theItr;
     int i;
 
@@ -99,7 +99,7 @@ public class LinkedList<E> {
    * Return an iterator representing the header node.
    */
   public LinkedListItr<E> zeroth() {
-    return new LinkedListItr<E>(header);
+    return new LinkedListItr<>(header);
   }
 
   /**
@@ -107,7 +107,7 @@ public class LinkedList<E> {
    * lists.
    */
   public LinkedListItr<E> first() {
-    return new LinkedListItr<E>(header.next);
+    return new LinkedListItr<>(header.next);
   }
 
   /**
@@ -118,7 +118,7 @@ public class LinkedList<E> {
    */
   public void insert(E x, LinkedListItr<E> p) {
     if (p != null && p.current != null) {
-      p.current.next = new ListNode<E>(x, p.current.next);
+      p.current.next = new ListNode<>(x, p.current.next);
     }
   }
 
@@ -135,7 +135,7 @@ public class LinkedList<E> {
       itr = itr.next; /* 3*/
     }
 
-    return new LinkedListItr<E>(itr); /* 4*/
+    return new LinkedListItr<>(itr); /* 4*/
   }
 
   /**
@@ -152,7 +152,7 @@ public class LinkedList<E> {
       itr = itr.next; /* 3*/
     }
 
-    return new LinkedListItr<E>(itr); /* 4*/
+    return new LinkedListItr<>(itr); /* 4*/
   }
 
   /**

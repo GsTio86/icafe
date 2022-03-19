@@ -157,9 +157,8 @@ public class LangUtils {
   public static URL getLoadedClassLocation(Class<?> cls) {
     ProtectionDomain pDomain = cls.getProtectionDomain();
     CodeSource cSource = pDomain.getCodeSource();
-    URL loc = (cSource == null) ? null : cSource.getLocation();
 
-    return loc;
+    return (cSource == null) ? null : cSource.getLocation();
   }
 
   /**
@@ -190,9 +189,7 @@ public class LangUtils {
 
     ClassLoader classLoader = cls.getClassLoader();
 
-    URL url = classLoader.getResource(className.replaceAll(Pattern.quote("."), "/") + ".class");
-
-    return url;
+    return classLoader.getResource(className.replaceAll(Pattern.quote("."), "/") + ".class");
   }
 
   // A convenience way to call main of other classes.
@@ -247,9 +244,7 @@ public class LangUtils {
     // Construct the relative path
     StringBuilder sb = new StringBuilder();
 
-    for (int j = 0; j < (bParts.length - i); j++) {
-      sb.append("../");
-    }
+    sb.append("../".repeat(Math.max(0, (bParts.length - i))));
 
     for (int j = i; j < cParts.length; j++) {
       if (j != i) {

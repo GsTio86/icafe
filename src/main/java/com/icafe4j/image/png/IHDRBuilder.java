@@ -123,13 +123,12 @@ public class IHDRBuilder extends ChunkBuilder implements Builder<Chunk> {
   @Override
   protected byte[] buildData() {
     // 13 bytes
-    byte[] data = {(byte) (width >>> 24),
+
+    return new byte[] {(byte) (width >>> 24),
         (byte) (width >>> 16), (byte) (width >>> 8),
         (byte) width, (byte) (height >>> 24),
         (byte) (height >>> 16), (byte) (height >>> 8),
         (byte) height, (byte) bitDepth, (byte) colorType, (byte) compressionMethod,
         (byte) filterMethod, (byte) interlaceMethod};
-
-    return data;
   }
 }

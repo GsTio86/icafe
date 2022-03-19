@@ -38,7 +38,7 @@ public abstract class ImageWriter {
     this.imageParam = param;
   }
 
-  private int[] getPixels(Image img, int imageWidth, int imageHeight) throws Exception {
+  private int[] getPixels(Image img, int imageWidth, int imageHeight) {
     int[] pixels = null;
 
     if (img instanceof BufferedImage) {

@@ -90,13 +90,10 @@ class ParseExpression extends Expression {
 
     result = primary(st);
     try {
-      switch (st.nextToken()) {
-        case '^':
-          result = new Expression(OP_EXP, result, factor(st));
-          break;
-        default:
-          st.pushBack();
-          break;
+      if (st.nextToken() == '^') {
+        result = new Expression(OP_EXP, result, factor(st));
+      } else {
+        st.pushBack();
       }
     } catch (IOException ioe) {
       throw new SyntaxError("Caught an I/O Exception.");

@@ -179,11 +179,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
    * Marks the current file position for later return using the <code>reset()</code> method.
    */
   public synchronized void mark(int readLimit) {
-    try {
-      markPos = getFilePointer();
-    } catch (IOException e) {
-      markPos = -1L;
-    }
+    markPos = getFilePointer();
   }
 
   /**
@@ -218,9 +214,8 @@ public abstract class SeekableStream extends InputStream implements DataInput {
    * Returns the current offset in this stream.
    *
    * @return the offset from the beginning of the stream, in bytes, at which the next read occurs.
-   * @throws IOException if an I/O error occurs.
    */
-  public abstract long getFilePointer() throws IOException;
+  public abstract long getFilePointer();
 
   // Methods from RandomAccessFile
 
@@ -383,7 +378,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
     if ((ch1 | ch2) < 0) {
       throw new EOFException();
     }
-    return (short) ((ch1 << 8) + (ch2 << 0));
+    return (short) ((ch1 << 8) + (ch2));
   }
 
   /**
@@ -409,7 +404,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
     if ((ch1 | ch2) < 0) {
       throw new EOFException();
     }
-    return (short) ((ch2 << 8) + (ch1 << 0));
+    return (short) ((ch2 << 8) + (ch1));
   }
 
   /**
@@ -435,7 +430,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
     if ((ch1 | ch2) < 0) {
       throw new EOFException();
     }
-    return (ch1 << 8) + (ch2 << 0);
+    return (ch1 << 8) + (ch2);
   }
 
   /**
@@ -462,7 +457,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
     if ((ch1 | ch2) < 0) {
       throw new EOFException();
     }
-    return (ch2 << 8) + (ch1 << 0);
+    return (ch2 << 8) + (ch1);
   }
 
   /**
@@ -488,7 +483,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
     if ((ch1 | ch2) < 0) {
       throw new EOFException();
     }
-    return (char) ((ch1 << 8) + (ch2 << 0));
+    return (char) ((ch1 << 8) + (ch2));
   }
 
   /**
@@ -514,7 +509,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
     if ((ch1 | ch2) < 0) {
       throw new EOFException();
     }
-    return (char) ((ch2 << 8) + (ch1 << 0));
+    return (char) ((ch2 << 8) + (ch1));
   }
 
   /**
@@ -543,7 +538,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
     if ((ch1 | ch2 | ch3 | ch4) < 0) {
       throw new EOFException();
     }
-    return ((ch1 << 24) + (ch2 << 16) + (ch3 << 8) + (ch4 << 0));
+    return ((ch1 << 24) + (ch2 << 16) + (ch3 << 8) + (ch4));
   }
 
   /**
@@ -573,7 +568,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
     if ((ch1 | ch2 | ch3 | ch4) < 0) {
       throw new EOFException();
     }
-    return ((ch4 << 24) + (ch3 << 16) + (ch2 << 8) + (ch1 << 0));
+    return ((ch4 << 24) + (ch3 << 16) + (ch2 << 8) + (ch1));
   }
 
   /**
@@ -602,7 +597,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
     if ((ch1 | ch2 | ch3 | ch4) < 0) {
       throw new EOFException();
     }
-    return ((ch1 << 24) + (ch2 << 16) + (ch3 << 8) + (ch4 << 0));
+    return ((ch1 << 24) + (ch2 << 16) + (ch3 << 8) + (ch4));
   }
 
   /**
@@ -631,7 +626,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
     long ch3 = (ruileBuf[2] & 0xff);
     long ch4 = (ruileBuf[3] & 0xff);
 
-    return ((ch4 << 24) + (ch3 << 16) + (ch2 << 8) + (ch1 << 0));
+    return ((ch4 << 24) + (ch3 << 16) + (ch2 << 8) + (ch1));
   }
 
   /**
@@ -794,7 +789,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
    * @throws IOException if an I/O error occurs.
    */
   public final String readLine() throws IOException {
-    StringBuffer input = new StringBuffer();
+    StringBuilder input = new StringBuilder();
     int c = -1;
     boolean eol = false;
 

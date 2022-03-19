@@ -42,7 +42,7 @@ public class TestTIFFTweaker extends TestBase {
   }
 
   // This method is for testing only
-  private static Exif populateExif() throws Exception {
+  private static Exif populateExif() {
     // Create an EXIF wrapper
     Exif exif = new TiffExif();
     DateFormat formatter = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
@@ -78,7 +78,7 @@ public class TestTIFFTweaker extends TestBase {
       } else if (args[1].equalsIgnoreCase("extractICCProfile")) {
         byte[] icc_profile = TIFFTweaker.extractICCProfile(rin);
         if (icc_profile != null) {
-          OutputStream iccOut = new FileOutputStream(new File("ICCProfile.icc"));
+          OutputStream iccOut = new FileOutputStream("ICCProfile.icc");
           iccOut.write(icc_profile);
           iccOut.close();
         }
@@ -137,10 +137,10 @@ public class TestTIFFTweaker extends TestBase {
         if (args[1].equalsIgnoreCase("writemultipage")) {
           //TIFFTweaker.writeMultipageTIFF(rout, frames);
           TIFFWriter writer = new TIFFWriter();
-          List<IFD> ifds = new ArrayList<IFD>();
+          List<IFD> ifds = new ArrayList<>();
           int writeOffset = TIFFTweaker.prepareForWrite(rout, ByteOrder.LITTLE_ENDIAN);
-          for (int i = 0; i < frames.length; i++) {
-            writeOffset = TIFFTweaker.writePage(frames[i], rout, ifds, writeOffset, writer);
+          for (ImageFrame frame : frames) {
+            writeOffset = TIFFTweaker.writePage(frame, rout, ifds, writeOffset, writer);
           }
           TIFFTweaker.finishWrite(rout, ifds);
         } else {
@@ -148,13 +148,13 @@ public class TestTIFFTweaker extends TestBase {
           //TIFFTweaker.insertPages(rin, rout, 0, frames);
           // The following lines test insert pages each at a time
           long t1 = System.currentTimeMillis();
-          List<IFD> list = new ArrayList<IFD>();
+          List<IFD> list = new ArrayList<>();
           int offset = TIFFTweaker.prepareForInsert(rin, rout, list);
           int index = 3;
           TIFFWriter writer = new TIFFWriter();
           writer.setImageParam(frames[0].getFrameParam());
-          for (int i = 0; i < frames.length; i++) {
-            offset = TIFFTweaker.insertPage(frames[i].getFrame(), index += 2, rout, list, offset,
+          for (ImageFrame frame : frames) {
+            offset = TIFFTweaker.insertPage(frame.getFrame(), index += 2, rout, list, offset,
                 writer);
           }
           int nColors = 2;
@@ -191,7 +191,7 @@ public class TestTIFFTweaker extends TestBase {
       } else if (args[1].equalsIgnoreCase("splitpage")) {
         TIFFTweaker.splitPages(rin, FileUtils.getNameWithoutExtension(new File(args[0])));
       } else if (args[1].equalsIgnoreCase("splitpagebytes")) {
-        TIFFTweaker.splitPages(rin, new ArrayList<byte[]>());
+        TIFFTweaker.splitPages(rin, new ArrayList<>());
       } else if (args[1].equalsIgnoreCase("insertexif")) {
         fout = new FileOutputStream("EXIF.tif");
         rout = new FileCacheRandomAccessOutputStream(fout);

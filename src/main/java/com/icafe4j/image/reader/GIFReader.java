@@ -198,8 +198,8 @@ public class GIFReader extends ImageReader {
     if (bi == null) {
       return null;
     }
-    int maxWidth = (width < logicalScreenWidth) ? width : logicalScreenWidth;
-    int maxHeight = (height < logicalScreenHeight) ? height : logicalScreenHeight;
+    int maxWidth = Math.min(width, logicalScreenWidth);
+    int maxHeight = Math.min(height, logicalScreenHeight);
     if (baseImage == null) {
       baseImage =
           new BufferedImage(logicalScreenWidth, logicalScreenHeight, BufferedImage.TYPE_INT_ARGB);
@@ -456,8 +456,8 @@ public class GIFReader extends ImageReader {
   }
 
   public BufferedImage read(InputStream is) throws Exception {
-    frames = new ArrayList<BufferedImage>();
-    gifFrames = new ArrayList<GIFFrame>();
+    frames = new ArrayList<>();
+    gifFrames = new ArrayList<>();
     BufferedImage bi = null;
 
     while ((bi = getFrameAsBufferedImageEx(is)) != null) {
@@ -522,8 +522,6 @@ public class GIFReader extends ImageReader {
     private int screen_height;
     private byte flags;
     private byte bgcolor;
-    @SuppressWarnings("unused")
-    private byte aspectRatio;
 
     void readHeader(InputStream is) throws Exception {
       int nindex = 0;
@@ -543,7 +541,7 @@ public class GIFReader extends ImageReader {
       screen_height = ((bhdr[nindex++] & 0xff) | ((bhdr[nindex++] & 0xff) << 8));
       flags = bhdr[nindex++];
       bgcolor = bhdr[nindex++];
-      aspectRatio = bhdr[nindex++];
+      byte aspectRatio = bhdr[nindex++];
       // The end
     }
   }

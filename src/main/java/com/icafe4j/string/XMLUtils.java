@@ -101,9 +101,7 @@ public class XMLUtils {
     Document document = null;
     try {
       document = builder.parse(new ByteArrayInputStream(xml));
-    } catch (SAXException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
+    } catch (SAXException | IOException e) {
       e.printStackTrace();
     }
 
@@ -126,9 +124,7 @@ public class XMLUtils {
     InputSource source = new InputSource(new StringReader(xml));
     try {
       document = builder.parse(source);
-    } catch (SAXException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
+    } catch (SAXException | IOException e) {
       e.printStackTrace();
     }
 
@@ -222,17 +218,17 @@ public class XMLUtils {
         }
         case Node.DOCUMENT_TYPE_NODE: {
           DocumentType doctype = (DocumentType) node;
-          stringBuilder.append("<!DOCTYPE " + doctype.getName() + ">\n");
+          stringBuilder.append("<!DOCTYPE ").append(doctype.getName()).append(">\n");
           break;
         }
         case Node.ELEMENT_NODE: { // Element node
           Element ele = (Element) node;
-          stringBuilder.append(indent + "<" + ele.getTagName());
+          stringBuilder.append(indent).append("<").append(ele.getTagName());
           NamedNodeMap attrs = ele.getAttributes();
           for (int i = 0; i < attrs.getLength(); i++) {
             Node a = attrs.item(i);
-            stringBuilder.append(" " + a.getNodeName() + "='" +
-                escapeXML(a.getNodeValue()) + "'");
+            stringBuilder.append(" ").append(a.getNodeName()).append("='")
+                .append(escapeXML(a.getNodeValue())).append("'");
           }
           stringBuilder.append(">\n");
 
@@ -242,36 +238,36 @@ public class XMLUtils {
             child = child.getNextSibling();
           }
 
-          stringBuilder.append(indent + "</" + ele.getTagName() + ">\n");
+          stringBuilder.append(indent).append("</").append(ele.getTagName()).append(">\n");
           break;
         }
         case Node.TEXT_NODE: {
           Text textNode = (Text) node;
           String text = textNode.getData().trim();
           if ((text != null) && text.length() > 0) {
-            stringBuilder.append(indent + escapeXML(text) + "\n");
+            stringBuilder.append(indent).append(escapeXML(text)).append("\n");
           }
           break;
         }
         case Node.PROCESSING_INSTRUCTION_NODE: {
           ProcessingInstruction pi = (ProcessingInstruction) node;
-          stringBuilder.append(indent + "<?" + pi.getTarget() +
-              " " + pi.getData() + "?>\n");
+          stringBuilder.append(indent).append("<?").append(pi.getTarget()).append(" ")
+              .append(pi.getData()).append("?>\n");
           break;
         }
         case Node.ENTITY_REFERENCE_NODE: {
-          stringBuilder.append(indent + "&" + node.getNodeName() + ";\n");
+          stringBuilder.append(indent).append("&").append(node.getNodeName()).append(";\n");
           break;
         }
         case Node.CDATA_SECTION_NODE: { // Output CDATA sections
           CDATASection cdata = (CDATASection) node;
-          stringBuilder.append(indent + "<" + "![CDATA[" + cdata.getData() +
-              "]]" + ">\n");
+          stringBuilder.append(indent).append("<").append("![CDATA[").append(cdata.getData())
+              .append("]]").append(">\n");
           break;
         }
         case Node.COMMENT_NODE: {
           Comment c = (Comment) node;
-          stringBuilder.append(indent + "<!--" + c.getData() + "-->\n");
+          stringBuilder.append(indent).append("<!--").append(c.getData()).append("-->\n");
           break;
         }
         default:
@@ -365,10 +361,8 @@ public class XMLUtils {
    * @param node Node to be serialized
    * @param encoding encoding for the output
    * @return String representation of the Document
-   * @throws IOException
    */
-  public static String serializeToStringLS(Document doc, Node node, String encoding)
-      throws IOException {
+  public static String serializeToStringLS(Document doc, Node node, String encoding) {
     DOMImplementationLS domImpl = (DOMImplementationLS) doc.getImplementation();
     LSSerializer lsSerializer = domImpl.createLSSerializer();
     LSOutput output = domImpl.createLSOutput();

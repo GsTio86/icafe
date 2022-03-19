@@ -4,12 +4,12 @@ package com.icafe4j.string;
 
 public abstract class StringSearchTool {
 
-  public static int NOT_FOUND = -1;
+  public static final int NOT_FOUND = -1;
   public static int SEARCH_EXACT = 0;
-  public static int SEARCH_CASELESS = 1;
+  public static final int SEARCH_CASELESS = 1;
 
   protected String pattern;
-  protected int search;
+  protected final int search;
 
   public StringSearchTool() {
     search = SEARCH_CASELESS;

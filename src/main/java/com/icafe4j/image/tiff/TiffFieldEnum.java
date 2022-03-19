@@ -48,7 +48,7 @@ public class TiffFieldEnum {
 
     UNKNOWN("Unknown", 9999);
 
-    private static final Map<Integer, PhotoMetric> typeMap = new HashMap<Integer, PhotoMetric>();
+    private static final Map<Integer, PhotoMetric> typeMap = new HashMap<>();
 
     static {
       for (PhotoMetric photoMetric : values()) {
@@ -103,7 +103,7 @@ public class TiffFieldEnum {
 
     UNKNOWN("Unknown", 9999);
 
-    private static final Map<Integer, Compression> typeMap = new HashMap<Integer, Compression>();
+    private static final Map<Integer, Compression> typeMap = new HashMap<>();
 
     static {
       for (Compression compression : values()) {
@@ -163,7 +163,7 @@ public class TiffFieldEnum {
     UNKNOWN("Unknown", 9999);
 
     private static final Map<Integer, PlanarConfiguration> typeMap =
-        new HashMap<Integer, PlanarConfiguration>();
+        new HashMap<>();
 
     static {
       for (PlanarConfiguration planarConfiguration : values()) {
@@ -210,7 +210,7 @@ public class TiffFieldEnum {
     UNKNOWN("Unknown", 9999);
 
     private static final Map<Integer, ResolutionUnit> typeMap =
-        new HashMap<Integer, ResolutionUnit>();
+        new HashMap<>();
 
     static {
       for (ResolutionUnit resolutionUnit : values()) {

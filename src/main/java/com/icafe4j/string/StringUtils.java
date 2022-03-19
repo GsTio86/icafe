@@ -110,7 +110,7 @@ public class StringUtils {
    * @return a string with the first character of all words capitalized
    */
   public static String capitalize(String s) {
-    StringBuffer myStringBuffer = new StringBuffer();
+    StringBuilder myStringBuffer = new StringBuilder();
     Pattern p = Pattern.compile("\\b(\\w)(\\w*)");
     Matcher m = p.matcher(s);
 
@@ -167,11 +167,10 @@ public class StringUtils {
       return first;
     }
 
-    StringBuilder sb = new StringBuilder(first.length() + second.length());
-    sb.append(first);
-    sb.append(second);
+    String sb = first
+        + second;
 
-    return sb.toString();
+    return sb;
   }
 
   public static String concat(String first, String... strings) {
@@ -504,38 +503,33 @@ public class StringUtils {
   }
 
   public static String intToHexString(int value) {
-    StringBuilder buffer = new StringBuilder(10);
 
-    buffer.append("0x");
+    String buffer = "0x"
+        + HEXES[(value & 0x0000000F)]
+        + HEXES[(value & 0x000000F0) >>> 4]
+        + HEXES[(value & 0x00000F00) >>> 8]
+        + HEXES[(value & 0x0000F000) >>> 12]
+        + HEXES[(value & 0x000F0000) >>> 16]
+        + HEXES[(value & 0x00F00000) >>> 20]
+        + HEXES[(value & 0x0F000000) >>> 24]
+        + HEXES[(value & 0xF0000000) >>> 28];
 
-    buffer.append(HEXES[(value & 0x0000000F)]);
-    buffer.append(HEXES[(value & 0x000000F0) >>> 4]);
-    buffer.append(HEXES[(value & 0x00000F00) >>> 8]);
-    buffer.append(HEXES[(value & 0x0000F000) >>> 12]);
-    buffer.append(HEXES[(value & 0x000F0000) >>> 16]);
-    buffer.append(HEXES[(value & 0x00F00000) >>> 20]);
-    buffer.append(HEXES[(value & 0x0F000000) >>> 24]);
-    buffer.append(HEXES[(value & 0xF0000000) >>> 28]);
-
-    return buffer.toString();
+    return buffer;
   }
 
   public static String intToHexStringMM(int value) {
 
-    StringBuilder buffer = new StringBuilder(10);
+    String buffer = "0x"
+        + HEXES[(value & 0xF0000000) >>> 28]
+        + HEXES[(value & 0x0F000000) >>> 24]
+        + HEXES[(value & 0x00F00000) >>> 20]
+        + HEXES[(value & 0x000F0000) >>> 16]
+        + HEXES[(value & 0x0000F000) >>> 12]
+        + HEXES[(value & 0x00000F00) >>> 8]
+        + HEXES[(value & 0x000000F0) >>> 4]
+        + HEXES[(value & 0x0000000F)];
 
-    buffer.append("0x");
-
-    buffer.append(HEXES[(value & 0xF0000000) >>> 28]);
-    buffer.append(HEXES[(value & 0x0F000000) >>> 24]);
-    buffer.append(HEXES[(value & 0x00F00000) >>> 20]);
-    buffer.append(HEXES[(value & 0x000F0000) >>> 16]);
-    buffer.append(HEXES[(value & 0x0000F000) >>> 12]);
-    buffer.append(HEXES[(value & 0x00000F00) >>> 8]);
-    buffer.append(HEXES[(value & 0x000000F0) >>> 4]);
-    buffer.append(HEXES[(value & 0x0000000F)]);
-
-    return buffer.toString();
+    return buffer;
   }
 
   public static boolean isInCharset(String input, String encoding) {
@@ -782,7 +776,7 @@ public class StringUtils {
 
   public static String reverse2(String str, String delimiter) {
     if (isNullOrEmpty(delimiter) || isNullOrEmpty(str) || (str.trim().length() == 0) || (
-        str.indexOf(delimiter) < 0)) {
+        !str.contains(delimiter))) {
       return str;
     }
 
@@ -799,7 +793,7 @@ public class StringUtils {
   }
 
   private static void reverseIt(String str, String delimiter, StringBuilder sb) {
-    if (isNullOrEmpty(str) || (str.trim().length() == 0) || str.indexOf(delimiter) < 0) {
+    if (isNullOrEmpty(str) || (str.trim().length() == 0) || !str.contains(delimiter)) {
       sb.append(str);
       return;
     }
@@ -879,30 +873,25 @@ public class StringUtils {
   }
 
   public static String shortToHexString(short value) {
-    StringBuilder buffer = new StringBuilder(6);
 
-    buffer.append("0x");
+    String buffer = "0x"
+        + HEXES[(value & 0x000F)]
+        + HEXES[(value & 0x00F0) >>> 4]
+        + HEXES[(value & 0x0F00) >>> 8]
+        + HEXES[(value & 0xF000) >>> 12];
 
-    buffer.append(HEXES[(value & 0x000F)]);
-    buffer.append(HEXES[(value & 0x00F0) >>> 4]);
-    buffer.append(HEXES[(value & 0x0F00) >>> 8]);
-    buffer.append(HEXES[(value & 0xF000) >>> 12]);
-
-    return buffer.toString();
+    return buffer;
   }
 
   public static String shortToHexStringMM(short value) {
 
-    StringBuilder buffer = new StringBuilder(6);
+    String buffer = "0x"
+        + HEXES[(value & 0xF000) >>> 12]
+        + HEXES[(value & 0x0F00) >>> 8]
+        + HEXES[(value & 0x00F0) >>> 4]
+        + HEXES[(value & 0x000F)];
 
-    buffer.append("0x");
-
-    buffer.append(HEXES[(value & 0xF000) >>> 12]);
-    buffer.append(HEXES[(value & 0x0F00) >>> 8]);
-    buffer.append(HEXES[(value & 0x00F0) >>> 4]);
-    buffer.append(HEXES[(value & 0x000F)]);
-
-    return buffer.toString();
+    return buffer;
   }
 
   /**
@@ -927,7 +916,7 @@ public class StringUtils {
       throw new NullPointerException();
     }
 
-    return new Iterator<Character>() {
+    return new Iterator<>() {
       private int index = 0;
 
       public boolean hasNext() {

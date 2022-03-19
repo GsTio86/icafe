@@ -68,7 +68,7 @@ public class SOFReader implements Reader {
     return components.clone();
   }
 
-  public void read() throws IOException {
+  public void read() {
     //
     byte[] data = segment.getData();
     // This is in bits/sample, usually 8, (12 and 16 not supported by most software).

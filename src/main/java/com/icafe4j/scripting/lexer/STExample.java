@@ -35,7 +35,7 @@ import java.util.Hashtable;
  */
 public class STExample {
 
-  static String[] helptext = {
+  static final String[] helptext = {
       "Simple Interactive Calculator Application v1.0",
       "Copyright (c) 1996 by Chuck McManis, freely redistributable.",
       " ",
@@ -56,8 +56,8 @@ public class STExample {
   };
 
   static void help() {
-    for (int i = 0; i < helptext.length; i++) {
-      System.out.println(helptext[i]);
+    for (String s : helptext) {
+      System.out.println(s);
     }
   }
 
@@ -66,14 +66,14 @@ public class STExample {
     System.out.println("Variable Dump:");
     while (e.hasMoreElements()) {
       String zz = e.nextElement();
-      double d = varList.get(zz).doubleValue();
+      double d = varList.get(zz);
       System.out.println(zz + " = " + d);
     }
   }
 
 
   public static void main(String[] args) throws IOException {
-    Hashtable<String, Double> variables = new Hashtable<String, Double>();
+    Hashtable<String, Double> variables = new Hashtable<>();
     @SuppressWarnings("deprecation")
     StreamTokenizer st = new StreamTokenizer(System.in);
     st.eolIsSignificant(true);
@@ -99,7 +99,7 @@ public class STExample {
               dumpVariables(variables);
               continue;
             } else if (st.sval.compareTo("clear") == 0) {
-              variables = new Hashtable<String, Double>();
+              variables = new Hashtable<>();
               continue;
             } else if (st.sval.compareTo("quit") == 0) {
               System.exit(0);
@@ -142,7 +142,7 @@ public class STExample {
         try {
           Double z;
           System.out.println("Parsed expression : " + res.unparse());
-          z = new Double(res.value(variables));
+          z = res.value(variables);
           System.out.println("Value is : " + z);
           if (varName != null) {
             variables.put(varName, z);

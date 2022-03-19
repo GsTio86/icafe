@@ -38,7 +38,7 @@ public class FrameReader extends GIFReader {
         transparencyFlag, transparent_color) : null;
   }
 
-  public BufferedImage read(InputStream is) throws Exception {
+  public BufferedImage read(InputStream is) {
     return null; // NOOP
   }
 }

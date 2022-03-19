@@ -38,7 +38,7 @@ public class COMReader implements Reader {
     return this.comment;
   }
 
-  public void read() throws IOException {
+  public void read() {
     this.comment = new String(segment.getData()).trim();
   }
 }

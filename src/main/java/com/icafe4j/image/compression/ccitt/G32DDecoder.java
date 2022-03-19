@@ -44,7 +44,7 @@ public class G32DDecoder extends G31DDecoder implements ImageDecoder {
     return decode2D(pix, offset, len);
   }
 
-  private int decode1D(byte[] pix, int offset, int len) throws Exception {
+  private int decode1D(byte[] pix, int offset, int len) {
     T4CodeHuffmanTreeNode blackNodes = T4BlackCodeHuffmanTreeNode.getInstance();
     T4CodeHuffmanTreeNode whiteNodes = T4WhiteCodeHuffmanTreeNode.getInstance();
     T4CodeHuffmanTreeNode currNode = whiteNodes;
@@ -238,7 +238,7 @@ public class G32DDecoder extends G31DDecoder implements ImageDecoder {
     return uncompressedBytes;
   }
 
-  private int decode2D(byte[] pix, int offset, int len) throws Exception {
+  private int decode2D(byte[] pix, int offset, int len) {
     T4CodeHuffmanTreeNode blackNodes = T4BlackCodeHuffmanTreeNode.getInstance();
     T4CodeHuffmanTreeNode whiteNodes = T4WhiteCodeHuffmanTreeNode.getInstance();
     T4CodeHuffmanTreeNode currNode = whiteNodes;

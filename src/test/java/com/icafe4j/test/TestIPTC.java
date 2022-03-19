@@ -22,13 +22,13 @@ public class TestIPTC extends TestBase {
       // Retrieve a list of Keywords Dataset
       List<IPTCDataSet> keywords = iptc.getDataSet(IPTCApplicationTag.KEY_WORDS);
       //List<IPTCDataset> keywords = iptc.getDataSet(IPTCEnvelopeTag.KEY_WORDS.getName());
-      String value = "";
+      StringBuilder value = new StringBuilder();
 
       for (IPTCDataSet item : keywords) {
-        value += ";" + item.getDataAsString();
+        value.append(";").append(item.getDataAsString());
       }
 
-      logger.info("Keywords: " + value.replaceFirst(";", ""));
+      logger.info("Keywords: " + value.toString().replaceFirst(";", ""));
     }
   }
 }

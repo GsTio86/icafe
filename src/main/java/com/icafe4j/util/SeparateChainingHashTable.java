@@ -45,7 +45,7 @@ public class SeparateChainingHashTable<E> {
   public SeparateChainingHashTable(int size) {
     theLists = new LinkedList[nextPrime(size)];
     for (int i = 0; i < theLists.length; i++) {
-      theLists[i] = new LinkedList<E>();
+      theLists[i] = new LinkedList<>();
     }
   }
 
@@ -112,7 +112,7 @@ public class SeparateChainingHashTable<E> {
 
   // Test program
   public static void main(String[] args) {
-    SeparateChainingHashTable<Integer> H = new SeparateChainingHashTable<Integer>();
+    SeparateChainingHashTable<Integer> H = new SeparateChainingHashTable<>();
 
     final int NUMS = 4000;
     final int GAP = 37;
@@ -127,7 +127,7 @@ public class SeparateChainingHashTable<E> {
     }
 
     for (int i = 2; i < NUMS; i += 2) {
-      if (H.get(i).intValue() != i) {
+      if (H.get(i) != i) {
         System.out.println("Find fails " + i);
       }
     }
@@ -190,8 +190,8 @@ public class SeparateChainingHashTable<E> {
    * Make the hash table logically empty.
    */
   public void makeEmpty() {
-    for (int i = 0; i < theLists.length; i++) {
-      theLists[i].makeEmpty();
+    for (LinkedList<E> theList : theLists) {
+      theList.makeEmpty();
     }
   }
 }

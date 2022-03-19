@@ -8,7 +8,7 @@ package com.icafe4j.util;// Temporarily put in this package
 class ListNode<E> {
 
   // Friendly data; accessible by other package routines
-  E element;
+  final E element;
   ListNode<E> next;
 
   // Constructors

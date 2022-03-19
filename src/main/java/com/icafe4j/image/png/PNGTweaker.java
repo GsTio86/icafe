@@ -38,7 +38,6 @@ import java.awt.color.ICC_Profile;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -77,7 +76,7 @@ public class PNGTweaker {
   private PNGTweaker() {
   }
 
-  public static void dumpTextChunks(Chunk[] chunks) throws IOException {
+  public static void dumpTextChunks(Chunk[] chunks) {
     TextReader reader = new TextReader();
     for (Chunk chunk : chunks) {
       if ((chunk.getChunkType() == ChunkType.TEXT) || (chunk.getChunkType() == ChunkType.ITXT) ||
@@ -182,8 +181,7 @@ public class PNGTweaker {
       Chunk chunk = itr.next();
       if (chunk.getChunkType() == ChunkType.ITXT) {
         TextReader reader = new TextReader(chunk);
-        if (reader.getKeyword().equals("XML:com.adobe.xmp"))
-          ; // We found XMP data
+        // We found XMP data
         itr.remove();
       }
     }
@@ -230,8 +228,8 @@ public class PNGTweaker {
       throw new RuntimeException("Invalid PNG signature");
     }
 
-    /** Read header */
-    /** We are expecting IHDR */
+    /* Read header */
+    /* We are expecting IHDR */
     if ((IOUtils.readIntMM(is) != 13) || (IOUtils.readIntMM(is) != ChunkType.IHDR.getValue())) {
       throw new RuntimeException("Invalid PNG header");
     }
@@ -250,16 +248,14 @@ public class PNGTweaker {
 
       ChunkType chunk = ChunkType.fromInt(chunk_value);
 
-      switch (chunk) {
-        case ICCP:
-          buf = new byte[data_len];
-          IOUtils.readFully(is, buf);
-          IOUtils.skipFully(is, 4); // Skip CRC
-          return readICCProfile(buf);
-        default:
-          buf = new byte[data_len + 4];
-          IOUtils.readFully(is, buf, 0, data_len + 4);
-          break;
+      if (chunk == ChunkType.ICCP) {
+        buf = new byte[data_len];
+        IOUtils.readFully(is, buf);
+        IOUtils.skipFully(is, 4); // Skip CRC
+        return readICCProfile(buf);
+      } else {
+        buf = new byte[data_len + 4];
+        IOUtils.readFully(is, buf, 0, data_len + 4);
       }
     }
 
@@ -284,8 +280,8 @@ public class PNGTweaker {
       throw new RuntimeException("ReadTextChunks: Invalid PNG signature");
     }
 
-    /** Read header */
-    /** We are expecting IHDR */
+    /* Read header */
+    /* We are expecting IHDR */
     if ((IOUtils.readIntMM(is) != 13) || (IOUtils.readIntMM(is) != ChunkType.IHDR.getValue())) {
       throw new RuntimeException("ReadTextChunks: Invalid PNG header");
     }
@@ -346,16 +342,16 @@ public class PNGTweaker {
           IOUtils.skipFully(is, 4);
           break;
         case ITXT:
-          /**
-           * Keyword:             1-79 bytes (character string)
-           * Null separator:      1 byte
-           * Compression flag:    1 byte
-           * Compression method:  1 byte
-           * Language tag:        0 or more bytes (character string)
-           * Null separator:      1 byte
-           * Translated keyword:  0 or more bytes
-           * Null separator:      1 byte
-           * Text:                0 or more bytes
+          /*
+            Keyword:             1-79 bytes (character string)
+            Null separator:      1 byte
+            Compression flag:    1 byte
+            Compression method:  1 byte
+            Language tag:        0 or more bytes (character string)
+            Null separator:      1 byte
+            Translated keyword:  0 or more bytes
+            Null separator:      1 byte
+            Text:                0 or more bytes
            */
           sb.append("iTXt chunk:\n");
           sb.append("**********************\n");
@@ -431,7 +427,7 @@ public class PNGTweaker {
   }
 
   public static List<Chunk> readChunks(InputStream is) throws IOException {
-    List<Chunk> list = new ArrayList<Chunk>();
+    List<Chunk> list = new ArrayList<>();
     //Local variables for reading chunks
     int data_len = 0;
     int chunk_type = 0;
@@ -443,8 +439,8 @@ public class PNGTweaker {
       throw new RuntimeException("Invalid PNG signature");
     }
 
-    /** Read header */
-    /** We are expecting IHDR */
+    /* Read header */
+    /* We are expecting IHDR */
     if ((IOUtils.readIntMM(is) != 13) || (IOUtils.readIntMM(is) != ChunkType.IHDR.getValue())) {
       throw new RuntimeException("Invalid PNG header");
     }
@@ -497,7 +493,7 @@ public class PNGTweaker {
   }
 
   public static Map<MetadataType, Metadata> readMetadata(InputStream is) throws IOException {
-    Map<MetadataType, Metadata> metadataMap = new HashMap<MetadataType, Metadata>();
+    Map<MetadataType, Metadata> metadataMap = new HashMap<>();
     List<Chunk> chunks = readChunks(is);
     Iterator<Chunk> iter = chunks.iterator();
     TextualChunks textualChunk = null;
@@ -565,7 +561,7 @@ public class PNGTweaker {
     LOGGER.info("************************");
   }
 
-  public static List<Chunk> removeAncillaryChunks(List<Chunk> chunks) throws Exception {
+  public static List<Chunk> removeAncillaryChunks(List<Chunk> chunks) {
     return removeChunks(chunks, REMOVABLE);
   }
 
@@ -592,11 +588,7 @@ public class PNGTweaker {
     }
 
     if (files == null) {
-      files = dir.listFiles(new FileFilter() {
-        public boolean accept(File file) {
-          return file.getName().toLowerCase().endsWith("png");
-        }
-      });
+      files = dir.listFiles(file -> file.getName().toLowerCase().endsWith("png"));
     }
 
     if (chunkTypes != null) {
@@ -637,8 +629,8 @@ public class PNGTweaker {
       throw new RuntimeException("Invalid PNG signature");
     }
 
-    /** Read header */
-    /** We are expecting IHDR */
+    /* Read header */
+    /* We are expecting IHDR */
     if ((IOUtils.readIntMM(is) != 13) || (IOUtils.readIntMM(is) != ChunkType.IHDR.getValue())) {
       throw new RuntimeException("Invalid PNG header");
     }
@@ -681,16 +673,7 @@ public class PNGTweaker {
 
   public static List<Chunk> removeChunks(List<Chunk> chunks, ChunkType chunkType) {
 
-    Iterator<Chunk> iter = chunks.listIterator();
-
-    while (iter.hasNext()) {
-
-      Chunk chunk = iter.next();
-
-      if (chunk.getChunkType() == chunkType) {
-        iter.remove();
-      }
-    }
+    chunks.removeIf(chunk -> chunk.getChunkType() == chunkType);
 
     return chunks;
   }
@@ -705,33 +688,16 @@ public class PNGTweaker {
 
   public static List<Chunk> removeChunks(List<Chunk> chunks, Set<ChunkType> chunkTypeSet) {
 
-    Iterator<Chunk> iter = chunks.listIterator();
-
-    while (iter.hasNext()) {
-
-      Chunk chunk = iter.next();
-
-      if (chunkTypeSet.contains(chunk.getChunkType())) {
-        iter.remove();
-      }
-    }
+    chunks.removeIf(chunk -> chunkTypeSet.contains(chunk.getChunkType()));
 
     return chunks;
   }
 
   public static List<Chunk> removeTextChunks(List<Chunk> chunks) {
 
-    Iterator<Chunk> iter = chunks.listIterator();
-
-    while (iter.hasNext()) {
-
-      Chunk chunk = iter.next();
-
-      if ((chunk.getChunkType() == ChunkType.TEXT) || (chunk.getChunkType() == ChunkType.ZTXT) ||
-          (chunk.getChunkType() == ChunkType.ITXT)) {
-        iter.remove();
-      }
-    }
+    chunks.removeIf(chunk -> (chunk.getChunkType() == ChunkType.TEXT) || (chunk.getChunkType()
+        == ChunkType.ZTXT) ||
+        (chunk.getChunkType() == ChunkType.ITXT));
 
     return chunks;
   }
@@ -762,7 +728,7 @@ public class PNGTweaker {
       throw new IllegalArgumentException("Invalid IDAT chunk size: " + size);
     }
 
-    List<Chunk> chunks = new ArrayList<Chunk>();
+    List<Chunk> chunks = new ArrayList<>();
     byte[] data = chunk.getData();
 
     int dataLen = data.length;
@@ -789,7 +755,7 @@ public class PNGTweaker {
 
   public static List<Chunk> splitIDATChunks(List<Chunk> chunks, int size) {
 
-    List<Chunk> listIDAT = new ArrayList<Chunk>();
+    List<Chunk> listIDAT = new ArrayList<>();
     ListIterator<Chunk> iter = chunks.listIterator();
 
     while (iter.hasNext()) {

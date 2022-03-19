@@ -180,7 +180,7 @@ public enum IPTCApplicationTag implements IPTCTag {
   UNKNOWN(999, "Unknown IPTCApplicationTag");
 
   private static final Map<Integer, IPTCApplicationTag> recordMap =
-      new HashMap<Integer, IPTCApplicationTag>();
+      new HashMap<>();
 
   static {
     for (IPTCApplicationTag record : values()) {

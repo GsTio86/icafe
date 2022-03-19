@@ -24,7 +24,6 @@ import com.icafe4j.image.meta.MetadataType;
 import com.icafe4j.image.png.Chunk;
 import com.icafe4j.image.png.ChunkType;
 import com.icafe4j.image.png.TextReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -48,17 +47,17 @@ public class TextualChunks extends Metadata {
 
   public TextualChunks() {
     super(MetadataType.PNG_TEXTUAL);
-    this.queue = new LinkedList<Chunk>();
-    this.chunks = new ArrayList<Chunk>();
-    this.keyValMap = new HashMap<String, String>();
+    this.queue = new LinkedList<>();
+    this.chunks = new ArrayList<>();
+    this.keyValMap = new HashMap<>();
   }
 
   public TextualChunks(Collection<Chunk> chunks) {
     super(MetadataType.PNG_TEXTUAL);
     validateChunks(chunks);
-    this.queue = new LinkedList<Chunk>(chunks);
-    this.chunks = new ArrayList<Chunk>();
-    this.keyValMap = new HashMap<String, String>();
+    this.queue = new LinkedList<>(chunks);
+    this.chunks = new ArrayList<>();
+    this.keyValMap = new HashMap<>();
   }
 
   private static void validateChunks(Collection<Chunk> chunks) {
@@ -75,7 +74,7 @@ public class TextualChunks extends Metadata {
   }
 
   public List<Chunk> getChunks() {
-    ArrayList<Chunk> chunkList = new ArrayList<Chunk>(chunks);
+    ArrayList<Chunk> chunkList = new ArrayList<>(chunks);
     chunkList.addAll(queue);
     return chunkList;
   }
@@ -87,7 +86,7 @@ public class TextualChunks extends Metadata {
 
   public Iterator<MetadataEntry> iterator() {
     ensureDataRead();
-    List<MetadataEntry> entries = new ArrayList<MetadataEntry>();
+    List<MetadataEntry> entries = new ArrayList<>();
 
     for (Map.Entry<String, String> entry : keyValMap.entrySet()) {
       entries.add(new MetadataEntry(entry.getKey(), entry.getValue()));
@@ -101,7 +100,7 @@ public class TextualChunks extends Metadata {
     queue.offer(chunk);
   }
 
-  public void read() throws IOException {
+  public void read() {
     if (queue.size() > 0) {
       TextReader reader = new TextReader();
       for (Chunk chunk : queue) {

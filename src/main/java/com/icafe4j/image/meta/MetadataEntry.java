@@ -24,7 +24,7 @@ public class MetadataEntry {
   private final String value;
   private final boolean isMetadataEntryGroup;
 
-  private final Collection<MetadataEntry> entries = new ArrayList<MetadataEntry>();
+  private final Collection<MetadataEntry> entries = new ArrayList<>();
 
   public MetadataEntry(String key, String value) {
     this(key, value, false);

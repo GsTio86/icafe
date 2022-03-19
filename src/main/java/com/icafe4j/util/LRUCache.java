@@ -40,7 +40,7 @@ public class LRUCache<K, V> implements Map<K, V>, java.io.Serializable {
   }
 
   public LRUCache(final int limit, boolean isThreadsafe) {
-    map = new LinkedHashMap<K, V>(16, 0.75f, true) {
+    map = new LinkedHashMap<>(16, 0.75f, true) {
       private static final long serialVersionUID = 3195834455030574184L;
 
       public boolean removeEldestEntry(Map.Entry<K, V> eldest) {

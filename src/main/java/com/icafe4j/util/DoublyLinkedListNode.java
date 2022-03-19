@@ -19,7 +19,7 @@ package com.icafe4j.util;
 class DoublyLinkedListNode<E> {
 
   E value;
-  int freq;
+  final int freq;
   DoublyLinkedListNode<E> prev;
   DoublyLinkedListNode<E> next;
 

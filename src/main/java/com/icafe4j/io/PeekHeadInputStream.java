@@ -57,7 +57,7 @@ public class PeekHeadInputStream extends InputStream {
     }
   }
 
-  public void shallowClose() throws IOException {
+  public void shallowClose() {
     if (closed) {
       return;
     }

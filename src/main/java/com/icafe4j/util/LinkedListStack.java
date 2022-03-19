@@ -21,7 +21,7 @@ public class LinkedListStack<E> {
   private final SinglyLinkedList<E> list;
 
   public LinkedListStack() {
-    list = new SinglyLinkedList<E>();
+    list = new SinglyLinkedList<>();
   }
 
   public void push(E value) {

@@ -41,10 +41,10 @@ public final class IFD {
    * Create a children map for sub IFDs. A sub IFD is associated with a tag of the current IFD
    * which serves as pointer to the sub IFD.
    */
-  private Map<Tag, IFD> children = new HashMap<Tag, IFD>();
+  private Map<Tag, IFD> children = new HashMap<>();
 
   /** Create a fields map to hold all of the fields for this IFD */
-  private Map<Short, TiffField<?>> tiffFields = new HashMap<Short, TiffField<?>>();
+  private Map<Short, TiffField<?>> tiffFields = new HashMap<>();
 
   private int endOffset;
 
@@ -169,7 +169,7 @@ public final class IFD {
   public int write(RandomAccessOutputStream os, int offset) throws IOException {
     startOffset = offset;
     // Write this IFD and its children, if any, to the RandomAccessOutputStream
-    List<TiffField<?>> list = new ArrayList<TiffField<?>>(tiffFields.values());
+    List<TiffField<?>> list = new ArrayList<>(tiffFields.values());
     // Make sure tiffFields are in incremental order.
     Collections.sort(list);
     os.seek(offset);

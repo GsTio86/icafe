@@ -24,6 +24,12 @@
 
 package com.icafe4j.image.meta.adobe;
 
+import com.icafe4j.image.ImageIO;
+import com.icafe4j.image.ImageType;
+import com.icafe4j.image.meta.Thumbnail;
+import com.icafe4j.image.writer.ImageWriter;
+import com.icafe4j.io.IOUtils;
+import com.icafe4j.util.ArrayUtils;
 import java.awt.Transparency;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
@@ -36,13 +42,6 @@ import java.awt.image.WritableRaster;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-
-import com.icafe4j.image.ImageIO;
-import com.icafe4j.image.ImageType;
-import com.icafe4j.image.meta.Thumbnail;
-import com.icafe4j.image.writer.ImageWriter;
-import com.icafe4j.io.IOUtils;
-import com.icafe4j.util.ArrayUtils;
 
 public class ThumbnailResource extends _8BIM {
 	// Check to make sure id is either ImageResourceID.THUMBNAIL_RESOURCE_PS4
@@ -87,9 +86,9 @@ public class ThumbnailResource extends _8BIM {
 		// Initialize fields
 		this.id = id;
 		this.dataType = dataType;
-		/** Sometimes, we don't have information about width and height */
-		this.width = (width > 0)? width : 0; 
-		this.height = (height > 0)? height : 0;
+    /* Sometimes, we don't have information about width and height */
+		this.width = Math.max(width, 0);
+		this.height = Math.max(height, 0);
 		// paddedRowBytes = (width * bitsPerPixel + 31) / 32 * 4.
 		// totalSize = paddedRowBytes * height * numOfPlanes
 		this.paddedRowBytes = (width * 24 + 31)/32 * 4;
@@ -102,18 +101,14 @@ public class ThumbnailResource extends _8BIM {
 	
 	public ThumbnailResource(String name, BufferedImage thumbnail) {
 		super(ImageResourceID.THUMBNAIL_RESOURCE_PS5, name, null);
-		try {
-			this.thumbnail = createThumbnail(thumbnail);
-		} catch (IOException e) {
-			throw new RuntimeException("Unable to create IRBThumbnail from BufferedImage");
-		}
+		this.thumbnail = createThumbnail(thumbnail);
 	}
 		
 	public ThumbnailResource(ImageResourceID id, Thumbnail thumbnail) {
 		this(id, thumbnail.getDataType(), thumbnail.getWidth(), thumbnail.getHeight(), thumbnail.getCompressedImage());
 	}
 		
-	private IRBThumbnail createThumbnail(BufferedImage thumbnail) throws IOException {
+	private IRBThumbnail createThumbnail(BufferedImage thumbnail) {
 		// Create memory buffer to write data
 		ByteArrayOutputStream bout = new ByteArrayOutputStream();
 		// Compress the thumbnail

@@ -42,7 +42,6 @@ public class TGAReader extends ImageReader {
   private static final Logger LOGGER = LoggerFactory.getLogger(TGAReader.class);
   // TGA header
   private TgaHeader tgaHeader;
-  private int scanMode = 0;
   private int l = 0, m = 0, n = 0, o = 0;
   private int[] pix;
 
@@ -60,7 +59,7 @@ public class TGAReader extends ImageReader {
       return null;
     }
 
-    scanMode = ((tgaHeader.image_descriptor & 0x30) >> 4);
+    int scanMode = ((tgaHeader.image_descriptor & 0x30) >> 4);
 
     switch (scanMode) {
       case SCAN_MODE_BOTTOM_LEFT:
@@ -354,12 +353,12 @@ public class TGAReader extends ImageReader {
 
       int r = 0, g = 0, b = 0, a = 0;
 
-      /**
-       * The two byte entry is broken down as follows:
-       * ARRRRRGG GGGBBBBB, where each letter represents a bit.
-       * but, because of the lo-hi storage order, the first byte
-       * coming from the file will actually be GGGBBBBB, and the
-       * second will be ARRRRRGG. "A" represents an attribute.
+      /*
+        The two byte entry is broken down as follows:
+        ARRRRRGG GGGBBBBB, where each letter represents a bit.
+        but, because of the lo-hi storage order, the first byte
+        coming from the file will actually be GGGBBBBB, and the
+        second will be ARRRRRGG. "A" represents an attribute.
        */
 
       while (p < width * height) {
@@ -511,12 +510,12 @@ public class TGAReader extends ImageReader {
         || tgaHeader.bits_per_pixel == 16) { // 16 bit image
       LOGGER.info("16 bits Tga uncompressed image!");
       int r = 0, g = 0, b = 0, a = 0;
-      /**
-       * The two byte entry is broken down as follows:
-       * ARRRRRGG GGGBBBBB, where each letter represents a bit.
-       * but, because of the lo-hi storage order, the first byte
-       * coming from the file will actually be GGGBBBBB, and the
-       * second will be ARRRRRGG. "A" represents an attribute.
+      /*
+        The two byte entry is broken down as follows:
+        ARRRRRGG GGGBBBBB, where each letter represents a bit.
+        but, because of the lo-hi storage order, the first byte
+        coming from the file will actually be GGGBBBBB, and the
+        second will be ARRRRRGG. "A" represents an attribute.
        */
       for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {

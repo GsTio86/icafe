@@ -40,7 +40,7 @@ public enum ColorSpaceID {
 
   UNKNOWN("Unknown", 99);
 
-  private static final Map<Integer, ColorSpaceID> idMap = new HashMap<Integer, ColorSpaceID>();
+  private static final Map<Integer, ColorSpaceID> idMap = new HashMap<>();
 
   static {
     for (ColorSpaceID id : values()) {

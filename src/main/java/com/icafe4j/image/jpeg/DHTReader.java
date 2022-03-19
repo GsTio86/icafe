@@ -29,8 +29,8 @@ public class DHTReader implements Reader {
   private static final Logger LOGGER = LoggerFactory.getLogger(DHTReader.class);
 
   private final Segment segment;
-  private final List<HTable> dcTables = new ArrayList<HTable>(3);
-  private final List<HTable> acTables = new ArrayList<HTable>(3);
+  private final List<HTable> dcTables = new ArrayList<>(3);
+  private final List<HTable> acTables = new ArrayList<>(3);
 
   public DHTReader(Segment segment) throws IOException {
     //
@@ -50,7 +50,7 @@ public class DHTReader implements Reader {
     return acTables;
   }
 
-  public void read() throws IOException {
+  public void read() {
     //
     byte[] data = segment.getData();
     int len = segment.getLength();
@@ -82,9 +82,7 @@ public class DHTReader implements Reader {
 
       values = new byte[count];
 
-      for (int i = 0; i < count; i++) {
-        values[i] = data[offset + i];
-      }
+      System.arraycopy(data, offset + 0, values, 0, count);
 
       offset += count;
       len -= (1 + 16 + count);

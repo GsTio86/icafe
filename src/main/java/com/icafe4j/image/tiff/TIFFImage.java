@@ -34,7 +34,7 @@ public class TIFFImage implements Iterable<IFD>, Closeable {
   private int workingPage;
 
   public TIFFImage(RandomAccessInputStream rin) throws IOException {
-    ifds = new ArrayList<IFD>();
+    ifds = new ArrayList<>();
     this.rin = rin;
     TIFFTweaker.readIFDs(ifds, rin);
     this.numOfPages = ifds.size();

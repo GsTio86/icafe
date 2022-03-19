@@ -30,13 +30,7 @@ public class IPTCTagComparator implements Comparator<IPTCTag> {
       return AFTER;
     }
     if (o1.getRecordNumber() == o2.getRecordNumber()) {
-      if (o1.getTag() < o2.getTag()) {
-        return BEFORE;
-      }
-      if (o1.getTag() > o2.getTag()) {
-        return AFTER;
-      }
-      return EQUAL;
+      return Integer.compare(o1.getTag(), o2.getTag());
     }
 
     return EQUAL;

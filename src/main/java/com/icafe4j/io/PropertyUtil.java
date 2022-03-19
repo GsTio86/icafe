@@ -27,7 +27,7 @@ public class PropertyUtil {
     try {
       try {
         in = PropertyUtil.class.getResourceAsStream("properties");
-      } catch (Exception e1) {
+      } catch (Exception ignored) {
       }
 
       if (in == null) {

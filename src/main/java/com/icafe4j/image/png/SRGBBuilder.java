@@ -37,8 +37,7 @@ public class SRGBBuilder extends ChunkBuilder implements Builder<Chunk> {
   @Override
   protected byte[] buildData() {
     // 1 bytes
-    byte[] data = {renderingIntent};
 
-    return data;
+    return new byte[] {renderingIntent};
   }
 }

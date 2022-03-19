@@ -14,7 +14,7 @@ public class TestCollectionUtils extends TestBase {
   }
 
   public void test(String... args) {
-    Map<String, Integer> map = new HashMap<String, Integer>();
+    Map<String, Integer> map = new HashMap<>();
     map.put("first", 1);
     map.put("second", 1);
 

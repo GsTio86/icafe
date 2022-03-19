@@ -26,12 +26,9 @@ public class TestPNGTweaker extends TestBase {
   public void test(String... args) throws Exception {
     String text = PNGTweaker.readTextChunks(args[0]);
 
-    BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-        new FileOutputStream("textinfo.txt"), StandardCharsets.UTF_8));
-    try {
+    try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
+        new FileOutputStream("textinfo.txt"), StandardCharsets.UTF_8))) {
       out.write(text);
-    } finally {
-      out.close();
     }
 
     TextBuilder builder = new TextBuilder(ChunkType.ITXT);

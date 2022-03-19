@@ -75,11 +75,11 @@ class Expression {
   }
 
   public String toString() {
-    StringBuffer sb = new StringBuffer("(");
+    StringBuilder sb = new StringBuilder("(");
     if (arg1 != null) {
       sb.append(arg1);
     }
-    sb.append(opVals[oper] + arg2.toString() + ")");
+    sb.append(opVals[oper]).append(arg2.toString()).append(")");
     return sb.toString();
   }
 

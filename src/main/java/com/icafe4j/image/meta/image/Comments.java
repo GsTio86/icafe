@@ -20,7 +20,6 @@ package com.icafe4j.image.meta.image;
 import com.icafe4j.image.meta.Metadata;
 import com.icafe4j.image.meta.MetadataEntry;
 import com.icafe4j.image.meta.MetadataType;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,13 +35,13 @@ public class Comments extends Metadata {
 
   public Comments() {
     super(MetadataType.COMMENT);
-    queue = new LinkedList<byte[]>();
-    comments = new ArrayList<String>();
+    queue = new LinkedList<>();
+    comments = new ArrayList<>();
   }
 
   public Comments(List<String> comments) {
     super(MetadataType.COMMENT);
-    queue = new LinkedList<byte[]>();
+    queue = new LinkedList<>();
     if (comments == null) {
       throw new IllegalArgumentException("Input is null");
     }
@@ -70,7 +69,7 @@ public class Comments extends Metadata {
 
   public Iterator<MetadataEntry> iterator() {
     ensureDataRead();
-    List<MetadataEntry> entries = new ArrayList<MetadataEntry>();
+    List<MetadataEntry> entries = new ArrayList<>();
 
     for (String comment : comments) {
       entries.add(new MetadataEntry(comment, "")); // For comments, we set the value to empty string
@@ -79,7 +78,7 @@ public class Comments extends Metadata {
     return Collections.unmodifiableCollection(entries).iterator();
   }
 
-  public void read() throws IOException {
+  public void read() {
     if (queue.size() > 0) {
       for (byte[] comment : queue) {
         comments.add(new String(comment, StandardCharsets.UTF_8));

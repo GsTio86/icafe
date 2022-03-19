@@ -10,6 +10,8 @@
 
 package com.icafe4j.util;// Temporarily put in this package
 
+import java.util.Arrays;
+
 /**
  * A hash table using primitive integer keys. 
  *
@@ -91,7 +93,7 @@ public class IntHashtable<E> {
 
   // Simple main
   public static void main(String[] args) {
-    IntHashtable<Integer> H = new IntHashtable<Integer>();
+    IntHashtable<Integer> H = new IntHashtable<>();
 
     final int NUMS = 4000;
     final int GAP = 37;
@@ -99,7 +101,7 @@ public class IntHashtable<E> {
     System.out.println("Checking... (no more output means success)");
 
     for (int i = GAP; i != 0; i = (i + GAP) % NUMS) {
-      H.put(i, new Integer(i));
+      H.put(i, i);
     }
     for (int i = 1; i < NUMS; i += 2) {
       H.remove(i);
@@ -130,7 +132,7 @@ public class IntHashtable<E> {
       return;
     }
 
-    array[currentPos] = new HashEntry<E>(key, value, true);
+    array[currentPos] = new HashEntry<>(key, value, true);
 
     // Rehash
     if (++currentSize > array.length / 2) {
@@ -150,13 +152,12 @@ public class IntHashtable<E> {
     currentSize = 0;
 
     // Copy table over
-    for (int i = 0; i < oldArray.length; i++) {
-      if (oldArray[i] != null && oldArray[i].isActive) {
-        put(oldArray[i].key, oldArray[i].value);
+    for (HashEntry<E> eHashEntry : oldArray) {
+      if (eHashEntry != null && eHashEntry.isActive) {
+        put(eHashEntry.key, eHashEntry.value);
       }
     }
 
-    return;
   }
 
   /**
@@ -226,16 +227,14 @@ public class IntHashtable<E> {
    */
   public void makeEmpty() {
     currentSize = 0;
-    for (int i = 0; i < array.length; i++) {
-      array[i] = null;
-    }
+    Arrays.fill(array, null);
   }
 
   // The basic entry stored in ProbingHashTable
   private static class HashEntry<V> {
 
-    int key;         // the key
-    V value;       // the value
+    final int key;         // the key
+    final V value;       // the value
     boolean isActive;  // false if deleted
 
     @SuppressWarnings("unused")

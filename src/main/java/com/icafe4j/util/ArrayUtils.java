@@ -141,7 +141,7 @@ public class ArrayUtils {
     if (a == null) {
       throw new NullPointerException();
     }
-    return new AbstractList<Integer>() {// Concrete implementation built atop skeletal implementation
+    return new AbstractList<>() {// Concrete implementation built atop skeletal implementation
       public Integer get(int i) {
         return a[i];
       }
@@ -207,7 +207,7 @@ public class ArrayUtils {
    * @return true if input array contains duplicates, otherwise false.
    */
   public static <T> boolean checkDuplicate(T[] input) {
-    Set<T> tempSet = new HashSet<T>();
+    Set<T> tempSet = new HashSet<>();
 
     for (T str : input) {
       if (!tempSet.add(str)) {
@@ -256,6 +256,7 @@ public class ArrayUtils {
    * @return a concatenation of the input arrays
    * @throws NullPointerException if any of the input array is null
    */
+  @SafeVarargs
   public static <T> T[] concat(T[]... arrays) {
     if (arrays.length == 0) {
       throw new IllegalArgumentException("Varargs length is zero");
@@ -294,6 +295,7 @@ public class ArrayUtils {
    * @return a concatenation of the arrays.
    * @throws NullPointerException if any of the arrays to be concatenated is null.
    */
+  @SafeVarargs
   public static <T> T[] concat(Class<T> type, T[]... arrays) {
     if (type == null) {
       throw new IllegalArgumentException("Input type class is null");
@@ -613,9 +615,8 @@ public class ArrayUtils {
   private static <T extends Comparable<? super T>> void merge(T[] array, T[] temp, int left,
       int middle, int right) {
     // Copy both parts into the temporary array
-    for (int i = left; i <= right; i++) {
-      temp[i] = array[i];
-    }
+    if (right + 1 - left >= 0)
+      System.arraycopy(array, left, temp, left, right + 1 - left);
     int i = left;
     int j = middle + 1;
     int k = left;
@@ -638,9 +639,8 @@ public class ArrayUtils {
 
   private static void merge(int[] array, int[] temp, int left, int middle, int right) {
     // Copy both parts into the temporary array
-    for (int i = left; i <= right; i++) {
-      temp[i] = array[i];
-    }
+    if (right + 1 - left >= 0)
+      System.arraycopy(array, left, temp, left, right + 1 - left);
     int i = left;
     int j = middle + 1;
     int k = left;
@@ -995,13 +995,13 @@ public class ArrayUtils {
     return dest;
   }
 
-  private static final void swap(int[] array, int a, int b) {
+  private static void swap(int[] array, int a, int b) {
     int temp = array[a];
     array[a] = array[b];
     array[b] = temp;
   }
 
-  private static final <T> void swap(T[] array, int a, int b) {
+  private static <T> void swap(T[] array, int a, int b) {
     T temp = array[a];
     array[a] = array[b];
     array[b] = temp;
@@ -1029,7 +1029,7 @@ public class ArrayUtils {
     float[] floats = new float[ints.length];
 
     for (int i = 0; i < floats.length; i++) {
-      /**
+      /*
        int bits = ints[i]<<8;
        int sign     = ((bits & 0x80000000) == 0) ? 1 : -1;
        int exponent = ((bits & 0x7f800000) >> 23);
@@ -1092,9 +1092,7 @@ public class ArrayUtils {
     IntBuffer intBuffer = byteBuffer.asIntBuffer();
     intBuffer.put(data);
 
-    byte[] array = byteBuffer.array();
-
-    return array;
+    return byteBuffer.array();
   }
 
   public static byte[] toByteArray(long[] data, boolean bigEndian) {
@@ -1110,9 +1108,7 @@ public class ArrayUtils {
     LongBuffer longBuffer = byteBuffer.asLongBuffer();
     longBuffer.put(data);
 
-    byte[] array = byteBuffer.array();
-
-    return array;
+    return byteBuffer.array();
   }
 
   public static byte[] toByteArray(short value) {
@@ -1133,9 +1129,7 @@ public class ArrayUtils {
     ShortBuffer shortBuffer = byteBuffer.asShortBuffer();
     shortBuffer.put(data);
 
-    byte[] array = byteBuffer.array();
-
-    return array;
+    return byteBuffer.array();
   }
 
   public static byte[] toByteArrayMM(int value) {

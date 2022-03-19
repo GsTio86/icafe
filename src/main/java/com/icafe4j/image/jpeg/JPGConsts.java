@@ -180,39 +180,39 @@ public class JPGConsts {
   private JPGConsts() {
   }
 
-  public static final byte[] getACChrominanceBits() {
+  public static byte[] getACChrominanceBits() {
     return AC_CHROMINANCE_BITS.clone();
   }
 
-  public static final byte[] getACChrominanceValues() {
+  public static byte[] getACChrominanceValues() {
     return AC_CHROMINANCE_VALUES.clone();
   }
 
-  public static final byte[] getACLuminanceBits() {
+  public static byte[] getACLuminanceBits() {
     return AC_LUMINANCE_BITS.clone();
   }
 
-  public static final byte[] getACLuminanceValues() {
+  public static byte[] getACLuminanceValues() {
     return AC_LUMINANCE_VALUES.clone();
   }
 
-  public static final byte[] getDCChrominanceBits() {
+  public static byte[] getDCChrominanceBits() {
     return DC_CHROMINANCE_BITS.clone();
   }
 
-  public static final byte[] getDCChrominanceValues() {
+  public static byte[] getDCChrominanceValues() {
     return DC_CHROMINANCE_VALUES.clone();
   }
 
-  public static final byte[] getDCLuminanceBits() {
+  public static byte[] getDCLuminanceBits() {
     return DC_LUMINANCE_BITS.clone();
   }
 
-  public static final byte[] getDCLuminanceValues() {
+  public static byte[] getDCLuminanceValues() {
     return DC_LUMINANCE_VALUES.clone();
   }
 
-  public static final int[] getDefaultChrominanceMatrix(int quality) {
+  public static int[] getDefaultChrominanceMatrix(int quality) {
     //
     int[] quant_chrominance = QUANT_CHROMINANCE.clone();
 
@@ -242,7 +242,7 @@ public class JPGConsts {
     return quant_chrominance;
   }
 
-  public static final int[] getDefaultLuminanceMatrix(int quality) {
+  public static int[] getDefaultLuminanceMatrix(int quality) {
     //
     int[] quant_luminance = QUANT_LUMINANCE.clone();
 
@@ -272,11 +272,11 @@ public class JPGConsts {
     return quant_luminance;
   }
 
-  public static final int[] getDeZigzagMatrix() {
+  public static int[] getDeZigzagMatrix() {
     return DE_ZIGZAG_TRAVERSE_ORDER.clone();
   }
 
-  public static final int[] getZigzagMatrix() {
+  public static int[] getZigzagMatrix() {
     return ZIGZAG_TRAVERSE_ORDER.clone();
   }
 }  

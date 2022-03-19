@@ -189,10 +189,10 @@ public class GIFTweaker {
       os.write(DTO.globalPalette);
     }
     int numOfComments = comments.size();
-    for (int i = 0; i < numOfComments; i++) {
+    for (String comment : comments) {
       os.write(EXTENSION_INTRODUCER);
       os.write(COMMENT_EXTENSION_LABEL);
-      byte[] commentBytes = comments.get(i).getBytes();
+      byte[] commentBytes = comment.getBytes();
       int numBlocks = commentBytes.length / 0xff;
       int leftOver = commentBytes.length % 0xff;
       int offset = 0;
@@ -315,15 +315,15 @@ public class GIFTweaker {
               //throw new RuntimeException("Invalid GIF frame disposal method: " + disposalMethod);
           }
           // Check for transparent color flag
+          // len=0, block terminator!
           if ((packedFields & 0x01) == 0x01) {
             IOUtils.skipFully(is, 2);
             // Transparent GIF
             is.read(); // Transparent color index
-            len = is.read();// len=0, block terminator!
           } else {
             IOUtils.skipFully(is, 3);
-            len = is.read();// len=0, block terminator!
           }
+          len = is.read();// len=0, block terminator!
           // <<End of graphic control block>>
         } else if (func == 0xff) { // Application block
           // Application block
@@ -428,7 +428,7 @@ public class GIFTweaker {
     // Create a new data transfer object to hold data
     DataTransferObject DTO = new DataTransferObject();
     // Created a Map for the Meta data
-    DTO.metadataMap = new HashMap<MetadataType, Metadata>();
+    DTO.metadataMap = new HashMap<>();
 
     readHeader(is, DTO);
     readLSD(is, DTO);
@@ -516,11 +516,6 @@ public class GIFTweaker {
     BufferedImage baseImage =
         new BufferedImage(logicalScreenWidth, logicalScreenHeight, BufferedImage.TYPE_INT_ARGB);
     Graphics2D g = baseImage.createGraphics();
-    //g.setColor(reader.getBackgroundColor());
-    //g.fillRect(0, 0, logicalScreenWidth, logicalScreenHeight);
-
-    //ImageParam.ImageParamBuilder builder = new ImageParam.ImageParamBuilder();
-    //builder.transparent(reader.isTransparent()).transparentColor(reader.getBackgroundColor().getRGB());
 
     int frameCount = 0;
     String baseFileName =
@@ -556,9 +551,6 @@ public class GIFTweaker {
         g.setComposite(AlphaComposite.Clear);
         g.fillRect(image_x, image_y, imageWidth, imageHeight);
         g.setComposite(oldComposite);
-        //g.setColor(reader.getBackgroundColor());
-        //g.fillRect(0, 0, logicalScreenWidth, logicalScreenHeight);
-        //builder.transparent(true);
       } else if (frame.getDisposalMethod() == 3) { // Restore to previous
         Composite oldComposite = g.getComposite();
         g.setComposite(AlphaComposite.Src);
@@ -568,9 +560,6 @@ public class GIFTweaker {
         baseImage =
             new BufferedImage(logicalScreenWidth, logicalScreenHeight, BufferedImage.TYPE_INT_ARGB);
         g = baseImage.createGraphics();
-        //g.setColor(reader.getBackgroundColor());
-        //g.fillRect(0, 0, logicalScreenWidth, logicalScreenHeight);
-        //builder.transparent(true);
       }
       // Read another frame if we have more
       frame = reader.getGIFFrame(animatedGIF);

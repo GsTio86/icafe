@@ -56,9 +56,9 @@ public class GIFWriter extends ImageWriter {
    * and siblings are strings with a common parent(or prefix) and different
    * suffix colors
    */
-  int[] child = new int[4097];
-  int[] siblings = new int[4097];
-  int[] suffix = new int[4097];
+  final int[] child = new int[4097];
+  final int[] siblings = new int[4097];
+  final int[] suffix = new int[4097];
   // Fields
   private int codeLen;
   private int codeIndex;
@@ -344,15 +344,15 @@ public class GIFWriter extends ImageWriter {
     // We are going to write animated GIF, so enable animated flag
     animated = true;
 
-    for (int i = 0; i < frames.length; i++) {
+    for (GIFFrame frame : frames) {
       // Retrieve image dimension
-      int imageWidth = frames[i].getFrameWidth();
-      int imageHeight = frames[i].getFrameHeight();
+      int imageWidth = frame.getFrameWidth();
+      int imageHeight = frame.getFrameHeight();
       int[] pixels = IMGUtils.getRGB(
-          frames[i].getFrame());//images[i].getRGB(0, 0, imageWidth, imageHeight, null, 0, imageWidth);
-      if (frames[i].getTransparencyFlag() == GIFFrame.TRANSPARENCY_INDEX_SET
-          && frames[i].getTransparentColor() != -1) {
-        int transColor = (frames[i].getTransparentColor() & 0x00ffffff);
+          frame.getFrame());//images[i].getRGB(0, 0, imageWidth, imageHeight, null, 0, imageWidth);
+      if (frame.getTransparencyFlag() == GIFFrame.TRANSPARENCY_INDEX_SET
+          && frame.getTransparentColor() != -1) {
+        int transColor = (frame.getTransparentColor() & 0x00ffffff);
         for (int j = pixels.length - 1; j > 0; j--) {
           int pixel = (pixels[j] & 0x00ffffff);
           if (pixel == transColor) {
@@ -360,9 +360,9 @@ public class GIFWriter extends ImageWriter {
           }
         }
       }
-      writeFrame(pixels, imageWidth, imageHeight, frames[i].getLeftPosition(),
-          frames[i].getTopPosition(),
-          frames[i].getDelay(), frames[i].getDisposalMethod(), frames[i].getUserInputFlag(), os);
+      writeFrame(pixels, imageWidth, imageHeight, frame.getLeftPosition(),
+          frame.getTopPosition(),
+          frame.getDelay(), frame.getDisposalMethod(), frame.getUserInputFlag(), os);
     }
 
     os.write(IMAGE_TRAILER);
@@ -553,7 +553,7 @@ public class GIFWriter extends ImageWriter {
     }
     // LZW encode the image
     encode(newPixels, os);
-    /** Write out a zero length data sub-block */
+    /* Write out a zero length data sub-block */
     os.write(0x00);
   }
 

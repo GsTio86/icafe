@@ -200,7 +200,7 @@ public class TIFFTweaker {
    */
   public static void copyCat(RandomAccessInputStream rin, RandomAccessOutputStream rout)
       throws IOException {
-    List<IFD> list = new ArrayList<IFD>();
+    List<IFD> list = new ArrayList<>();
 
     int offset = copyHeader(rin, rout);
 
@@ -248,8 +248,7 @@ public class TIFFTweaker {
     return rin.readInt();
   }
 
-  private static Collection<IPTCDataSet> copyIPTCDataSet(Collection<IPTCDataSet> iptcs, byte[] data)
-      throws IOException {
+  private static Collection<IPTCDataSet> copyIPTCDataSet(Collection<IPTCDataSet> iptcs, byte[] data) {
     IPTC iptc = new IPTC(data);
     // Shallow copy the map
     Map<IPTCTag, List<IPTCDataSet>> dataSetMap = new HashMap<>(iptc.getDataSets());
@@ -478,9 +477,7 @@ public class TIFFTweaker {
             && off.length == samplesPerPixel)) {
           int[] totalBytes2Read = getBytes2Read(ifd);
 
-          for (int i = 0; i < off.length; i++) {
-            counts[i] = totalBytes2Read[i];
-          }
+          System.arraycopy(totalBytes2Read, 0, counts, 0, off.length);
         }
       } // End of bug fix
 
@@ -534,7 +531,7 @@ public class TIFFTweaker {
           jpegIFOffset =
               new LongField(TiffTag.JPEG_INTERCHANGE_FORMAT.getValue(), new int[] {writeOffset});
           ifd.addField(jpegIFOffset);
-        } catch (EOFException ex) {
+        } catch (EOFException ignored) {
         }
       } else { // To fix the issue of double copy the JPEG data, we can safely re-assign the pointers.
         ifd.addField(new LongField(TiffTag.JPEG_INTERCHANGE_FORMAT.getValue(), new int[] {offset}));
@@ -547,7 +544,7 @@ public class TIFFTweaker {
     if (jpegTable != null) {
       try {
         ifd.addField(copyJpegHufTable(rin, rout, jpegTable, (int) rout.getStreamPointer()));
-      } catch (EOFException ex) {
+      } catch (EOFException ignored) {
       }
     }
 
@@ -555,7 +552,7 @@ public class TIFFTweaker {
     if (jpegTable != null) {
       try {
         ifd.addField(copyJpegHufTable(rin, rout, jpegTable, (int) rout.getStreamPointer()));
-      } catch (EOFException ex) {
+      } catch (EOFException ignored) {
       }
     }
 
@@ -563,7 +560,7 @@ public class TIFFTweaker {
     if (jpegTable != null) {
       try {
         ifd.addField(copyJpegQTable(rin, rout, jpegTable, (int) rout.getStreamPointer()));
-      } catch (EOFException ex) {
+      } catch (EOFException ignored) {
       }
     }
     /* End of code to work with old-style JPEG compression */
@@ -603,7 +600,7 @@ public class TIFFTweaker {
     // Read pass image header
     int offset = readHeader(rin);
     // Read the IFDs into a list first
-    List<IFD> ifds = new ArrayList<IFD>();
+    List<IFD> ifds = new ArrayList<>();
     readIFDs(ifds, offset, rin);
 
     if (pageNumber < 0 || pageNumber >= ifds.size()) {
@@ -629,7 +626,7 @@ public class TIFFTweaker {
     // Read pass image header
     int offset = readHeader(rin);
     // Read the IFDs into a list first
-    List<IFD> ifds = new ArrayList<IFD>();
+    List<IFD> ifds = new ArrayList<>();
     readIFDs(ifds, offset, rin);
 
     if (pageNumber < 0 || pageNumber >= ifds.size()) {
@@ -643,8 +640,7 @@ public class TIFFTweaker {
       byte[] data = (byte[]) f_photoshop.getData();
       IRB irb = new IRB(data);
       if (irb.containsThumbnail()) {
-        IRBThumbnail thumbnail = irb.getThumbnail();
-        return thumbnail;
+        return irb.getThumbnail();
       }
     }
 
@@ -843,7 +839,7 @@ public class TIFFTweaker {
     long streamPointer = rin.getStreamPointer();
     // Go the the stream head
     rin.seek(TIFFWriter.STREAM_HEAD);
-    List<IFD> list = new ArrayList<IFD>();
+    List<IFD> list = new ArrayList<>();
     readIFDs(list, rin);
     // Reset stream pointer
     rin.seek(streamPointer);
@@ -1076,7 +1072,7 @@ public class TIFFTweaker {
       RandomAccessInputStream rin, RandomAccessOutputStream rout) throws IOException {
     int offset = copyHeader(rin, rout);
     // Read the IFDs into a list first
-    List<IFD> ifds = new ArrayList<IFD>();
+    List<IFD> ifds = new ArrayList<>();
     readIFDs(ifds, offset, rin);
 
     if (pageNumber < 0 || pageNumber >= ifds.size()) {
@@ -1122,7 +1118,7 @@ public class TIFFTweaker {
       Exif exif, int pageNumber, boolean update) throws IOException {
     int offset = copyHeader(rin, rout);
     // Read the IFDs into a list first
-    List<IFD> ifds = new ArrayList<IFD>();
+    List<IFD> ifds = new ArrayList<>();
     readIFDs(ifds, offset, rin);
 
     if (pageNumber < 0 || pageNumber >= ifds.size()) {
@@ -1191,7 +1187,7 @@ public class TIFFTweaker {
       RandomAccessInputStream rin, RandomAccessOutputStream rout) throws IOException {
     int offset = copyHeader(rin, rout);
     // Read the IFDs into a list first
-    List<IFD> ifds = new ArrayList<IFD>();
+    List<IFD> ifds = new ArrayList<>();
     readIFDs(ifds, offset, rin);
 
     if (pageNumber < 0 || pageNumber >= ifds.size()) {
@@ -1258,7 +1254,7 @@ public class TIFFTweaker {
       int pageNumber, Collection<IPTCDataSet> iptcs, boolean update) throws IOException {
     int offset = copyHeader(rin, rout);
     // Read the IFDs into a list first
-    List<IFD> ifds = new ArrayList<IFD>();
+    List<IFD> ifds = new ArrayList<>();
     readIFDs(ifds, offset, rin);
 
     if (pageNumber < 0 || pageNumber >= ifds.size()) {
@@ -1276,7 +1272,7 @@ public class TIFFTweaker {
     if (f_photoshop != null) { // Read 8BIMs
       IRB irb = new IRB((byte[]) f_photoshop.getData());
       // Shallow copy the map.
-      Map<Short, _8BIM> bims = new HashMap<Short, _8BIM>(irb.get8BIM());
+      Map<Short, _8BIM> bims = new HashMap<>(irb.get8BIM());
       _8BIM photoshop_iptc = bims.remove(ImageResourceID.IPTC_NAA.getValue());
       if (photoshop_iptc != null) { // If we have IPTC
         if (update) { // If we need to keep the old data, copy it
@@ -1293,7 +1289,7 @@ public class TIFFTweaker {
           // Now copy the Photoshop IPTC data
           copyIPTCDataSet(iptcs, photoshop_iptc.getData());
           // Remove duplicates
-          iptcs = new ArrayList<IPTCDataSet>(new HashSet<IPTCDataSet>(iptcs));
+          iptcs = new ArrayList<>(new HashSet<>(iptcs));
         }
       }
       for (_8BIM bim : bims.values()) // Copy the other 8BIMs if any
@@ -1316,7 +1312,7 @@ public class TIFFTweaker {
     }
 
     // Sort the IPTCDataSet collection
-    List<IPTCDataSet> iptcList = new ArrayList<IPTCDataSet>(iptcs);
+    List<IPTCDataSet> iptcList = new ArrayList<>(iptcs);
     Collections.sort(iptcList);
     // Write IPTCDataSet collection
     bout.reset();
@@ -1341,7 +1337,7 @@ public class TIFFTweaker {
       int pageNumber, Collection<_8BIM> bims, boolean update) throws IOException {
     int offset = copyHeader(rin, rout);
     // Read the IFDs into a list first
-    List<IFD> ifds = new ArrayList<IFD>();
+    List<IFD> ifds = new ArrayList<>();
     readIFDs(ifds, offset, rin);
 
     if (pageNumber < 0 || pageNumber >= ifds.size()) {
@@ -1358,7 +1354,7 @@ public class TIFFTweaker {
       if (f_irb != null) {
         IRB irb = new IRB((byte[]) f_irb.getData());
         // Shallow copy the map.
-        Map<Short, _8BIM> bimMap = new HashMap<Short, _8BIM>(irb.get8BIM());
+        Map<Short, _8BIM> bimMap = new HashMap<>(irb.get8BIM());
         for (_8BIM bim : bims) // Replace the original data
         {
           bimMap.put(bim.getID(), bim);
@@ -1402,7 +1398,7 @@ public class TIFFTweaker {
       int pageNumber, Collection<Metadata> metadata) throws IOException {
     int offset = copyHeader(rin, rout);
     // Read the IFDs into a list first
-    List<IFD> ifds = new ArrayList<IFD>();
+    List<IFD> ifds = new ArrayList<>();
     readIFDs(ifds, offset, rin);
 
     if (pageNumber < 0 || pageNumber >= ifds.size()) {
@@ -1413,7 +1409,7 @@ public class TIFFTweaker {
     IFD workingPage = ifds.get(pageNumber);
 
     // Create a map to hold all the metadata
-    Map<MetadataType, Metadata> metadataMap = new HashMap<MetadataType, Metadata>();
+    Map<MetadataType, Metadata> metadataMap = new HashMap<>();
     for (Metadata meta : metadata) {
       metadataMap.put(meta.getType(), meta);
     }
@@ -1423,7 +1419,7 @@ public class TIFFTweaker {
       IRB irb = (IRB) metadataMap.get(MetadataType.PHOTOSHOP_IRB);
       if (irb != null) {
         // Shallow copy the map.
-        Map<Short, _8BIM> bimMap = new HashMap<Short, _8BIM>(irb.get8BIM());
+        Map<Short, _8BIM> bimMap = new HashMap<>(irb.get8BIM());
         bimMap.remove(ImageResourceID.IPTC_NAA.getValue());
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         for (_8BIM bim : bimMap.values()) {
@@ -1489,7 +1485,7 @@ public class TIFFTweaker {
       if (f_photoshop != null) { // Read 8BIMs
         IRB irb = new IRB((byte[]) f_photoshop.getData());
         // Shallow copy the map.
-        Map<Short, _8BIM> bims = new HashMap<Short, _8BIM>(irb.get8BIM());
+        Map<Short, _8BIM> bims = new HashMap<>(irb.get8BIM());
         bims.remove(ImageResourceID.IPTC_NAA.getValue());
         // Insert IPTC data as one of IRB 8BIM block
         iptc.write(bout);
@@ -1618,8 +1614,8 @@ public class TIFFTweaker {
     rin.seek(TIFFWriter.STREAM_HEAD);
     int offset = copyHeader(rin, rout);
 
-    List<IFD> list = new ArrayList<IFD>();
-    List<IFD> insertedList = new ArrayList<IFD>(frames.length);
+    List<IFD> list = new ArrayList<>();
+    List<IFD> insertedList = new ArrayList<>(frames.length);
 
     // Read the IFDs into a list first
     readIFDs(list, offset, rin);
@@ -1638,9 +1634,9 @@ public class TIFFTweaker {
 
     TIFFWriter writer = new TIFFWriter();
 
-    for (int i = 0; i < frames.length; i++) {
-      BufferedImage frame = frames[i].getFrame();
-      ImageParam param = frames[i].getFrameParam();
+    for (ImageFrame imageFrame : frames) {
+      BufferedImage frame = imageFrame.getFrame();
+      ImageParam param = imageFrame.getFrameParam();
       try {
         writer.setImageParam(param);
         writeOffset = writer.writePage(frame, pageNumber++, maxPageNumber, rout, writeOffset);
@@ -1718,8 +1714,8 @@ public class TIFFTweaker {
     rin.seek(TIFFWriter.STREAM_HEAD);
     int offset = copyHeader(rin, rout);
 
-    List<IFD> list = new ArrayList<IFD>();
-    List<IFD> insertedList = new ArrayList<IFD>(images.length);
+    List<IFD> list = new ArrayList<>();
+    List<IFD> insertedList = new ArrayList<>(images.length);
 
     // Read the IFDs into a list first
     readIFDs(list, offset, rin);
@@ -1826,7 +1822,7 @@ public class TIFFTweaker {
       throw new IllegalArgumentException("Input thumbnail is null");
     }
     _8BIM bim = new ThumbnailResource(thumbnail);
-    insertIRB(rin, rout, Arrays.asList(bim), true);
+    insertIRB(rin, rout, List.of(bim), true);
   }
 
   /**
@@ -1878,7 +1874,7 @@ public class TIFFTweaker {
   public static void insertTiffImage(RandomAccessInputStream original,
       RandomAccessInputStream toBeInserted, int pageNumber, RandomAccessOutputStream output)
       throws IOException {
-    List<IFD> ifds1 = new ArrayList<IFD>();
+    List<IFD> ifds1 = new ArrayList<>();
     int offset1 = copyHeader(original, output);
     // Read IFDs for the first image
     readIFDs(ifds1, offset1, original);
@@ -1889,21 +1885,21 @@ public class TIFFTweaker {
       pageNumber = ifds1.size();
     }
     // Remove page number field if any and put in place holder
-    for (int i = 0; i < ifds1.size(); i++) {
-      ifds1.get(i).removeField(TiffTag.PAGE_NUMBER);
+    for (IFD value : ifds1) {
+      value.removeField(TiffTag.PAGE_NUMBER);
       // Place holder, to be updated afterwards
-      ifds1.get(i).addField(new ShortField(TiffTag.PAGE_NUMBER.getValue(), new short[] {0, 0}));
+      value.addField(new ShortField(TiffTag.PAGE_NUMBER.getValue(), new short[] {0, 0}));
     }
     int offset = copyPages(ifds1, TIFFWriter.FIRST_WRITE_OFFSET, original, output);
     short writeEndian = output.getEndian();
-    List<IFD> ifds2 = new ArrayList<IFD>();
+    List<IFD> ifds2 = new ArrayList<>();
     readIFDs(ifds2, toBeInserted);
-    for (int j = 0; j < ifds2.size(); j++) {
-      ifds2.get(j).removeField(TiffTag.PAGE_NUMBER);
+    for (IFD ifd : ifds2) {
+      ifd.removeField(TiffTag.PAGE_NUMBER);
       // Place holder, to be updated afterwards
-      ifds2.get(j).addField(new ShortField(TiffTag.PAGE_NUMBER.getValue(), new short[] {0, 0}));
+      ifd.addField(new ShortField(TiffTag.PAGE_NUMBER.getValue(), new short[] {0, 0}));
     }
-    List<IFD> newList = new ArrayList<IFD>(ifds1.size() + ifds2.size());
+    List<IFD> newList = new ArrayList<>(ifds1.size() + ifds2.size());
     short readEndian = toBeInserted.getEndian();
     if (readEndian == writeEndian) // Copy as is
     {
@@ -1911,8 +1907,7 @@ public class TIFFTweaker {
     } else {
       // Need to check BitsPerSample to see if we are dealing with images with BitsPerSample > 8
       IFD prevIFD = null;
-      for (int j = 0; j < ifds2.size(); j++) {
-        IFD currIFD = ifds2.get(j);
+      for (IFD currIFD : ifds2) {
         int bitsPerSample = 1; // Default
         TiffField<?> f_bitsPerSample = currIFD.getField(TiffTag.BITS_PER_SAMPLE);
         if (f_bitsPerSample != null) {
@@ -2015,9 +2010,7 @@ public class TIFFTweaker {
                     || planaryConfiguration == 2 && off.length == samplesPerPixel) {
                   int[] totalBytes2Read = getBytes2Read(currIFD);
 
-                  for (int k = 0; k < off.length; k++) {
-                    counts[k] = totalBytes2Read[k];
-                  }
+                  System.arraycopy(totalBytes2Read, 0, counts, 0, off.length);
                 }
                 // Read the data, reorder the byte sequence and write back the data
                 for (int k = 0; k < off.length; k++) {
@@ -2150,7 +2143,7 @@ public class TIFFTweaker {
       RandomAccessOutputStream rout) throws IOException {
     int offset = copyHeader(rin, rout);
     // Read the IFDs into a list first
-    List<IFD> ifds = new ArrayList<IFD>();
+    List<IFD> ifds = new ArrayList<>();
     readIFDs(ifds, offset, rin);
 
     if (pageNumber < 0 || pageNumber >= ifds.size()) {
@@ -2180,27 +2173,27 @@ public class TIFFTweaker {
       RandomInputStreamAdaptor<E> adaptor) throws IOException {
     if (adaptor.hasNext()) {
       RandomAccessInputStream image1 = adaptor.next();
-      List<IFD> ifds1 = new ArrayList<IFD>();
+      List<IFD> ifds1 = new ArrayList<>();
       int offset1 = copyHeader(image1, merged);
       // Read IFDs for the first image
       readIFDs(ifds1, offset1, image1);
-      for (int i = 0; i < ifds1.size(); i++) {
-        ifds1.get(i).removeField(TiffTag.PAGE_NUMBER);
+      for (IFD value : ifds1) {
+        value.removeField(TiffTag.PAGE_NUMBER);
         // Place holder, to be updated afterwards
-        ifds1.get(i).addField(new ShortField(TiffTag.PAGE_NUMBER.getValue(), new short[] {0, 0}));
+        value.addField(new ShortField(TiffTag.PAGE_NUMBER.getValue(), new short[] {0, 0}));
       }
       int offset = copyPages(ifds1, TIFFWriter.FIRST_WRITE_OFFSET, image1, merged);
       // Release main.resources
       image1.close();
       short writeEndian = merged.getEndian();
       while (adaptor.hasNext()) {
-        List<IFD> ifds2 = new ArrayList<IFD>();
+        List<IFD> ifds2 = new ArrayList<>();
         RandomAccessInputStream image2 = adaptor.next();
         readIFDs(ifds2, image2);
-        for (int j = 0; j < ifds2.size(); j++) {
-          ifds2.get(j).removeField(TiffTag.PAGE_NUMBER);
+        for (IFD ifd : ifds2) {
+          ifd.removeField(TiffTag.PAGE_NUMBER);
           // Place holder, to be updated afterwards
-          ifds2.get(j).addField(new ShortField(TiffTag.PAGE_NUMBER.getValue(), new short[] {0, 0}));
+          ifd.addField(new ShortField(TiffTag.PAGE_NUMBER.getValue(), new short[] {0, 0}));
         }
         short readEndian = image2.getEndian();
         if (readEndian == writeEndian) // Copy as is
@@ -2209,8 +2202,7 @@ public class TIFFTweaker {
         } else {
           // Need to check BitsPerSample to see if we are dealing with images with BitsPerSample > 8
           IFD prevIFD = null;
-          for (int j = 0; j < ifds2.size(); j++) {
-            IFD currIFD = ifds2.get(j);
+          for (IFD currIFD : ifds2) {
             int bitsPerSample = 1; // Default
             TiffField<?> f_bitsPerSample = currIFD.getField(TiffTag.BITS_PER_SAMPLE);
             if (f_bitsPerSample != null) {
@@ -2314,9 +2306,7 @@ public class TIFFTweaker {
                         || planaryConfiguration == 2 && off.length == samplesPerPixel) {
                       int[] totalBytes2Read = getBytes2Read(currIFD);
 
-                      for (int k = 0; k < off.length; k++) {
-                        counts[k] = totalBytes2Read[k];
-                      }
+                      System.arraycopy(totalBytes2Read, 0, counts, 0, off.length);
                     }
                     // Read the data, reorder the byte sequence and write back the data
                     for (int k = 0; k < off.length; k++) {
@@ -2434,8 +2424,8 @@ public class TIFFTweaker {
     int offset1 = copyHeader(image1, merged);
     int offset2 = readHeader(image2);
     // Read IFDs
-    List<IFD> ifds1 = new ArrayList<IFD>();
-    List<IFD> ifds2 = new ArrayList<IFD>();
+    List<IFD> ifds1 = new ArrayList<>();
+    List<IFD> ifds2 = new ArrayList<>();
     readIFDs(ifds1, offset1, image1);
     readIFDs(ifds2, offset2, image2);
     int maxPageNumber = ifds1.size() + ifds2.size();
@@ -2478,27 +2468,27 @@ public class TIFFTweaker {
     if (images != null && images.length > 1) {
       FileInputStream fis1 = new FileInputStream(images[0]);
       RandomAccessInputStream image1 = new FileCacheRandomAccessInputStream(fis1);
-      List<IFD> ifds1 = new ArrayList<IFD>();
+      List<IFD> ifds1 = new ArrayList<>();
       int offset1 = copyHeader(image1, merged);
       // Read IFDs for the first image
       readIFDs(ifds1, offset1, image1);
-      for (int i = 0; i < ifds1.size(); i++) {
-        ifds1.get(i).removeField(TiffTag.PAGE_NUMBER);
+      for (IFD value : ifds1) {
+        value.removeField(TiffTag.PAGE_NUMBER);
         // Place holder, to be updated afterwards
-        ifds1.get(i).addField(new ShortField(TiffTag.PAGE_NUMBER.getValue(), new short[] {0, 0}));
+        value.addField(new ShortField(TiffTag.PAGE_NUMBER.getValue(), new short[] {0, 0}));
       }
       int offset = copyPages(ifds1, TIFFWriter.FIRST_WRITE_OFFSET, image1, merged);
       // Release main.resources
       image1.close();
       for (int i = 1; i < images.length; i++) {
-        List<IFD> ifds2 = new ArrayList<IFD>();
+        List<IFD> ifds2 = new ArrayList<>();
         FileInputStream fis2 = new FileInputStream(images[i]);
         RandomAccessInputStream image2 = new FileCacheRandomAccessInputStream(fis2);
         readIFDs(ifds2, image2);
-        for (int j = 0; j < ifds2.size(); j++) {
-          ifds2.get(j).removeField(TiffTag.PAGE_NUMBER);
+        for (IFD ifd : ifds2) {
+          ifd.removeField(TiffTag.PAGE_NUMBER);
           // Place holder, to be updated afterwards
-          ifds2.get(j).addField(new ShortField(TiffTag.PAGE_NUMBER.getValue(), new short[] {0, 0}));
+          ifd.addField(new ShortField(TiffTag.PAGE_NUMBER.getValue(), new short[] {0, 0}));
         }
         offset = copyPages(ifds2, offset, image2, merged);
         // Link the two IFDs
@@ -2569,10 +2559,10 @@ public class TIFFTweaker {
       }
       ifds.get(0).addField(new ShortField(TiffTag.SUBFILE_TYPE.getValue(), new short[] {3}));
     }
-    for (int i = 0; i < ifds.size(); i++) {
-      ifds.get(i).removeField(TiffTag.PAGE_NUMBER);
+    for (IFD ifd : ifds) {
+      ifd.removeField(TiffTag.PAGE_NUMBER);
       // Place holder, to be updated later
-      ifds.get(i).addField(new ShortField(TiffTag.PAGE_NUMBER.getValue(), new short[] {0, 0}));
+      ifd.addField(new ShortField(TiffTag.PAGE_NUMBER.getValue(), new short[] {0, 0}));
     }
     int writeOffset = TIFFWriter.FIRST_WRITE_OFFSET;
     // Copy pages
@@ -2646,7 +2636,7 @@ public class TIFFTweaker {
 
     for (TiffField<?> field : fields) {
       ifds.append(indent);
-      ifds.append("Field #" + i + "\n");
+      ifds.append("Field #").append(i).append("\n");
       ifds.append(indent);
       short tag = field.getTag();
       Tag ftag = TiffTag.UNKNOWN;
@@ -2666,14 +2656,14 @@ public class TIFFTweaker {
       if (ftag == TiffTag.UNKNOWN) {
         LOGGER.warn("Tag: {} [Value: 0x{}] (Unknown)", ftag, Integer.toHexString(tag & 0xffff));
       } else {
-        ifds.append("Tag: " + ftag + "\n");
+        ifds.append("Tag: ").append(ftag).append("\n");
       }
       FieldType ftype = field.getType();
       ifds.append(indent);
-      ifds.append("Field type: " + ftype + "\n");
+      ifds.append("Field type: ").append(ftype).append("\n");
       int field_length = field.getLength();
       ifds.append(indent);
-      ifds.append("Field length: " + field_length + "\n");
+      ifds.append("Field length: ").append(field_length).append("\n");
       ifds.append(indent);
 
       String tagString = null;
@@ -2683,9 +2673,9 @@ public class TIFFTweaker {
         tagString = ftag.getFieldAsString(field.getData());
       }
       if (StringUtils.isNullOrEmpty(tagString)) {
-        ifds.append("Field value: " + field.getDataAsString() + "\n");
+        ifds.append("Field value: ").append(field.getDataAsString()).append("\n");
       } else {
-        ifds.append("Field value: " + tagString + "\n");
+        ifds.append("Field value: ").append(tagString).append("\n");
       }
 
       i++;
@@ -2694,18 +2684,18 @@ public class TIFFTweaker {
     Map<Tag, IFD> children = currIFD.getChildren();
 
     if (children.get(TiffTag.EXIF_SUB_IFD) != null) {
-      ifds.append(indent + "--------- ");
+      ifds.append(indent).append("--------- ");
       ifds.append("<<Exif SubIFD starts>>\n");
       print(children.get(TiffTag.EXIF_SUB_IFD), ExifTag.class, indent + "--------- ", ifds);
-      ifds.append(indent + "--------- ");
+      ifds.append(indent).append("--------- ");
       ifds.append("<<Exif SubIFD ends>>\n");
     }
 
     if (children.get(TiffTag.GPS_SUB_IFD) != null) {
-      ifds.append(indent + "--------- ");
+      ifds.append(indent).append("--------- ");
       ifds.append("<<GPS SubIFD starts>>\n");
       print(children.get(TiffTag.GPS_SUB_IFD), GPSTag.class, indent + "--------- ", ifds);
-      ifds.append(indent + "--------- ");
+      ifds.append(indent).append("--------- ");
       ifds.append("<<GPS SubIFD ends>>\n");
     }
   }
@@ -3012,9 +3002,9 @@ public class TIFFTweaker {
 
   public static Map<MetadataType, Metadata> readMetadata(RandomAccessInputStream rin,
       int pageNumber) throws IOException {
-    Map<MetadataType, Metadata> metadataMap = new HashMap<MetadataType, Metadata>();
+    Map<MetadataType, Metadata> metadataMap = new HashMap<>();
     int offset = readHeader(rin);
-    List<IFD> ifds = new ArrayList<IFD>();
+    List<IFD> ifds = new ArrayList<>();
     readIFDs(ifds, offset, rin);
 
     if (pageNumber < 0 || pageNumber >= ifds.size()) {
@@ -3042,7 +3032,7 @@ public class TIFFTweaker {
       }
       if (irb.containsThumbnail()) {// Add thumbnail to metadata map if any
         IRBThumbnail thumbnail = irb.getThumbnail();
-        Map<String, Thumbnail> thumbnails = new HashMap<String, Thumbnail>(1);
+        Map<String, Thumbnail> thumbnails = new HashMap<>(1);
         thumbnails.put("PHOTOSHOP_IRB", thumbnail);
         metadataMap.put(MetadataType.IMAGE, new ImageMetadata(thumbnails));
       }
@@ -3099,7 +3089,7 @@ public class TIFFTweaker {
   public static Map<MetadataType, Metadata> removeMetadata(int pageNumber,
       RandomAccessInputStream rin, RandomAccessOutputStream rout, MetadataType... metadataTypes)
       throws IOException {
-    return removeMetadata(new HashSet<MetadataType>(Arrays.asList(metadataTypes)), pageNumber, rin,
+    return removeMetadata(new HashSet<>(Arrays.asList(metadataTypes)), pageNumber, rin,
         rout);
   }
 
@@ -3131,11 +3121,11 @@ public class TIFFTweaker {
       throws IOException {
     int offset = copyHeader(rin, rout);
     // Read the IFDs into a list first
-    List<IFD> ifds = new ArrayList<IFD>();
+    List<IFD> ifds = new ArrayList<>();
     readIFDs(ifds, offset, rin);
 
     // Create a map to hold all the metadata and thumbnails
-    Map<MetadataType, Metadata> metadataMap = new HashMap<MetadataType, Metadata>();
+    Map<MetadataType, Metadata> metadataMap = new HashMap<>();
 
     if (pageNumber < 0 || pageNumber >= ifds.size()) {
       throw new IllegalArgumentException(
@@ -3224,7 +3214,7 @@ public class TIFFTweaker {
               // Read the EXIF data
               RandomAccessInputStream exif = new MemoryCacheRandomAccessInputStream(
                   new ByteArrayInputStream(bims.get(0).getData()));
-              List<IFD> exifIFDs = new ArrayList<IFD>();
+              List<IFD> exifIFDs = new ArrayList<>();
               readIFDs(exifIFDs, exif);
               exif.close();
               // put the data into metadataMap
@@ -3272,8 +3262,8 @@ public class TIFFTweaker {
       ImageResourceID... ids) throws IOException {
     IRB irb = new IRB(data);
     // Shallow copy the map.
-    Map<Short, _8BIM> bimMap = new HashMap<Short, _8BIM>(irb.get8BIM());
-    List<_8BIM> bimList = new ArrayList<_8BIM>();
+    Map<Short, _8BIM> bimMap = new HashMap<>(irb.get8BIM());
+    List<_8BIM> bimList = new ArrayList<>();
     // We only remove XMP and keep the other IRB data untouched.
     for (ImageResourceID id : ids) {
       _8BIM bim = bimMap.remove(id.getValue());
@@ -3312,7 +3302,7 @@ public class TIFFTweaker {
       throw new IllegalArgumentException("Start page is larger than end page");
     }
 
-    List<IFD> list = new ArrayList<IFD>();
+    List<IFD> list = new ArrayList<>();
 
     int offset = copyHeader(rin, rout);
 
@@ -3360,7 +3350,7 @@ public class TIFFTweaker {
    */
   public static int removePages(RandomAccessInputStream rin, RandomAccessOutputStream rout,
       int... pages) throws IOException {
-    List<IFD> list = new ArrayList<IFD>();
+    List<IFD> list = new ArrayList<>();
 
     int offset = copyHeader(rin, rout);
 
@@ -3405,7 +3395,7 @@ public class TIFFTweaker {
       throw new IllegalArgumentException("Start page is larger than end page");
     }
 
-    List<IFD> list = new ArrayList<IFD>();
+    List<IFD> list = new ArrayList<>();
 
     int offset = copyHeader(rin, rout);
 
@@ -3413,7 +3403,7 @@ public class TIFFTweaker {
     readIFDs(list, offset, rin);
     // Step 2: remove pages from a multiple page TIFF
     int pagesRetained = list.size();
-    List<IFD> newList = new ArrayList<IFD>();
+    List<IFD> newList = new ArrayList<>();
     if (startPage <= list.size() - 1) {
       if (endPage > list.size() - 1) {
         endPage = list.size() - 1;
@@ -3447,14 +3437,14 @@ public class TIFFTweaker {
   // Return number of pages retained
   public static int retainPages(RandomAccessInputStream rin, RandomAccessOutputStream rout,
       int... pages) throws IOException {
-    List<IFD> list = new ArrayList<IFD>();
+    List<IFD> list = new ArrayList<>();
 
     int offset = copyHeader(rin, rout);
     // Step 1: read the IFDs into a list first
     readIFDs(list, offset, rin);
     // Step 2: remove pages from a multiple page TIFF
     int pagesRetained = list.size();
-    List<IFD> newList = new ArrayList<IFD>();
+    List<IFD> newList = new ArrayList<>();
     Arrays.sort(pages);
     for (int i = pages.length - 1; i >= 0; i--) {
       if (pages[i] >= 0 && pages[i] < list.size()) {
@@ -3490,7 +3480,7 @@ public class TIFFTweaker {
    */
   public static void splitPages(RandomAccessInputStream rin, final List<byte[]> outputFilesByte)
       throws IOException {
-    List<IFD> list = new ArrayList<IFD>();
+    List<IFD> list = new ArrayList<>();
     short endian = rin.readShort();
     WriteStrategy writeStrategy = WriteStrategyMM.getInstance();
     // Set write strategy based on byte order
@@ -3535,7 +3525,7 @@ public class TIFFTweaker {
    */
   public static void splitPages(RandomAccessInputStream rin, String outputFilePrefix)
       throws IOException {
-    List<IFD> list = new ArrayList<IFD>();
+    List<IFD> list = new ArrayList<>();
     short endian = rin.readShort();
     WriteStrategy writeStrategy = WriteStrategyMM.getInstance();
     // Set write strategy based on byte order
@@ -3589,7 +3579,7 @@ public class TIFFTweaker {
       splitPages(rin, outputFilePrefix);
     }
     // The user is serious keep on working
-    List<IFD> list = new ArrayList<IFD>();
+    List<IFD> list = new ArrayList<>();
     short endian = rin.readShort();
     WriteStrategy writeStrategy = WriteStrategyMM.getInstance();
     // Set write strategy based on byte order
@@ -3710,7 +3700,7 @@ public class TIFFTweaker {
       splitPages(rin, outputFilesByte);
     }
     // The user is serious keep on working
-    List<IFD> list = new ArrayList<IFD>();
+    List<IFD> list = new ArrayList<>();
     short endian = rin.readShort();
     WriteStrategy writeStrategy = WriteStrategyMM.getInstance();
     // Set write strategy based on byte order
@@ -3880,12 +3870,12 @@ public class TIFFTweaker {
     // Write pages
     int pageNumber = 0;
     int maxPageNumber = frames.length;
-    List<IFD> list = new ArrayList<IFD>(frames.length);
+    List<IFD> list = new ArrayList<>(frames.length);
     TIFFWriter writer = new TIFFWriter();
     // Write image frames
-    for (int i = 0; i < frames.length; i++) {
-      BufferedImage frame = frames[i].getFrame();
-      param = frames[i].getFrameParam();
+    for (ImageFrame imageFrame : frames) {
+      BufferedImage frame = imageFrame.getFrame();
+      param = imageFrame.getFrameParam();
       try {
         writer.setImageParam(param);
         writeOffset = writer.writePage(frame, pageNumber++, maxPageNumber, rout, writeOffset);
@@ -3935,7 +3925,7 @@ public class TIFFTweaker {
     // Write pages
     int pageNumber = 0;
     int maxPageNumber = images.length;
-    List<IFD> list = new ArrayList<IFD>(images.length);
+    List<IFD> list = new ArrayList<>(images.length);
     TIFFWriter writer = new TIFFWriter();
     // Write image frames
     for (int i = 0; i < images.length; i++) {

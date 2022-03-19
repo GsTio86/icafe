@@ -14,9 +14,6 @@ public class NQCanvas extends Canvas {
    *
    */
   private static final long serialVersionUID = -5075876371476649415L;
-  private NeuQuant nq = null;
-  private int w = 0;
-  private int h = 0;
   private Image image = null;
   private String url = null;
 
@@ -53,7 +50,7 @@ public class NQCanvas extends Canvas {
       tracker.addImage(img, 0);
       try {
         tracker.waitForID(0);
-      } catch (InterruptedException e) {
+      } catch (InterruptedException ignored) {
       }
       System.out.println("w = " + img.getWidth(this));
       System.out.println("h = " + img.getHeight(this));
@@ -64,19 +61,19 @@ public class NQCanvas extends Canvas {
   }
 
   public void set(Image img) throws IOException {
-    w = img.getWidth(this);
-    h = img.getHeight(this);
+    int w = img.getWidth(this);
+    int h = img.getHeight(this);
     int[] pixels = new int[w * h];
     java.awt.image.PixelGrabber pg
         = new java.awt.image.PixelGrabber(img, 0, 0, w, h, pixels, 0, w);
     try {
       pg.grabPixels();
-    } catch (InterruptedException e) {
+    } catch (InterruptedException ignored) {
     }
     if ((pg.getStatus() & java.awt.image.ImageObserver.ABORT) != 0) {
       throw new IOException("Image pixel grab aborted or errored");
     }
-    nq = new NeuQuant(pixels);
+    NeuQuant nq = new NeuQuant(pixels);
     pixels = nq.quantize();
     this.image = this.createImage(new MemoryImageSource(w, h, pixels, 0, w));
   }

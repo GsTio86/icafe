@@ -25,7 +25,7 @@ import java.util.List;
 public class DQTReader implements Reader {
 
   private final Segment segment;
-  private final List<QTable> qTables = new ArrayList<QTable>(4);
+  private final List<QTable> qTables = new ArrayList<>(4);
 
   public DQTReader(Segment segment) throws IOException {
     //
@@ -41,7 +41,7 @@ public class DQTReader implements Reader {
     return qTables;
   }
 
-  public void read() throws IOException {
+  public void read() {
     //
     byte[] data = segment.getData();
     int len = segment.getLength();

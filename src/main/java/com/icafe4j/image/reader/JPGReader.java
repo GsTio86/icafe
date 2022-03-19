@@ -23,14 +23,14 @@
  * @author Wen Yu, yuwen_66@yahoo.com
  * @version 1.0 04/23/2007
  */
-/**
- * Decodes and shows images in JPEG format.
- *
- * Current version is a baseline JFIF compatible one. It supports Adobe
- * APP14 color transform - YCCK, CMYK, YCCK inverted. Progressive DCT
- * is not supported!
- *
- * @author Wen Yu, yuwen_66@yahoo.com
+/*
+  Decodes and shows images in JPEG format.
+
+  Current version is a baseline JFIF compatible one. It supports Adobe
+  APP14 color transform - YCCK, CMYK, YCCK inverted. Progressive DCT
+  is not supported!
+
+  @author Wen Yu, yuwen_66@yahoo.com
  * @version 1.0 04/23/2007
  */
 
@@ -86,7 +86,7 @@ public class JPGReader extends ImageReader {
   // Obtain a logger instance
   private static final Logger LOGGER = LoggerFactory.getLogger(JPGReader.class);
   // Create a map to hold all the metadata and thumbnails
-  private final Map<MetadataType, Metadata> metadataMap = new HashMap<MetadataType, Metadata>();
+  private final Map<MetadataType, Metadata> metadataMap = new HashMap<>();
   // Tables definition
   // For JFIF there are normally two quantization tables, but for
   // other format there can be up to 4 quantization tables!
@@ -94,7 +94,7 @@ public class JPGReader extends ImageReader {
   private final HuffmanTbl[] dc_hufftbl = new HuffmanTbl[4];
   private final HuffmanTbl[] ac_hufftbl = new HuffmanTbl[4];
   @SuppressWarnings("unused")
-  private final Map<Integer, Component> components = new HashMap<Integer, Component>(4);
+  private final Map<Integer, Component> components = new HashMap<>(4);
   // Used to read multiple segment ICCProfile
   private ByteArrayOutputStream iccProfileStream = null;
   // Used to read multiple segment Adobe APP13
@@ -113,15 +113,15 @@ public class JPGReader extends ImageReader {
     for (QTable table : qTables) {
       int QT_precision = table.getPrecision();
       int[] qTable = table.getData();
-      qtTables.append("precision of QT is " + QT_precision + "\n");
-      qtTables.append("Quantization table #" + table.getID() + ":\n");
+      qtTables.append("precision of QT is ").append(QT_precision).append("\n");
+      qtTables.append("Quantization table #").append(table.getID()).append(":\n");
 
       if (QT_precision == 0) {
         for (int j = 0; j < 64; j++) {
           if (j != 0 && j % 8 == 0) {
             qtTables.append("\n");
           }
-          qtTables.append(qTable[j] + " ");
+          qtTables.append(qTable[j]).append(" ");
         }
       } else { // 16 bit big-endian
 
@@ -129,7 +129,7 @@ public class JPGReader extends ImageReader {
           if (j != 0 && j % 8 == 0) {
             qtTables.append("\n");
           }
-          qtTables.append(qTable[j] + " ");
+          qtTables.append(qTable[j]).append(" ");
         }
       }
 
@@ -139,7 +139,7 @@ public class JPGReader extends ImageReader {
       qtTables.append("***************************\n");
     }
 
-    qtTables.append("Total number of Quantation tables: " + count + "\n");
+    qtTables.append("Total number of Quantation tables: ").append(count).append("\n");
     qtTables.append("End of quantization table information\n");
 
     return qtTables.toString();
@@ -153,20 +153,20 @@ public class JPGReader extends ImageReader {
     hufTable.append("Huffman table information =>:\n");
 
     for (HTable table : hTables) {
-      hufTable.append(
-          "Class: " + table.getClazz() + " (" + HT_class_table[table.getClazz()] + ")\n");
-      hufTable.append("Huffman table #: " + table.getID() + "\n");
+      hufTable.append("Class: ").append(table.getClazz()).append(" (")
+          .append(HT_class_table[table.getClazz()]).append(")\n");
+      hufTable.append("Huffman table #: ").append(table.getID()).append("\n");
 
       byte[] bits = table.getBits();
       byte[] values = table.getValues();
 
       int count = 0;
 
-      for (int i = 0; i < bits.length; i++) {
-        count += (bits[i] & 0xff);
+      for (byte bit : bits) {
+        count += (bit & 0xff);
       }
 
-      hufTable.append("Number of codes: " + count + "\n");
+      hufTable.append("Number of codes: ").append(count).append("\n");
 
       if (count > 256) {
         throw new RuntimeException("Invalid huffman code count: " + count);
@@ -176,10 +176,11 @@ public class JPGReader extends ImageReader {
 
       for (int i = 0; i < 16; i++) {
 
-        hufTable.append("Codes of length " + (i + 1) + " (" + (bits[i] & 0xff) + " total): [ ");
+        hufTable.append("Codes of length ").append(i + 1).append(" (").append(bits[i] & 0xff)
+            .append(" total): [ ");
 
         for (int k = 0; k < (bits[i] & 0xff); k++) {
-          hufTable.append((values[j++] & 0xff) + " ");
+          hufTable.append(values[j++] & 0xff).append(" ");
         }
 
         hufTable.append("]\n");
@@ -194,20 +195,20 @@ public class JPGReader extends ImageReader {
   private static String sofToString(SOFReader reader) {
     StringBuilder sof = new StringBuilder();
     sof.append("SOF information =>\n");
-    sof.append("Precision: " + reader.getPrecision() + "\n");
-    sof.append("Image height: " + reader.getFrameHeight() + "\n");
-    sof.append("Image width: " + reader.getFrameWidth() + "\n");
-    sof.append("# of Components: " + reader.getNumOfComponents() + "\n");
+    sof.append("Precision: ").append(reader.getPrecision()).append("\n");
+    sof.append("Image height: ").append(reader.getFrameHeight()).append("\n");
+    sof.append("Image width: ").append(reader.getFrameWidth()).append("\n");
+    sof.append("# of Components: ").append(reader.getNumOfComponents()).append("\n");
     sof.append("(1 = grey scaled, 3 = color YCbCr or YIQ, 4 = color CMYK)\n");
 
     for (Component component : reader.getComponents()) {
       sof.append("\n");
-      sof.append("Component ID: " + component.getId() + "\n");
-      sof.append("Herizontal sampling factor: " + component.getHSampleFactor() + "\n");
-      sof.append("Vertical sampling factor: " + component.getVSampleFactor() + "\n");
-      sof.append("Quantization table #: " + component.getQTableNumber() + "\n");
-      sof.append("DC table number: " + component.getDCTableNumber() + "\n");
-      sof.append("AC table number: " + component.getACTableNumber() + "\n");
+      sof.append("Component ID: ").append(component.getId()).append("\n");
+      sof.append("Herizontal sampling factor: ").append(component.getHSampleFactor()).append("\n");
+      sof.append("Vertical sampling factor: ").append(component.getVSampleFactor()).append("\n");
+      sof.append("Quantization table #: ").append(component.getQTableNumber()).append("\n");
+      sof.append("DC table number: ").append(component.getDCTableNumber()).append("\n");
+      sof.append("AC table number: ").append(component.getACTableNumber()).append("\n");
     }
 
     sof.append("<= End of SOF information\n");
@@ -225,7 +226,7 @@ public class JPGReader extends ImageReader {
      * Usually there is only one SOF segment, but for hierarchical
      * JPEG, there could be more than one SOF
      */
-    List<SOFReader> readers = new ArrayList<SOFReader>();
+    List<SOFReader> readers = new ArrayList<>();
 
     // The very first marker should be the start_of_image marker!
     if (Marker.fromShort(IOUtils.readShortMM(is)) != Marker.SOI) {

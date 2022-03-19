@@ -48,7 +48,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -196,7 +195,7 @@ public abstract class Metadata implements com.icafe4j.image.meta.MetadataReader,
 
   public static void insertComment(InputStream is, OutputStream os, String comment)
       throws IOException {
-    insertComments(is, os, Arrays.asList(comment));
+    insertComments(is, os, List.of(comment));
   }
 
   public static void insertComments(InputStream is, OutputStream os, List<String> comments)

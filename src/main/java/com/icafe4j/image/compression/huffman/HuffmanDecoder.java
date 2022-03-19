@@ -114,11 +114,7 @@ public class HuffmanDecoder {
         B2 = NEXTBYTE();
 
         if (B2 != 0) {
-          if (B2 == DNL) {
-            // do_DNL();
-            // terminate scan;
-          } else
-            ; // showError();
+          // showError();
         }
       }
     }

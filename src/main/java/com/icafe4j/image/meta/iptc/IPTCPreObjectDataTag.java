@@ -30,7 +30,7 @@ public enum IPTCPreObjectDataTag implements IPTCTag {
   UNKNOWN(999, "Unknown IPTCPreObjectDataTag");
 
   private static final Map<Integer, IPTCPreObjectDataTag> recordMap =
-      new HashMap<Integer, IPTCPreObjectDataTag>();
+      new HashMap<>();
 
   static {
     for (IPTCPreObjectDataTag record : values()) {

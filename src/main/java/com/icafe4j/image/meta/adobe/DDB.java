@@ -43,7 +43,7 @@ public class DDB extends Metadata {
   // Obtain a logger instance
   private static final Logger LOGGER = LoggerFactory.getLogger(DDB.class);
   private final ReadStrategy readStrategy;
-  private final Map<Integer, DDBEntry> entries = new HashMap<Integer, DDBEntry>();
+  private final Map<Integer, DDBEntry> entries = new HashMap<>();
 
   public DDB(byte[] data, ReadStrategy readStrategy) {
     super(MetadataType.PHOTOSHOP_DDB, data);
@@ -53,25 +53,19 @@ public class DDB extends Metadata {
     this.readStrategy = readStrategy;
   }
 
-  public static void showDDB(byte[] data, ReadStrategy readStrategy) {
+  public static void showDDB(byte[] data, ReadStrategy readStrategy) throws IOException {
     if (data != null && data.length > 0) {
       DDB ddb = new DDB(data, readStrategy);
-      try {
-        ddb.read();
-        Iterator<MetadataEntry> iterator = ddb.iterator();
-        while (iterator.hasNext()) {
-          MetadataEntry item = iterator.next();
-          LOGGER.info(item.getKey() + ": " + item.getValue());
-          if (item.isMetadataEntryGroup()) {
-            String indent = "    ";
-            Collection<MetadataEntry> entries = item.getMetadataEntries();
-            for (MetadataEntry e : entries) {
-              LOGGER.info(indent + e.getKey() + ": " + e.getValue());
-            }
+      ddb.read();
+      for (MetadataEntry item : ddb) {
+        LOGGER.info(item.getKey() + ": " + item.getValue());
+        if (item.isMetadataEntryGroup()) {
+          String indent = "    ";
+          Collection<MetadataEntry> entries = item.getMetadataEntries();
+          for (MetadataEntry e : entries) {
+            LOGGER.info(indent + e.getKey() + ": " + e.getValue());
           }
         }
-      } catch (IOException e) {
-        e.printStackTrace();
       }
     }
   }
@@ -90,7 +84,7 @@ public class DDB extends Metadata {
 
   public Iterator<MetadataEntry> iterator() {
     ensureDataRead();
-    List<MetadataEntry> entries = new ArrayList<MetadataEntry>();
+    List<MetadataEntry> entries = new ArrayList<>();
 
     for (DDBEntry entry : this.entries.values()) {
       entries.add(entry.getMetadataEntry());

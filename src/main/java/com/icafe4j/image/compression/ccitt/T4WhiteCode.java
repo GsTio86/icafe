@@ -135,8 +135,8 @@ public enum T4WhiteCode implements T4Code {
   FILL_2_EOL(-4, 14, (short) 0x0004),
   FILL_1_EOL(-5, 13, (short) 0x0008);
 
-  private static final Map<Integer, T4Code> runLenMap = new HashMap<Integer, T4Code>();
-  private static final Map<Short, T4Code> codeMap = new HashMap<Short, T4Code>();
+  private static final Map<Integer, T4Code> runLenMap = new HashMap<>();
+  private static final Map<Short, T4Code> codeMap = new HashMap<>();
 
   static {
     for (T4Code code : values()) {

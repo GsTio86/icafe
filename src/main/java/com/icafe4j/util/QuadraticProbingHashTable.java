@@ -10,6 +10,8 @@
 
 package com.icafe4j.util;// Temporarily put in this package
 
+import java.util.Arrays;
+
 /**
  * Quadratic probing hash table.  
  *
@@ -113,7 +115,7 @@ public class QuadraticProbingHashTable<K, V> {
   // Simple main
   public static void main(String[] args) {
     QuadraticProbingHashTable<Integer, Integer> H =
-        new QuadraticProbingHashTable<Integer, Integer>();
+        new QuadraticProbingHashTable<>();
 
     final int NUMS = 4000;
     final int GAP = 37;
@@ -128,7 +130,7 @@ public class QuadraticProbingHashTable<K, V> {
     }
 
     for (int i = 2; i < NUMS; i += 2) {
-      if (H.get(i).intValue() != i) {
+      if (H.get(i) != i) {
         System.out.println("Find fails " + i);
       }
     }
@@ -152,7 +154,7 @@ public class QuadraticProbingHashTable<K, V> {
       return;
     }
 
-    array[currentPos] = new HashEntry<K, V>(key, value, true);
+    array[currentPos] = new HashEntry<>(key, value, true);
 
     // Rehash
     if (++currentSize > array.length / 2) {
@@ -172,13 +174,12 @@ public class QuadraticProbingHashTable<K, V> {
     currentSize = 0;
 
     // Copy table over
-    for (int i = 0; i < oldArray.length; i++) {
-      if (oldArray[i] != null && oldArray[i].isActive) {
-        put(oldArray[i].key, oldArray[i].value);
+    for (HashEntry<K, V> kvHashEntry : oldArray) {
+      if (kvHashEntry != null && kvHashEntry.isActive) {
+        put(kvHashEntry.key, kvHashEntry.value);
       }
     }
 
-    return;
   }
 
   /**
@@ -249,16 +250,14 @@ public class QuadraticProbingHashTable<K, V> {
    */
   public void makeEmpty() {
     currentSize = 0;
-    for (int i = 0; i < array.length; i++) {
-      array[i] = null;
-    }
+    Arrays.fill(array, null);
   }
 
   // The basic entry stored in ProbingHashTable
   private static class HashEntry<K, V> {
 
-    K key;         // the key
-    V value;       // the value
+    final K key;         // the key
+    final V value;       // the value
     boolean isActive;  // false if deleted
 
     HashEntry(K k, V val, boolean i) {

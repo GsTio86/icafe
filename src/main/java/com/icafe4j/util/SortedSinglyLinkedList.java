@@ -28,7 +28,7 @@ public class SortedSinglyLinkedList<E extends Comparable<? super E>> {
 
   // Test
   public static void main(String[] args) {
-    SortedSinglyLinkedList<Integer> t = new SortedSinglyLinkedList<Integer>();
+    SortedSinglyLinkedList<Integer> t = new SortedSinglyLinkedList<>();
 
     final int NUMS = 100;
     final int GAP = 37;
@@ -55,12 +55,12 @@ public class SortedSinglyLinkedList<E extends Comparable<? super E>> {
     SinglyLinkedListNode<E> prev, curr;
 
     if (head == null) {
-      head = new SinglyLinkedListNode<E>(content);
+      head = new SinglyLinkedListNode<>(content);
     } else {
       for (prev = null, curr = head; (curr != null) && (content.compareTo(curr.getValue()) > 0);
           prev = curr, curr = curr.next())
         ;
-      /** Duplication is not allowed
+      /* Duplication is not allowed
        if (curr == null)// Insert as new tail
        prev.setNext(new SinglyLinkedListNode<E>(content));
        else if(content.compareTo(curr.content)==0) {
@@ -74,10 +74,10 @@ public class SortedSinglyLinkedList<E extends Comparable<? super E>> {
        */
       // Duplication is allowed
       if (prev != null) {
-        prev.setNext(new SinglyLinkedListNode<E>(content, curr));
+        prev.setNext(new SinglyLinkedListNode<>(content, curr));
       } else// Insert as new head
       {
-        head = new SinglyLinkedListNode<E>(content, head);
+        head = new SinglyLinkedListNode<>(content, head);
       }
     }
     count++;

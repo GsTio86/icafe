@@ -69,7 +69,7 @@ public class Adobe extends Metadata {
   public Iterator<MetadataEntry> iterator() {
     ensureDataRead();
 
-    List<MetadataEntry> entries = new ArrayList<MetadataEntry>();
+    List<MetadataEntry> entries = new ArrayList<>();
     String[] colorTransform = {"Unknown (RGB or CMYK)", "YCbCr", "YCCK"};
     entries.add(new MetadataEntry("DCTEncodeVersion", m_DCTEncodeVersion + ""));
     entries.add(
@@ -82,7 +82,7 @@ public class Adobe extends Metadata {
     return Collections.unmodifiableCollection(entries).iterator();
   }
 
-  public void read() throws IOException {
+  public void read() {
     if (!isDataRead) {
       int expectedLen = 7;
       int offset = 0;

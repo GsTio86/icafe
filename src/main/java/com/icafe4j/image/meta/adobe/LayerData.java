@@ -24,7 +24,7 @@ import java.util.List;
 
 public class LayerData extends DDBEntry {
 
-  private final List<Channel> channels = new ArrayList<Channel>();
+  private final List<Channel> channels = new ArrayList<>();
   private int layerCount;
 
   public LayerData(int size, byte[] data, ReadStrategy readStrategy) {

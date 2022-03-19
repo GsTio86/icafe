@@ -160,7 +160,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Riyad Kalla (software@thebuzzmedia.com)
  * @since 3.2
  */
-@SuppressWarnings("javadoc")
 public class AsyncScalr {
 
   /**
@@ -185,8 +184,8 @@ public class AsyncScalr {
       THREAD_COUNT_PROPERTY_NAME, 2);
   protected static volatile ExecutorService service;
 
-  /**
-   * Initializer used to verify the THREAD_COUNT system property.
+  /*
+    Initializer used to verify the THREAD_COUNT system property.
    */
   static {
     if (THREAD_COUNT < 1) {
@@ -224,11 +223,7 @@ public class AsyncScalr {
       ImagingOpException {
     checkService();
 
-    return service.submit(new Callable<BufferedImage>() {
-      public BufferedImage call() throws Exception {
-        return Scalr.apply(src, ops);
-      }
-    });
+    return service.submit(() -> Scalr.apply(src, ops));
   }
 
   /**
@@ -239,11 +234,7 @@ public class AsyncScalr {
       throws IllegalArgumentException, ImagingOpException {
     checkService();
 
-    return service.submit(new Callable<BufferedImage>() {
-      public BufferedImage call() throws Exception {
-        return Scalr.crop(src, width, height, ops);
-      }
-    });
+    return service.submit(() -> Scalr.crop(src, width, height, ops));
   }
 
   /**
@@ -255,26 +246,18 @@ public class AsyncScalr {
       ImagingOpException {
     checkService();
 
-    return service.submit(new Callable<BufferedImage>() {
-      public BufferedImage call() throws Exception {
-        return Scalr.crop(src, x, y, width, height, ops);
-      }
-    });
+    return service.submit(() -> Scalr.crop(src, x, y, width, height, ops));
   }
 
   /**
-   * @see Scalr#pad(BufferedImage, int, BufferedImageOp...)
+   * @see Scalr#pad(BufferedImage, int)
    */
   public static Future<BufferedImage> pad(final BufferedImage src,
       final int padding, final BufferedImageOp... ops)
       throws IllegalArgumentException, ImagingOpException {
     checkService();
 
-    return service.submit(new Callable<BufferedImage>() {
-      public BufferedImage call() throws Exception {
-        return Scalr.pad(src, padding, ops);
-      }
-    });
+    return service.submit(() -> Scalr.pad(src, padding));
   }
 
   /**
@@ -285,11 +268,7 @@ public class AsyncScalr {
       throws IllegalArgumentException, ImagingOpException {
     checkService();
 
-    return service.submit(new Callable<BufferedImage>() {
-      public BufferedImage call() throws Exception {
-        return Scalr.pad(src, padding, color, ops);
-      }
-    });
+    return service.submit(() -> Scalr.pad(src, padding, color, ops));
   }
 
   /**
@@ -300,11 +279,7 @@ public class AsyncScalr {
       throws IllegalArgumentException, ImagingOpException {
     checkService();
 
-    return service.submit(new Callable<BufferedImage>() {
-      public BufferedImage call() throws Exception {
-        return Scalr.resize(src, targetSize, ops);
-      }
-    });
+    return service.submit(() -> Scalr.resize(src, targetSize, ops));
   }
 
   /**
@@ -316,11 +291,7 @@ public class AsyncScalr {
       ImagingOpException {
     checkService();
 
-    return service.submit(new Callable<BufferedImage>() {
-      public BufferedImage call() throws Exception {
-        return Scalr.resize(src, scalingMethod, targetSize, ops);
-      }
-    });
+    return service.submit(() -> Scalr.resize(src, scalingMethod, targetSize, ops));
   }
 
   /**
@@ -332,11 +303,7 @@ public class AsyncScalr {
       ImagingOpException {
     checkService();
 
-    return service.submit(new Callable<BufferedImage>() {
-      public BufferedImage call() throws Exception {
-        return Scalr.resize(src, resizeMode, targetSize, ops);
-      }
-    });
+    return service.submit(() -> Scalr.resize(src, resizeMode, targetSize, ops));
   }
 
   /**
@@ -348,12 +315,8 @@ public class AsyncScalr {
       throws IllegalArgumentException, ImagingOpException {
     checkService();
 
-    return service.submit(new Callable<BufferedImage>() {
-      public BufferedImage call() throws Exception {
-        return Scalr.resize(src, scalingMethod, resizeMode, targetSize,
-            ops);
-      }
-    });
+    return service.submit(() -> Scalr.resize(src, scalingMethod, resizeMode, targetSize,
+        ops));
   }
 
   /**
@@ -365,11 +328,7 @@ public class AsyncScalr {
       ImagingOpException {
     checkService();
 
-    return service.submit(new Callable<BufferedImage>() {
-      public BufferedImage call() throws Exception {
-        return Scalr.resize(src, targetWidth, targetHeight, ops);
-      }
-    });
+    return service.submit(() -> Scalr.resize(src, targetWidth, targetHeight, ops));
   }
 
   /**
@@ -380,12 +339,8 @@ public class AsyncScalr {
       final int targetHeight, final BufferedImageOp... ops) {
     checkService();
 
-    return service.submit(new Callable<BufferedImage>() {
-      public BufferedImage call() throws Exception {
-        return Scalr.resize(src, scalingMethod, targetWidth,
-            targetHeight, ops);
-      }
-    });
+    return service.submit(() -> Scalr.resize(src, scalingMethod, targetWidth,
+        targetHeight, ops));
   }
 
   /**
@@ -397,12 +352,8 @@ public class AsyncScalr {
       throws IllegalArgumentException, ImagingOpException {
     checkService();
 
-    return service.submit(new Callable<BufferedImage>() {
-      public BufferedImage call() throws Exception {
-        return Scalr.resize(src, resizeMode, targetWidth, targetHeight,
-            ops);
-      }
-    });
+    return service.submit(() -> Scalr.resize(src, resizeMode, targetWidth, targetHeight,
+        ops));
   }
 
   /**
@@ -415,12 +366,8 @@ public class AsyncScalr {
       ImagingOpException {
     checkService();
 
-    return service.submit(new Callable<BufferedImage>() {
-      public BufferedImage call() throws Exception {
-        return Scalr.resize(src, scalingMethod, resizeMode,
-            targetWidth, targetHeight, ops);
-      }
-    });
+    return service.submit(() -> Scalr.resize(src, scalingMethod, resizeMode,
+        targetWidth, targetHeight, ops));
   }
 
   /**
@@ -431,11 +378,7 @@ public class AsyncScalr {
       throws IllegalArgumentException, ImagingOpException {
     checkService();
 
-    return service.submit(new Callable<BufferedImage>() {
-      public BufferedImage call() throws Exception {
-        return Scalr.rotate(src, rotation, ops);
-      }
-    });
+    return service.submit(() -> Scalr.rotate(src, rotation, ops));
   }
 
   protected static ExecutorService createService() {

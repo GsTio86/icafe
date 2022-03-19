@@ -53,8 +53,8 @@ public enum ChunkType {
   UNKNOWN("UNKNOWN", 0x00000000, Attribute.ANCILLARY,
       99); // We don't know this chunk, ranking it right before IEND
 
-  private static final Map<String, ChunkType> stringMap = new HashMap<String, ChunkType>();
-  private static final Map<Integer, ChunkType> intMap = new HashMap<Integer, ChunkType>();
+  private static final Map<String, ChunkType> stringMap = new HashMap<>();
+  private static final Map<Integer, ChunkType> intMap = new HashMap<>();
 
   static {
     for (ChunkType chunk : values()) {

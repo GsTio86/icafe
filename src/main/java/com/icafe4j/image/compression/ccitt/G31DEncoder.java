@@ -43,7 +43,7 @@ public class G31DEncoder implements ImageEncoder {
   private final int buf_length;
   private final OutputStream os;
   private final Updatable<Integer> writer;
-  protected int scanLineWidth;
+  protected final int scanLineWidth;
   protected int currPos = 7;
   private int empty_bits;
   private boolean extraFlush;
@@ -74,8 +74,8 @@ public class G31DEncoder implements ImageEncoder {
   }
 
   protected int encode1DLine(byte[] pixels, int start) throws Exception {
-    List<Integer> runLen = new ArrayList<Integer>();
-    List<Integer> bits = new ArrayList<Integer>();
+    List<Integer> runLen = new ArrayList<>();
+    List<Integer> bits = new ArrayList<>();
     int l = 0;
     int offset = 0; // Offset within the scan line
 
@@ -211,7 +211,7 @@ public class G31DEncoder implements ImageEncoder {
     return compressedDataLen;
   }
 
-  public void initialize() throws Exception {
+  public void initialize() {
     empty_bits = 0x08;
     compressedDataLen = 0;
   }

@@ -223,7 +223,7 @@ public abstract class Exif extends Metadata {
 
   public Iterator<MetadataEntry> iterator() {
     ensureDataRead();
-    List<MetadataEntry> items = new ArrayList<MetadataEntry>();
+    List<MetadataEntry> items = new ArrayList<>();
     if (imageIFD != null) {
       getMetadataEntries(imageIFD, TiffTag.class, items);
     }
@@ -318,7 +318,7 @@ public abstract class Exif extends Metadata {
     if (!isDataRead) {
       RandomAccessInputStream exifIn =
           new FileCacheRandomAccessInputStream(new ByteArrayInputStream(data));
-      List<IFD> ifds = new ArrayList<IFD>(3);
+      List<IFD> ifds = new ArrayList<>(3);
       TIFFTweaker.readIFDs(ifds, exifIn);
       if (ifds.size() > 0) {
         imageIFD = ifds.get(0);

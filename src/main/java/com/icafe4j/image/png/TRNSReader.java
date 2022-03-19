@@ -11,7 +11,6 @@
 package com.icafe4j.image.png;
 
 import com.icafe4j.util.Reader;
-import java.io.IOException;
 
 /**
  * PNG tRNS chunk reader
@@ -35,18 +34,14 @@ public class TRNSReader implements Reader {
 
     this.chunk = chunk;
 
-    try {
-      read();
-    } catch (IOException e) {
-      throw new RuntimeException("TRNSReader: error reading chunk");
-    }
+    read();
   }
 
   public byte[] getAlpha() {
     return alpha.clone(); // Defensive copy
   }
 
-  public void read() throws IOException {
+  public void read() {
     this.alpha = chunk.getData();
   }
 }

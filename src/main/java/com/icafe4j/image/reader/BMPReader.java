@@ -54,14 +54,13 @@ public class BMPReader extends ImageReader {
   BitmapHeader bitmapHeader;
   private int bytePerScanLine;
   private int alignment = BMPOptions.ALIGN_BOTTOM_UP;
-  private int compression = 0;
 
   public BufferedImage read(InputStream is) throws Exception {
     bitmapHeader = new BitmapHeader();
     bitmapHeader.readHeader(is);
     width = bitmapHeader.imageWidth;
     height = bitmapHeader.imageHeight;
-    compression = bitmapHeader.compression;
+    int compression = bitmapHeader.compression;
 
     if (height < 0) {
       alignment = BMPOptions.ALIGN_TOP_DOWN;

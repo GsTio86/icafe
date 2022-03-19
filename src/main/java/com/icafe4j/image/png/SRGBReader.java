@@ -11,7 +11,6 @@
 package com.icafe4j.image.png;
 
 import com.icafe4j.util.Reader;
-import java.io.IOException;
 
 /**
  * PNG sRGB chunk reader
@@ -35,11 +34,7 @@ public class SRGBReader implements Reader {
 
     this.chunk = chunk;
 
-    try {
-      read();
-    } catch (IOException e) {
-      throw new RuntimeException("SRGBReader: error reading chunk");
-    }
+    read();
   }
 
   /**
@@ -65,7 +60,7 @@ public class SRGBReader implements Reader {
     return renderingIntent;
   }
 
-  public void read() throws IOException {
+  public void read() {
     byte[] data = chunk.getData();
     if (data.length > 0) {
       renderingIntent = data[0];

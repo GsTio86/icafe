@@ -94,8 +94,8 @@ public class TIFFWriter extends ImageWriter implements Updatable<Integer> {
   // Obtain a logger instance
   private static final Logger LOGGER = LoggerFactory.getLogger(TIFFWriter.class);
   // Lists to hold strip offset and strip bytes count
-  private final List<Integer> stripOffsets = new ArrayList<Integer>();
-  private final List<Integer> stripByteCounts = new ArrayList<Integer>();
+  private final List<Integer> stripOffsets = new ArrayList<>();
+  private final List<Integer> stripByteCounts = new ArrayList<>();
   // Offset to write image data
   private int stripOffset;
   private IFD ifd;
@@ -129,8 +129,8 @@ public class TIFFWriter extends ImageWriter implements Updatable<Integer> {
   // Predictor for RGB and gray-scale PLANARY_CONFIGURATION value 2 and gray-scale PLANARY_CONFIGURATION value 1 without alpha
   private static byte[] applyPredictor2(byte[] input, int imageWidth, int imageHeight) {
     //
-    for (int i = imageHeight - 1, inc = imageWidth, maxVal = inc - 1, minVal = 1; i >= 0;
-        maxVal += inc, minVal += inc, i--) {
+    for (int i = imageHeight - 1, maxVal = imageWidth - 1, minVal = 1; i >= 0;
+        maxVal += imageWidth, minVal += imageWidth, i--) {
       for (int j = maxVal; j >= minVal; j--) {
         input[j] -= input[j - 1];
       }
@@ -814,7 +814,7 @@ public class TIFFWriter extends ImageWriter implements Updatable<Integer> {
     }
 
     // See if we are dealing with BW image
-    /** Comment out to respect user's compression setting
+    /* Comment out to respect user's compression setting
      if(bitsPerPixel == 1) {
 
      int color0 = colorPalette[0]&0xffffff;
@@ -838,7 +838,7 @@ public class TIFFWriter extends ImageWriter implements Updatable<Integer> {
     for (int i = 0; i < numOfColors; i++) {
       map[i] = (short) (((colorPalette[i] >> 16) & 0xff) << 8); // Red elements
       map[numOfColors + i] = (short) (((colorPalette[i] >> 8) & 0xff) << 8); // Green elements
-      map[numOfColors2 + i] = (short) (((colorPalette[i] >> 0) & 0xff) << 8); // Blue elements
+      map[numOfColors2 + i] = (short) (((colorPalette[i]) & 0xff) << 8); // Blue elements
     }
 
     TiffField<?> tiffField = new ShortField(TiffTag.PHOTOMETRIC_INTERPRETATION.getValue(),

@@ -11,7 +11,6 @@
 package com.icafe4j.image.png;
 
 import com.icafe4j.util.Reader;
-import java.io.IOException;
 
 /**
  * Special chunk reader for UnknownChunk.
@@ -32,11 +31,7 @@ public class UnknownChunkReader implements Reader {
 
     this.chunk = chunk;
 
-    try {
-      read();
-    } catch (IOException e) {
-      throw new RuntimeException("UnknownChunkReader: error reading chunk");
-    }
+    read();
   }
 
   public int getChunkValue() {
@@ -47,7 +42,7 @@ public class UnknownChunkReader implements Reader {
     return data.clone();
   }
 
-  public void read() throws IOException {
+  public void read() {
     if (chunk instanceof UnknownChunk) {
       UnknownChunk unknownChunk = (UnknownChunk) chunk;
       this.chunkValue = unknownChunk.getChunkValue();

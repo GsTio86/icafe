@@ -23,9 +23,9 @@ public class DoublyLinkedList<E> {
    *  which point to head and tail.
    */
   private final DoublyLinkedListNode<E>
-      SENTINEL1 = new DoublyLinkedListNode<E>(null);
+      SENTINEL1 = new DoublyLinkedListNode<>(null);
   private final DoublyLinkedListNode<E>
-      SENTINEL2 = new DoublyLinkedListNode<E>(null);
+      SENTINEL2 = new DoublyLinkedListNode<>(null);
   private int count;
   private DoublyLinkedListNode<E> head, tail;
 
@@ -36,13 +36,13 @@ public class DoublyLinkedList<E> {
 
   // Test program
   public static void main(String[] args) {
-    DoublyLinkedList<Integer> list = new DoublyLinkedList<Integer>();
+    DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
     final int NUMS = 4000;
 
     System.out.println("Checking... (no more output means success)");
 
     for (int i = 0; i < NUMS; i++) {
-      list.addToTail(new Integer(i));
+      list.addToTail(i);
     }
 
     for (int i = NUMS - 1; i > 0; i--) {
@@ -55,7 +55,7 @@ public class DoublyLinkedList<E> {
     }
     list.clear();
     for (int i = 0; i < NUMS; i++) {
-      list.addToTail(new Integer(i));
+      list.addToTail(i);
     }
 
     for (int i = 0; i < NUMS; i++) {
@@ -70,7 +70,7 @@ public class DoublyLinkedList<E> {
 
   public void addToHead(E value) {
     DoublyLinkedListNode<E> temp
-        = new DoublyLinkedListNode<E>(value, head, head.next());
+        = new DoublyLinkedListNode<>(value, head, head.next());
     head.setNext(temp);
     temp.next().setPrev(temp);
     count++;
@@ -98,7 +98,7 @@ public class DoublyLinkedList<E> {
 
   public void addToTail(E value) {
     DoublyLinkedListNode<E> temp
-        = new DoublyLinkedListNode<E>(value, tail.prev(), tail);
+        = new DoublyLinkedListNode<>(value, tail.prev(), tail);
     tail.setPrev(temp);
     temp.prev().setNext(temp);
     count++;

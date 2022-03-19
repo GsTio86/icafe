@@ -27,7 +27,7 @@ public enum IPTCPostObjectDataTag implements IPTCTag {
   UNKNOWN(999, "Unknown IPTCPostObjectDataTag");
 
   private static final Map<Integer, IPTCPostObjectDataTag> recordMap =
-      new HashMap<Integer, IPTCPostObjectDataTag>();
+      new HashMap<>();
 
   static {
     for (IPTCPostObjectDataTag record : values()) {

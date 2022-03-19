@@ -19,7 +19,6 @@ import com.icafe4j.io.PeekHeadInputStream;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import javax.swing.ImageIcon;
@@ -39,7 +38,7 @@ public class TestImageReader extends TestBase {
   public void test(String... args) throws Exception {
     long t1 = System.currentTimeMillis();
 
-    FileInputStream fin = new FileInputStream(new File(args[0]));
+    FileInputStream fin = new FileInputStream(args[0]);
     PeekHeadInputStream peekHeadInputStream =
         new PeekHeadInputStream(fin, ImageIO.IMAGE_MAGIC_NUMBER_LEN);
     ImageReader reader = ImageIO.getReader(peekHeadInputStream);

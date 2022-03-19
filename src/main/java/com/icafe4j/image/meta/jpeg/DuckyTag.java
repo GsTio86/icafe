@@ -28,7 +28,7 @@ public enum DuckyTag {
 
   UNKNOWN(999, "Unknown");
 
-  private static final Map<Integer, DuckyTag> recordMap = new HashMap<Integer, DuckyTag>();
+  private static final Map<Integer, DuckyTag> recordMap = new HashMap<>();
 
   static {
     for (DuckyTag record : values()) {

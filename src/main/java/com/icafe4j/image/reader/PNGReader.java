@@ -85,14 +85,12 @@ public class PNGReader extends ImageReader {
     }
   }
 
-  private final float displayExponent = 2.2f;
   /* Define header variables */
   private byte color_format;
   private byte compression;
   private byte filter_method;
 
   private byte interlace_method;
-  private float gamma = 0.45455f; // Default Gamma
   private boolean hasGamma;
   private byte[] alpha;
   private byte[] gammaTable;
@@ -122,8 +120,6 @@ public class PNGReader extends ImageReader {
       IOUtils.readFully(bis, pixBytes, offset, bytesPerScanLine);
       // Do the filter
       switch (filter_type) {
-        case Filter.NONE:
-          break;
         case Filter.SUB:
           Filter.defilter_sub(bytesPerPixel, bytesPerScanLine, pixBytes, offset);
           break;
@@ -136,6 +132,7 @@ public class PNGReader extends ImageReader {
         case Filter.PAETH:
           Filter.defilter_paeth(bytesPerPixel, bytesPerScanLine, pixBytes, offset);
           break;
+        case Filter.NONE:
         default:
           break;
       }
@@ -166,7 +163,7 @@ public class PNGReader extends ImageReader {
         break;
       case 2:
         if (width < 5) {
-          return false;//skip pass
+          return true;//skip pass
         }
         block_width = (width / 8) + ((width % 8) < 5 ? 0 : 1);
         block_height = (height / 8) + ((height % 8) == 0 ? 0 : 1);
@@ -176,7 +173,7 @@ public class PNGReader extends ImageReader {
         break;
       case 3:
         if (height < 5) {
-          return false;//skip pass
+          return true;//skip pass
         }
         block_width = (width / 4) + ((width % 4) == 0 ? 0 : 1);
         block_height = (height / 8) + ((height % 8) < 5 ? 0 : 1);
@@ -187,7 +184,7 @@ public class PNGReader extends ImageReader {
         break;
       case 4:
         if (width < 3) {
-          return false;//skip pass
+          return true;//skip pass
         }
         block_width = (width / 4) + ((width % 4) < 3 ? 0 : 1);
         block_height = (height / 4) + ((height % 4) == 0 ? 0 : 1);
@@ -198,7 +195,7 @@ public class PNGReader extends ImageReader {
         break;
       case 5:
         if (height < 3) {
-          return false;//skip pass
+          return true;//skip pass
         }
         block_width = (width / 2) + ((width % 2) == 0 ? 0 : 1);
         block_height = (height / 4) + ((height % 4) < 3 ? 0 : 1);
@@ -209,7 +206,7 @@ public class PNGReader extends ImageReader {
         break;
       case 6:
         if (width < 2) {
-          return false;//skip pass
+          return true;//skip pass
         }
         block_width = (width / 2);
         block_height = (height / 2) + ((height % 2) == 0 ? 0 : 1);
@@ -219,7 +216,7 @@ public class PNGReader extends ImageReader {
         break;
       case 7:
         if (height < 2) {
-          return false;//skip pass
+          return true;//skip pass
         }
         block_width = width;
         block_height = (height / 2);
@@ -229,10 +226,10 @@ public class PNGReader extends ImageReader {
         y_inc = 2;
         break;
       default:
-        return false;
+        return true;
     }
 
-    return true;
+    return false;
   }
 
   // Gamma correct for byte type image data
@@ -379,7 +376,7 @@ public class PNGReader extends ImageReader {
         new BufferedInputStream(new InflaterInputStream(new ByteArrayInputStream(compr_data)));
     // Decoding the image pass by pass. There are 7 passes for ADAM7 interlacing method.
     for (int pass = 1; pass < 8; pass++) {
-      if (!calculatePassVariables(pass)) {
+      if (calculatePassVariables(pass)) {
         continue;
       }
 
@@ -492,7 +489,7 @@ public class PNGReader extends ImageReader {
         new BufferedInputStream(new InflaterInputStream(new ByteArrayInputStream(compr_data)));
     // Decoding the image pass by pass. There are 7 passes for ADAM7 interlacing method.
     for (int pass = 1; pass < 8; pass++) {
-      if (!calculatePassVariables(pass)) {
+      if (calculatePassVariables(pass)) {
         continue;
       }
 
@@ -632,7 +629,7 @@ public class PNGReader extends ImageReader {
         new BufferedInputStream(new InflaterInputStream(new ByteArrayInputStream(compr_data)));
     // Decoding the image pass by pass. There are 7 passes for ADAM7 interlacing method.
     for (int pass = 1; pass < 8; pass++) {
-      if (!calculatePassVariables(pass)) {
+      if (calculatePassVariables(pass)) {
         continue;
       }
 
@@ -727,7 +724,7 @@ public class PNGReader extends ImageReader {
           for (int k = 0; k < safeEnd; k += 2) {
             pixels[p_index] = (byte) ((pix_interlaced[i] >>> 4) & 0x0f);
             p_index += x_inc;
-            pixels[p_index] = (byte) ((pix_interlaced[i++] >>> 0) & 0x0f);
+            pixels[p_index] = (byte) ((pix_interlaced[i++]) & 0x0f);
             p_index += x_inc;
           }
           if (padding != 0) {
@@ -961,7 +958,7 @@ public class PNGReader extends ImageReader {
         new BufferedInputStream(new InflaterInputStream(new ByteArrayInputStream(compr_data)));
     // Decoding the image pass by pass. There are 7 passes for ADAM7 interlacing method.
     for (int pass = 1; pass < 8; pass++) {
-      if (!calculatePassVariables(pass)) {
+      if (calculatePassVariables(pass)) {
         continue;
       }
 
@@ -1077,7 +1074,7 @@ public class PNGReader extends ImageReader {
         new BufferedInputStream(new InflaterInputStream(new ByteArrayInputStream(compr_data)));
     // Decoding the image pass by pass. There are 7 passes for ADAM7 interlacing method.
     for (int pass = 1; pass < 8; pass++) {
-      if (!calculatePassVariables(pass)) {
+      if (calculatePassVariables(pass)) {
         continue;
       }
 
@@ -1376,7 +1373,7 @@ public class PNGReader extends ImageReader {
         new BufferedInputStream(new InflaterInputStream(new ByteArrayInputStream(compr_data)));
     // Decoding the image pass by pass. There are 7 passes for ADAM7 interlacing method.
     for (int pass = 1; pass < 8; pass++) {
-      if (!calculatePassVariables(pass)) {
+      if (calculatePassVariables(pass)) {
         continue;
       }
       bytesPerScanLine = getBytesPerScanLine(block_width);
@@ -1399,23 +1396,23 @@ public class PNGReader extends ImageReader {
     int data_len = 0;
     int chunk_type = 0;
 
-    /** ByteArrayOutputStream to write compressed image data */
+    /* ByteArrayOutputStream to write compressed image data */
     ByteArrayOutputStream compr_data = new ByteArrayOutputStream(65536);
 
-    /** Read the 8 bytes signature */
-    /**
-     * The first eight bytes of a PNG file always contain the following (decimal) values:
-     * 137 80 78 71 13 10 26 10 ======  0x89504e470d0a1a0aL
-     * Decimal Value ASCII Interpretation
-     * 137 --- A byte with its most significant bit set (``8-bit character'')
-     * 80  --- P
-     * 78  --- N
-     * 71  --- G
-     * 13  --- Carriage-return (CR) character, a.k.a. CTRL-M or ^M
-     * 10  --- Line-feed (LF) character, a.k.a. CTRL-J or ^J
-     * 26  --- CTRL-Z or ^Z
-     * 10  --- Line-feed (LF) character, a.k.a. CTRL-J or ^J
-     *******************************************************************
+    /* Read the 8 bytes signature */
+    /*
+      The first eight bytes of a PNG file always contain the following (decimal) values:
+      137 80 78 71 13 10 26 10 ======  0x89504e470d0a1a0aL
+      Decimal Value ASCII Interpretation
+      137 --- A byte with its most significant bit set (``8-bit character'')
+      80  --- P
+      78  --- N
+      71  --- G
+      13  --- Carriage-return (CR) character, a.k.a. CTRL-M or ^M
+      10  --- Line-feed (LF) character, a.k.a. CTRL-J or ^J
+      26  --- CTRL-Z or ^Z
+      10  --- Line-feed (LF) character, a.k.a. CTRL-J or ^J
+
      */
     //long signature = ((IOUtils.readIntMM(is)&0xffffffffffffL)<<32)|IOUtils.readIntMM(is);
     long signature = IOUtils.readLongMM(is);
@@ -1425,7 +1422,7 @@ public class PNGReader extends ImageReader {
       return null;
     }
 
-    /**
+    /*
      byte[] signature = new byte[8];
      is.read(signature, 0, 8);
 
@@ -1440,31 +1437,31 @@ public class PNGReader extends ImageReader {
     //*******************************
     // Chunks follow, start with IHDR
     //*******************************
-    /**
-     * Chunk layout
-     * Each chunk consists of four parts:
-     *
-     * Length
-     *     A 4-byte unsigned integer giving the number of bytes in the chunk's data field.
-     *	 The length counts only the data field, not itself, the chunk type code, or the CRC.
-     *	 Zero is a valid length. Although encoders and decoders should treat the length as unsigned,
-     *	 its value must not exceed 2^31-1 bytes.
-     * Chunk Attribute
-     *     A 4-byte chunk type code. For convenience in description and in examining PNG files,
-     *	 type codes are restricted to consist of upper-case and lower-case ASCII letters
-     *	 (A-Z and a-z, or 65-90 and 97-122 decimal). However, encoders and decoders must treat
-     *	 the codes as fixed binary values, not character strings. For example, it would not be
-     *	 correct to represent the type code IDAT by the EBCDIC equivalents of those letters.
-     *	 Additional naming conventions for chunk types are discussed in the next section.
-     * Chunk Data
-     *     The data bytes appropriate to the chunk type, if any. This field can be of zero length.
-     * CRC
-     *     A 4-byte CRC (Cyclic Redundancy Check) calculated on the preceding bytes in the chunk,
-     *	 including the chunk type code and chunk data fields, but not including the length field.
-     *	 The CRC is always present, even for chunks containing no data. See CRC algorithm.
+    /*
+      Chunk layout
+      Each chunk consists of four parts:
+
+      Length
+          A 4-byte unsigned integer giving the number of bytes in the chunk's data field.
+     	 The length counts only the data field, not itself, the chunk type code, or the CRC.
+     	 Zero is a valid length. Although encoders and decoders should treat the length as unsigned,
+     	 its value must not exceed 2^31-1 bytes.
+      Chunk Attribute
+          A 4-byte chunk type code. For convenience in description and in examining PNG files,
+     	 type codes are restricted to consist of upper-case and lower-case ASCII letters
+     	 (A-Z and a-z, or 65-90 and 97-122 decimal). However, encoders and decoders must treat
+     	 the codes as fixed binary values, not character strings. For example, it would not be
+     	 correct to represent the type code IDAT by the EBCDIC equivalents of those letters.
+     	 Additional naming conventions for chunk types are discussed in the next section.
+      Chunk Data
+          The data bytes appropriate to the chunk type, if any. This field can be of zero length.
+      CRC
+          A 4-byte CRC (Cyclic Redundancy Check) calculated on the preceding bytes in the chunk,
+     	 including the chunk type code and chunk data fields, but not including the length field.
+     	 The CRC is always present, even for chunks containing no data. See CRC algorithm.
      */
 
-    /** Read header */
+    /* Read header */
     if (!read_IHDR(is)) {
       throw new IOException("NOT A VALID PNG IMAGE");
     }
@@ -1552,7 +1549,9 @@ public class PNGReader extends ImageReader {
       return;
     }
     hasGamma = true;
-    gamma = (IOUtils.readUnsignedIntMM(is) / 100000.0f);
+    // Default Gamma
+    float gamma = (IOUtils.readUnsignedIntMM(is) / 100000.0f);
+    float displayExponent = 2.2f;
     if (bitsPerPixel == 16) {
       createUShortGammaTable(gamma, displayExponent);
     } else {
@@ -1570,31 +1569,31 @@ public class PNGReader extends ImageReader {
   }
 
   private boolean read_IHDR(InputStream is) throws Exception {
-    /**
-     * Header layout
-     * Width:              4 bytes
-     * Height:             4 bytes
-     * Bit depth:          1 byte
-     * Color type:         1 byte
-     * Compression method: 1 byte
-     * Filter method:      1 byte
-     * Interlace method:   1 byte
-     ****************************
-     * Width and height give the image dimensions in pixels.
-     * They are 4-byte integers. Zero is an invalid value.
-     * The maximum for each is 2^31-1 in order to accommodate
-     * languages that have difficulty with unsigned 4-byte values.
-     *************************************************************
-     *    Color      Allowed         Interpretation
-     *    Attribute  Bit Depths
-     *    0          1, 2, 4, 8, 16  Each pixel is a grayscale sample.
-     *    2          8, 16           Each pixel is a R,G,B triple.
-     *    3          1, 2, 4, 8      Each pixel is a palette index; a PLTE chunk must appear.
-     *    4          8, 16           Each pixel is a grayscale sample, followed by an alpha sample.
-     *    6          8, 16           Each pixel is a R,G,B triple, followed by an alpha sample.
-     ***************************************************************************************
+    /*
+      Header layout
+      Width:              4 bytes
+      Height:             4 bytes
+      Bit depth:          1 byte
+      Color type:         1 byte
+      Compression method: 1 byte
+      Filter method:      1 byte
+      Interlace method:   1 byte
+
+      Width and height give the image dimensions in pixels.
+      They are 4-byte integers. Zero is an invalid value.
+      The maximum for each is 2^31-1 in order to accommodate
+      languages that have difficulty with unsigned 4-byte values.
+
+         Color      Allowed         Interpretation
+         Attribute  Bit Depths
+         0          1, 2, 4, 8, 16  Each pixel is a grayscale sample.
+         2          8, 16           Each pixel is a R,G,B triple.
+         3          1, 2, 4, 8      Each pixel is a palette index; a PLTE chunk must appear.
+         4          8, 16           Each pixel is a grayscale sample, followed by an alpha sample.
+         6          8, 16           Each pixel is a R,G,B triple, followed by an alpha sample.
+
      */
-    /** We are expecting IHDR */
+    /* We are expecting IHDR */
     if ((IOUtils.readIntMM(is) != 13) || (IOUtils.readIntMM(is) != ChunkType.IHDR.getValue())) {
       return false;
     }

@@ -22,7 +22,7 @@ public class DoublyLinkedListQueue<E> {
   private final DoublyLinkedList<E> list;
 
   public DoublyLinkedListQueue() {
-    list = new DoublyLinkedList<E>();
+    list = new DoublyLinkedList<>();
   }
 
   public void enqueue(E value) {

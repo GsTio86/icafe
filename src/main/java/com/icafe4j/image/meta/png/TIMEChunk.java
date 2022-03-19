@@ -129,7 +129,7 @@ public class TIMEChunk extends Metadata {
   public Iterator<MetadataEntry> iterator() {
     ensureDataRead();
 
-    List<MetadataEntry> entries = new ArrayList<MetadataEntry>();
+    List<MetadataEntry> entries = new ArrayList<>();
 
     entries.add(new MetadataEntry("UTC (Time of last modification)",
         day + " " + ((month > 0 && month <= 12) ? MONTH[month] : "()") + " " + year + ", " + hour
@@ -138,7 +138,7 @@ public class TIMEChunk extends Metadata {
     return Collections.unmodifiableCollection(entries).iterator();
   }
 
-  public void read() throws IOException {
+  public void read() {
     if (!isDataRead) {
       TIMEReader reader = new TIMEReader(chunk);
       this.year = reader.getYear();

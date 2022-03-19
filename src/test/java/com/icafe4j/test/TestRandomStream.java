@@ -41,10 +41,10 @@ public class TestRandomStream extends TestBase {
     RandomAccessInputStream randin = new FileCacheRandomAccessInputStream(fin);
     randin.setReadStrategy(ReadStrategyMM.getInstance());
     logger.info(randin.readUTF());
-    /**
-     *  Due to the current implementation, writeUTF and readUTF are machine or byte sequence independent
-     *  but writeChar and readChar are. So we switch back to the same byte sequence as the stream which
-     *  writes out the char before reading it.
+    /*
+       Due to the current implementation, writeUTF and readUTF are machine or byte sequence independent
+       but writeChar and readChar are. So we switch back to the same byte sequence as the stream which
+       writes out the char before reading it.
      */
     randin.setReadStrategy(ReadStrategyII.getInstance());
     logger.info("{}", randin.readChar());

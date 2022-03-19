@@ -11,7 +11,6 @@
 package com.icafe4j.image.png;
 
 import com.icafe4j.util.Reader;
-import java.io.IOException;
 
 public class TIMEReader implements Reader {
 
@@ -35,11 +34,7 @@ public class TIMEReader implements Reader {
 
     this.chunk = chunk;
 
-    try {
-      read();
-    } catch (IOException e) {
-      throw new RuntimeException("TIMEReader: error reading chunk");
-    }
+    read();
   }
 
   public int getDay() {
@@ -79,7 +74,7 @@ public class TIMEReader implements Reader {
    *  Second: 1 byte (0-60) (yes, 60, for leap seconds; not 61, a common error)
    *  </pre>
    */
-  public void read() throws IOException {
+  public void read() {
     byte[] data = chunk.getData();
 
     if (data.length < 7) {

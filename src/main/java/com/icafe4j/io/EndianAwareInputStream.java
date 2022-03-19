@@ -85,7 +85,7 @@ public class EndianAwareInputStream extends InputStream implements DataInput {
   }
 
   @Deprecated
-  public String readLine() throws IOException {
+  public String readLine() {
     throw new UnsupportedOperationException(
         "readLine is not supported by RandomAccessInputStream."
     );
@@ -156,9 +156,8 @@ public class EndianAwareInputStream extends InputStream implements DataInput {
   }
 
   public int skipBytes(int n) throws IOException {
-    int bytes = src.read(new byte[n], 0, n);
     /* return the actual number of bytes skipped */
-    return bytes;
+    return src.read(new byte[n], 0, n);
   }
 
   public void close() throws IOException {

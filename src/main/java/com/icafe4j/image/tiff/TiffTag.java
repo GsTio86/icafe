@@ -975,7 +975,7 @@ public enum TiffTag implements Tag {
   // Ranking unknown tag the least significant.
   UNKNOWN("Unknown", (short) 0xffff, Attribute.UNKNOWN);
 
-  private static final Map<Short, TiffTag> tagMap = new HashMap<Short, TiffTag>();
+  private static final Map<Short, TiffTag> tagMap = new HashMap<>();
 
   static {
     for (TiffTag tiffTag : values()) {

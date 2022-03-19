@@ -27,7 +27,7 @@ public class SinglyLinkedList<E> {
   }
 
   public void addToHead(E value) {
-    head = new SinglyLinkedListNode<E>(value, head);
+    head = new SinglyLinkedListNode<>(value, head);
     count++;
   }
 
@@ -57,9 +57,9 @@ public class SinglyLinkedList<E> {
       ;
 
     if (previous != null) {
-      previous.setNext(new SinglyLinkedListNode<E>(value, null));
+      previous.setNext(new SinglyLinkedListNode<>(value, null));
     } else {
-      head = new SinglyLinkedListNode<E>(value, null);
+      head = new SinglyLinkedListNode<>(value, null);
     }
     count++;
   }

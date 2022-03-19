@@ -1,26 +1,26 @@
 package com.icafe4j.graphics.util;
 
-/*************************************************************************
- *  Compilation:  javac StdDraw.java
- *  Execution:    java StdDraw
- *
- *  Standard drawing library. This class provides a basic capability for
- *  creating drawings with your programs. It uses a simple graphics model that
- *  allows you to create drawings consisting of points, lines, and curves
- *  in a window on your computer and to save the drawings to a file.
- *
- *  Todo
- *  ----
- *    -  Add support for gradient fill, etc.
- *
- *  Remarks
- *  -------
- *    -  don't use AffineTransform for rescaling since it inverts
- *       images and strings
- *    -  careful using setFont in inner loop within an animation -
- *       it can cause flicker
- *
- *************************************************************************/
+/************************************************************************
+ Compilation:  javac StdDraw.java
+ Execution:    java StdDraw
+
+ Standard drawing library. This class provides a basic capability for
+ creating drawings with your programs. It uses a simple graphics model that
+ allows you to create drawings consisting of points, lines, and curves
+ in a window on your computer and to save the drawings to a file.
+
+ Todo
+ ----
+ -  Add support for gradient fill, etc.
+
+ Remarks
+ -------
+ -  don't use AffineTransform for rescaling since it inverts
+ images and strings
+ -  careful using setFont in inner loop within an animation -
+ it can cause flicker
+
+ */
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -124,9 +124,9 @@ public final class StdDraw
   // singleton for callbacks: avoids generation of extra .class files
   private static final StdDraw std = new StdDraw();
   // queue of typed key characters
-  private static final LinkedList<Character> keysTyped = new LinkedList<Character>();
+  private static final LinkedList<Character> keysTyped = new LinkedList<>();
   // set of key codes currently pressed down
-  private static final TreeSet<Integer> keysDown = new TreeSet<Integer>();
+  private static final TreeSet<Integer> keysDown = new TreeSet<>();
   // current pen color
   private static Color penColor;
   private static int width = DEFAULT_SIZE;
@@ -170,7 +170,6 @@ public final class StdDraw
    *
    * @param w the width as a number of pixels
    * @param h the height as a number of pixels
-   * @throws a RunTimeException if the width or height is 0 or negative
    */
   public static void setCanvasSize(int w, int h) {
     if (w < 1 || h < 1) {
@@ -233,14 +232,14 @@ public final class StdDraw
     JMenuItem menuItem1 = new JMenuItem(" Save...   ");
     menuItem1.addActionListener(std);
     menuItem1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-        Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+        Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
     menu.add(menuItem1);
     return menuBar;
   }
 
-  /*************************************************************************
-   *  User and screen coordinate systems
-   *************************************************************************/
+  /************************************************************************
+   User and screen coordinate systems
+   */
 
   /**
    * Set the x-scale to be the default (between 0.0 and 1.0).
@@ -420,9 +419,9 @@ public final class StdDraw
     setFont(DEFAULT_FONT);
   }
 
-  /*************************************************************************
-   *  Drawing geometric shapes.
-   *************************************************************************/
+  /************************************************************************
+   Drawing geometric shapes.
+   */
 
   /**
    * Draw a line from (x0, y0) to (x1, y1).
@@ -459,9 +458,6 @@ public final class StdDraw
     double r = penRadius;
     float scaledPenRadius = (float) (r * DEFAULT_SIZE);
 
-    // double ws = factorX(2*r);
-    // double hs = factorY(2*r);
-    // if (ws <= 1 && hs <= 1) pixel(x, y);
     if (scaledPenRadius <= 1) {
       pixel(x, y);
     } else {
@@ -904,9 +900,9 @@ public final class StdDraw
     draw();
   }
 
-  /*************************************************************************
-   *  Drawing text.
-   *************************************************************************/
+  /************************************************************************
+   Drawing text.
+   */
 
   /**
    * Write the given text string in the current font, centered on (x, y).
@@ -1022,9 +1018,9 @@ public final class StdDraw
     frame.repaint();
   }
 
-  /*************************************************************************
-   *  Save drawing to a file.
-   *************************************************************************/
+  /************************************************************************
+   Save drawing to a file.
+   */
 
   /**
    * Save onscreen image to file - suffix must be png, jpg, or gif.
@@ -1077,9 +1073,9 @@ public final class StdDraw
     }
   }
 
-  /*************************************************************************
-   *  Mouse interactions.
-   *************************************************************************/
+  /************************************************************************
+   Mouse interactions.
+   */
 
   /**
    * What is the x-coordinate of the mouse?
@@ -1198,9 +1194,9 @@ public final class StdDraw
   public void mouseExited(MouseEvent e) {
   }
 
-  /*************************************************************************
-   *  Keyboard interactions.
-   *************************************************************************/
+  /************************************************************************
+   Keyboard interactions.
+   */
 
   /**
    * This method cannot be called directly.

@@ -39,7 +39,7 @@ public class PageReader extends TIFFReader {
     return null;
   }
 
-  public BufferedImage read(InputStream is) throws Exception {
+  public BufferedImage read(InputStream is) {
     return null; // NOOP
   }
 }

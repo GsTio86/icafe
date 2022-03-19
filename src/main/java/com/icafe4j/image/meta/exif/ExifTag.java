@@ -251,7 +251,7 @@ public enum ExifTag implements Tag {
 
   UNKNOWN("Unknown", (short) 0xffff);
 
-  private static final Map<Short, ExifTag> tagMap = new HashMap<Short, ExifTag>();
+  private static final Map<Short, ExifTag> tagMap = new HashMap<>();
 
   static {
     for (ExifTag exifTag : values()) {

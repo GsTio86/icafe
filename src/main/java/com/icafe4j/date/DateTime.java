@@ -144,9 +144,8 @@ public class DateTime {
 
     DateFormat df = new SimpleDateFormat(format, (locale == null) ? Locale.getDefault() : locale);
     df.setTimeZone(timeZone);
-    String dateString = df.format(date);
 
-    return dateString;
+    return df.format(date);
   }
 
   /**

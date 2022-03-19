@@ -61,7 +61,6 @@ public class JPGWriter extends ImageWriter {
   private int newWidth;
       // q table selectors for different components
   private ImageParam imageParam;
-  private JPGOptions jpegOptions;
   private int numOfComponents = 3; // Default number of components (3): YCrCb
   private int numOfQTables = 2; // Default number of quantization tables
   private int numOfHTables = 2; // Default number of Huffman tables for each class
@@ -136,7 +135,7 @@ public class JPGWriter extends ImageWriter {
     ImageOptions options = imageParam.getImageOptions();
     // Read and set options if any
     if (options instanceof JPGOptions) {
-      jpegOptions = (JPGOptions) options;
+      JPGOptions jpegOptions = (JPGOptions) options;
       quality = jpegOptions.getQuality();
       includeTables = jpegOptions.includeTables();
       colorSpace = jpegOptions.getColorSpace();
@@ -161,7 +160,7 @@ public class JPGWriter extends ImageWriter {
 
   // Convert RGB to separate R, G, B with level shift (minus 128)
   private void RGB2RGB(int[] rgb, float[][] r, float[][] g, float[][] b, int imageWidth,
-      int imageHeight) throws Exception {
+      int imageHeight) {
     // TODO: Add down-sampling
     int red, green, blue, index = 0;
 
@@ -497,11 +496,11 @@ public class JPGWriter extends ImageWriter {
     // Revision number, 1.0
     JFIF[9] = 0x01;
     JFIF[10] = 0x00;
-    /**
-     * Units for x/y densities
-     * 0 = no units, x/y-density specify the aspect ratio instead
-     * 1 = x/y-density are dots/inch
-     * 2 = x/y-density are dots/cm
+    /*
+      Units for x/y densities
+      0 = no units, x/y-density specify the aspect ratio instead
+      1 = x/y-density are dots/inch
+      2 = x/y-density are dots/cm
      */
     JFIF[11] = 0x00;
     // X/Y densities

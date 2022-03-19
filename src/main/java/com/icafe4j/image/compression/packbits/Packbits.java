@@ -58,13 +58,8 @@ public class Packbits {
   /**
    * More general. [ not really required so unimplemented at the moment.
    *
-   * @param inb  input buffer
-   * @param ini  where compressed data in input buffer starts
-   * @param outb start output index
-   * @param outi where to uncompress data to in output buffer
-   * @param len  length of the data after decompression.
    */
-  public static void unpackbits(byte[] inb, int ini, byte[] outb, int outi, int len) {
+  public static void unpackbits() {
   }
 
   /**
@@ -227,8 +222,6 @@ public class Packbits {
         o += b;          // new output location
       } else if (b != -128)    // replicate a byte
       {
-        //P.rt(" rep:"+(-b+1));	// -b + 1  is repetition count
-        //				rep = inb[i++];	//P.rt(" r:"+rep);	// repetition byte
         rep = in.readByte();
         end = o - b + 1;    // end of replication index
         for (; o < end; ++o) {

@@ -43,7 +43,7 @@ public final class MemoryCacheSeekableStream extends SeekableStream {
   /**
    * A Vector of source sectors.
    */
-  private final List<byte[]> data = new ArrayList<byte[]>();
+  private final List<byte[]> data = new ArrayList<>();
   /**
    * Number of sectors stored.
    */

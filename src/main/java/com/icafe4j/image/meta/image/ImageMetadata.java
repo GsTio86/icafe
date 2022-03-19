@@ -22,7 +22,6 @@ import com.icafe4j.image.meta.Metadata;
 import com.icafe4j.image.meta.MetadataEntry;
 import com.icafe4j.image.meta.MetadataType;
 import com.icafe4j.image.meta.Thumbnail;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -31,7 +30,7 @@ import java.util.Map;
 
 public class ImageMetadata extends Metadata {
 
-  private final Collection<MetadataEntry> entries = new ArrayList<MetadataEntry>();
+  private final Collection<MetadataEntry> entries = new ArrayList<>();
   private Map<String, Thumbnail> thumbnails;
 
   public ImageMetadata() {
@@ -59,7 +58,7 @@ public class ImageMetadata extends Metadata {
     return thumbnails;
   }
 
-  public void read() throws IOException {
+  public void read() {
     if (!isDataRead)
     // No implementation
     {

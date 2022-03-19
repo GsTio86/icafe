@@ -19,9 +19,9 @@ public class G31DDecoder implements ImageDecoder {
 
   protected byte[] input;
   protected int len;
-  protected int scanLineWidth;
+  protected final int scanLineWidth;
   protected int totalRunLen;
-  protected int rowsPerStrip;
+  protected final int rowsPerStrip;
   protected int byteOffset;
   protected int bitOffset = 7;
   protected int destByteOffset;

@@ -20,13 +20,10 @@ public class PNGDescriptor {
     //
     String description = "";
 
-    switch (compressionType) {
-      case 0:
-        description = "Deflate/inflate compression with a 32K sliding window";
-        break;
-      default:
-        description = "Invalid compression value";
-        break;
+    if (compressionType == 0) {
+      description = "Deflate/inflate compression with a 32K sliding window";
+    } else {
+      description = "Invalid compression value";
     }
 
     return description;
@@ -64,13 +61,10 @@ public class PNGDescriptor {
     //
     String description = "";
 
-    switch (filterType) {
-      case 0:
-        description = "Adaptive filtering with five basic filter types";
-        break;
-      default:
-        description = "Invalid filter type";
-        break;
+    if (filterType == 0) {
+      description = "Adaptive filtering with five basic filter types";
+    } else {
+      description = "Invalid filter type";
     }
 
     return description;

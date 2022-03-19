@@ -45,7 +45,7 @@ public class MemoryCacheRandomAccessInputStream extends RandomAccessInputStream 
   public MemoryCacheRandomAccessInputStream(InputStream src) {
     super(src);
     pointer = 0L;
-    cache = new ArrayList<byte[]>(10);
+    cache = new ArrayList<>(10);
     length = 0;
     foundEOS = false;
   }

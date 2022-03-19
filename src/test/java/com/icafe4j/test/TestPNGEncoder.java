@@ -55,33 +55,38 @@ public class TestPNGEncoder extends TestBase {
     te.filter = 0;
     te.pixelDepth = 24;
     te.compressionLevel = 1;
+    label:
     while (i < args.length) {
-      if (args[i].equals("-alpha")) {
-        te.encodeAlpha = true;
-        i++;
-      } else if (args[i].equals("-filter")) {
-        if (i != args.length - 1) {
-          try {
-            te.filter = Integer.parseInt(args[i + 1]);
-          } catch (Exception e) {
-            PNGEncoder.usage();
-            break;
+      switch (args[i]) {
+        case "-alpha":
+          te.encodeAlpha = true;
+          i++;
+          break;
+        case "-filter":
+          if (i != args.length - 1) {
+            try {
+              te.filter = Integer.parseInt(args[i + 1]);
+            } catch (Exception e) {
+              PNGEncoder.usage();
+              break;
+            }
           }
-        }
-        i += 2;
-      } else if (args[i].equals("-compress")) {
-        if (i != args.length - 1) {
-          try {
-            te.compressionLevel = Integer.parseInt(args[i + 1]);
-          } catch (Exception e) {
-            PNGEncoder.usage();
-            break;
+          i += 2;
+          break;
+        case "-compress":
+          if (i != args.length - 1) {
+            try {
+              te.compressionLevel = Integer.parseInt(args[i + 1]);
+            } catch (Exception e) {
+              PNGEncoder.usage();
+              break;
+            }
           }
-        }
-        i += 2;
-      } else {
-        PNGEncoder.usage();
-        break;
+          i += 2;
+          break;
+        default:
+          PNGEncoder.usage();
+          break label;
       }
     }
     if (te.pixelDepth == 8) {
@@ -144,17 +149,17 @@ class PNGEncoder extends Frame {
 
     /* draw the 12 / 3 / 6/ 9 numerals */
     g.setFont(smallFont);
-    g.drawString("12", 50 - fm.stringWidth("12") / 2, 11 + fm.getAscent());
-    g.drawString("3", 88 - fm.stringWidth("3"), 50 + fm.getAscent() / 2);
-    g.drawString("6", 50 - fm.stringWidth("6") / 2, 88);
-    g.drawString("9", 12, 50 + fm.getAscent() / 2);
+    g.drawString("12", 50 - (fm.stringWidth("12") >> 1), 11 + fm.getAscent());
+    g.drawString("3", 88 - fm.stringWidth("3"), 50 + (fm.getAscent() >> 1));
+    g.drawString("6", 50 - (fm.stringWidth("6") >> 1), 88);
+    g.drawString("9", 12, 50 + (fm.getAscent() >> 1));
 
     x0 = 50;
     y0 = 50;
 
     /* draw the hour hand */
     hour %= 12;
-    angle = -(hour * 30 + minute / 2) + 90;
+    angle = -(hour * 30 + (minute >> 1)) + 90;
     angle = angle * (Math.PI / 180.0);
 
     x1 = (int) (x0 + 28 * (Math.cos(angle)));
@@ -267,7 +272,7 @@ class PNGEncoder extends Frame {
   public void saveClockImage() {
     try {
       ImageIO.getWriter(ImageType.PNG).write(clockImage, new FileOutputStream("clock.png"));
-    } catch (Exception e) {
+    } catch (Exception ignored) {
     }
   }
 }

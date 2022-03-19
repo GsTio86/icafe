@@ -124,7 +124,7 @@ public class IMGUtils {
     int transparent_color = -1;// Transparent color
     int[] colorInfo = new int[2];// Return value
 
-    IntHashtable<Integer> rgbHash = new IntHashtable<Integer>(1023);
+    IntHashtable<Integer> rgbHash = new IntHashtable<>(1023);
 
     for (int i = 0; i < rgbTriplets.length; i++) {
       temp = (rgbTriplets[i] & 0x00ffffff);
@@ -277,9 +277,8 @@ public class IMGUtils {
     IOUtils.writeShortMM(bout, planes);
     bout.write(data);
     // Create 8BIM
-    _8BIM bim = new _8BIM(ImageResourceID.THUMBNAIL_RESOURCE_PS5, "thumbnail", bout.toByteArray());
 
-    return bim;
+    return new _8BIM(ImageResourceID.THUMBNAIL_RESOURCE_PS5, "thumbnail", bout.toByteArray());
   }
 
   /**
@@ -617,10 +616,10 @@ public class IMGUtils {
 
     int numOfColor = 0;
 
-    for (int j = 0; j < freq.length; j++) {
-			if (freq[j] != 0) {
-				numOfColor++;
-			}
+    for (int i : freq) {
+      if (i != 0) {
+        numOfColor++;
+      }
     }
 
     int k = 0;
@@ -839,8 +838,8 @@ public class IMGUtils {
 					for (int i = 0; i < rgbs.length; i++) {
 						rgbs[i] = 0xff000000 | rgbs[i];
 					}
-        } else if (type == BufferedImage.TYPE_INT_ARGB) {
-        } // Do nothing
+        }  // Do nothing
+
         return rgbs;
       case DataBuffer.TYPE_BYTE:
         byte[][] bpixels = ((DataBufferByte) dataBuffer).getBankData();
@@ -1107,9 +1106,8 @@ public class IMGUtils {
   public static ImageType guessImageType(PeekHeadInputStream is) throws IOException {
     // Read the first ImageIO.IMAGE_MAGIC_NUMBER_LEN bytes
     byte[] magicNumber = is.peek(ImageIO.IMAGE_MAGIC_NUMBER_LEN);
-    ImageType imageType = guessImageType(magicNumber);
 
-    return imageType;
+    return guessImageType(magicNumber);
   }
 
   public static ImageType guessImageType(RandomAccessInputStream is) throws IOException {
@@ -1187,18 +1185,18 @@ public class IMGUtils {
     // Get the 4 most significant bits of red, green, blue, and alpha to
     // form a 16 bits integer and determine the frequencies of different
     // values
-    for (int i = 0; i < rgbTriplets.length; i++) {
-      boolean trans = (fullAlpha ? (rgbTriplets[i] >>> 24) == 0 : (rgbTriplets[i] >>> 24) < 0x80);
+    for (int rgbTriplet : rgbTriplets) {
+      boolean trans = (fullAlpha ? (rgbTriplet >>> 24) == 0 : (rgbTriplet >>> 24) < 0x80);
       if (trans) { // Transparent
-				if (transparent_color < 0)  // Find the transparent color
-				{
-					transparent_color = rgbTriplets[i];
-				}
+        if (transparent_color < 0)  // Find the transparent color
+        {
+          transparent_color = rgbTriplet;
+        }
       }
-      red = ((rgbTriplets[i] & 0xf00000) >>> 20);
-      green = ((rgbTriplets[i] & 0x00f000) >>> 8);
-      blue = ((rgbTriplets[i] & 0x0000f0) << 4);
-      alpha = ((rgbTriplets[i] & 0xf0000000) >>> 16);
+      red = ((rgbTriplet & 0xf00000) >>> 20);
+      green = ((rgbTriplet & 0x00f000) >>> 8);
+      blue = ((rgbTriplet & 0x0000f0) << 4);
+      alpha = ((rgbTriplet & 0xf0000000) >>> 16);
 
       index = (alpha | red | green | blue);
       colorFreq[index]++;
@@ -1233,7 +1231,7 @@ public class IMGUtils {
       }
       gap /= 3;
     }
-    colorIndex = new int[no_of_color >= colorCount ? no_of_color : colorCount];
+    colorIndex = new int[Math.max(no_of_color, colorCount)];
     // Take the first no_of_color items as the palette
     for (int i = 0; i < no_of_color; i++) {
       clrPalBlue[i] = ((indexColor[i] & 0xf00) >>> 4);
@@ -1439,16 +1437,16 @@ public class IMGUtils {
     // Get the 4 most significant bits of red, green and blue to
     // form a 12 bits integer and determine the frequencies of different
     // values
-    for (int i = 0; i < rgbTriplet.length; i++) {
-      if ((rgbTriplet[i] >>> 24) < 0x80) { // Transparent
-				if (transparent_color < 0)  // Find the transparent color
-				{
-					transparent_color = rgbTriplet[i];
-				}
+    for (int k : rgbTriplet) {
+      if ((k >>> 24) < 0x80) { // Transparent
+        if (transparent_color < 0)  // Find the transparent color
+        {
+          transparent_color = k;
+        }
       }
-      red = ((rgbTriplet[i] & 0xf00000) >>> 20);
-      green = ((rgbTriplet[i] & 0x00f000) >>> 8);
-      blue = ((rgbTriplet[i] & 0x0000f0) << 4);
+      red = ((k & 0xf00000) >>> 20);
+      green = ((k & 0x00f000) >>> 8);
+      blue = ((k & 0x0000f0) << 4);
       index = (red | green | blue);
       colorFreq[index]++;
     }
@@ -1514,7 +1512,7 @@ public class IMGUtils {
     colorInfo[0] = bitsPerPixel;
     colorInfo[1] = transparent_index;
 
-    return (colorCount < no_of_color) ? colorCount : no_of_color; // Actual colors
+    return Math.min(colorCount, no_of_color); // Actual colors
   }
 
   // This works quite well without dither
@@ -1732,10 +1730,10 @@ public class IMGUtils {
     int red, green, blue, index = 0;
     byte[] ycbcr = new byte[rgb.length * 3];
 
-    for (int i = 0; i < rgb.length; i++) {
-      red = ((rgb[i] >> 16) & 0xff);
-      green = ((rgb[i] >> 8) & 0xff);
-      blue = (rgb[i] & 0xff);
+    for (int j : rgb) {
+      red = ((j >> 16) & 0xff);
+      green = ((j >> 8) & 0xff);
+      blue = (j & 0xff);
       ycbcr[index++] = (byte) (0.299f * red + 0.587f * green + 0.114f * blue);
       ycbcr[index++] = (byte) (-0.1687f * red - 0.3313f * green + 0.5f * blue + 128.0f);
       ycbcr[index++] = (byte) (0.5f * red - 0.4187f * green - 0.0813f * blue + 128.f);
@@ -1780,11 +1778,11 @@ public class IMGUtils {
     int alpha, red, green, blue, index = 0;
     byte[] ycbcra = new byte[rgba.length * 4];
     //
-    for (int i = 0; i < rgba.length; i++) {
-      alpha = ((rgba[i] >> 24) & 0xff);
-      red = ((rgba[i] >> 16) & 0xff);
-      green = ((rgba[i] >> 8) & 0xff);
-      blue = (rgba[i] & 0xff);
+    for (int j : rgba) {
+      alpha = ((j >> 24) & 0xff);
+      red = ((j >> 16) & 0xff);
+      green = ((j >> 8) & 0xff);
+      blue = (j & 0xff);
       ycbcra[index++] = (byte) (0.299f * red + 0.587f * green + 0.114f * blue);
       ycbcra[index++] = (byte) (-0.1687f * red - 0.3313f * green + 0.5f * blue + 128.0f);
       ycbcra[index++] = (byte) (0.5f * red - 0.4187f * green - 0.0813f * blue + 128.f);

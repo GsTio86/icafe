@@ -29,7 +29,7 @@ public enum DataBlockType {
 
   UNKNOWN("Unknown Data Block", 0xFFFFFFFF);
 
-  private static final Map<Integer, DataBlockType> typeMap = new HashMap<Integer, DataBlockType>();
+  private static final Map<Integer, DataBlockType> typeMap = new HashMap<>();
 
   static {
     for (DataBlockType type : values()) {

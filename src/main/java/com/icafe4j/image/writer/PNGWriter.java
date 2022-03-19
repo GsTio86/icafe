@@ -57,7 +57,7 @@ public class PNGWriter extends ImageWriter {
   /** PNG signature constant */
   private static final long SIGNATURE = 0x89504E470D0A1A0AL;
   // A collection of chunks representing the PNG image.
-  private final List<Chunk> chunks = new ArrayList<Chunk>(10);
+  private final List<Chunk> chunks = new ArrayList<>(10);
   // Parameters to control compression
   boolean isApplyAdaptiveFilter = false;
   int filterType = Filter.NONE;
@@ -128,8 +128,6 @@ public class PNGWriter extends ImageWriter {
     for (int j = height - 1, offset = pixBytes.length - bytesPerScanLine; j >= 0;
         j--, offset -= bytesPerScanLine) {
       switch (filter_type[j]) {
-        case Filter.NONE:
-          break;
         case Filter.SUB:
           Filter.filter_sub(bytesPerPixel, bytesPerScanLine, pixBytes, offset);
           break;
@@ -142,6 +140,7 @@ public class PNGWriter extends ImageWriter {
         case Filter.PAETH:
           Filter.filter_paeth(bytesPerPixel, bytesPerScanLine, pixBytes, offset);
           break;
+        case Filter.NONE:
         default:
           break;
       }
@@ -364,7 +363,7 @@ public class PNGWriter extends ImageWriter {
     ImageParam param = getImageParam();
     // The rule of thumb is never apply any filter to index color image
     int[] filter_type = new int[imageHeight];
-    int bytesPerScanLine = imageWidth * 1;
+    int bytesPerScanLine = imageWidth;
     byte[] bytePixels = new byte[imageHeight * bytesPerScanLine];
 
     int bitsPerPixel = 8;
@@ -547,7 +546,7 @@ public class PNGWriter extends ImageWriter {
 
       byte[] alpha =
           new byte[] {0, (byte) (transparentColor >>> 16), 0, (byte) (transparentColor >>> 8), 0,
-              (byte) (transparentColor >>> 0)};
+              (byte) (transparentColor)};
 
       chunks.add(tBuilder.alpha(alpha).build());
     }

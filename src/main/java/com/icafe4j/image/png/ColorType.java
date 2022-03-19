@@ -31,7 +31,7 @@ public enum ColorType {
 
   UNKNOWN(999, "UNKNOWN"); // We don't know this color format
 
-  private static final Map<Integer, ColorType> intMap = new HashMap<Integer, ColorType>();
+  private static final Map<Integer, ColorType> intMap = new HashMap<>();
 
   static {
     for (ColorType color : values()) {

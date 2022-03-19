@@ -11,7 +11,6 @@
 package com.icafe4j.image.png;
 
 import com.icafe4j.util.Reader;
-import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,14 +37,10 @@ public class IENDReader implements Reader {
 
     this.chunk = chunk;
 
-    try {
-      read();
-    } catch (IOException e) {
-      throw new RuntimeException("IENDReader: error reading chunk");
-    }
+    read();
   }
 
-  public void read() throws IOException {
+  public void read() {
     if (chunk.getData().length != 0) {
       LOGGER.warn("Warning: IEND data field is not empty!");
     }

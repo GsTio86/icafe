@@ -124,7 +124,7 @@ public abstract class RandomAccessInputStream extends InputStream implements Dat
   }
 
   @Deprecated
-  public final String readLine() throws IOException {
+  public final String readLine() {
     throw new UnsupportedOperationException(
         "readLine is not supported by RandomAccessInputStream."
     );

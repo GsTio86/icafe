@@ -26,7 +26,7 @@ public enum IPTCFotoStationTag implements IPTCTag {
   UNKNOWN(999, "Unknown IPTCFotoStationTag");
 
   private static final Map<Integer, IPTCFotoStationTag> recordMap =
-      new HashMap<Integer, IPTCFotoStationTag>();
+      new HashMap<>();
 
   static {
     for (IPTCFotoStationTag record : values()) {

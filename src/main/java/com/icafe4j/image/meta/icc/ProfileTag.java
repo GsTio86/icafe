@@ -97,7 +97,7 @@ public enum ProfileTag {
 
   // Obtain a logger instance
   private static final Logger LOGGER = LoggerFactory.getLogger(ProfileTag.class);
-  private static final Map<Integer, ProfileTag> typeMap = new HashMap<Integer, ProfileTag>();
+  private static final Map<Integer, ProfileTag> typeMap = new HashMap<>();
 
   static {
     for (ProfileTag tagSignature : values()) {

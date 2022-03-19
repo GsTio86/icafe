@@ -52,7 +52,7 @@ public enum BlendModeKey {
 
   UNKNOWN("Unknown Blending Mode", 0xFFFFFFFF);
 
-  private static final Map<Integer, BlendModeKey> keyMap = new HashMap<Integer, BlendModeKey>();
+  private static final Map<Integer, BlendModeKey> keyMap = new HashMap<>();
 
   static {
     for (BlendModeKey key : values()) {

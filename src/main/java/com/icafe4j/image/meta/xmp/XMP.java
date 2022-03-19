@@ -180,7 +180,7 @@ public abstract class XMP extends Metadata {
           StringBuilder attributes = new StringBuilder();
           for (int i = 0; i < attrs.getLength(); i++) {
             Node a = attrs.item(i);
-            attributes.append(a.getNodeName()).append("=").append("'" + a.getNodeValue())
+            attributes.append(a.getNodeName()).append("=").append("'").append(a.getNodeValue())
                 .append("' ");
           }
           MetadataEntry element =
@@ -227,7 +227,7 @@ public abstract class XMP extends Metadata {
     }
   }
 
-  public void read() throws IOException {
+  public void read() {
     if (!isDataRead) {
       if (xmp != null) {
         xmpDocument = XMLUtils.createXML(xmp);

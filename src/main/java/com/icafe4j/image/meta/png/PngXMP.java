@@ -11,7 +11,6 @@
 package com.icafe4j.image.meta.png;
 
 import com.icafe4j.image.meta.xmp.XMP;
-import java.io.IOException;
 import java.io.OutputStream;
 
 public class PngXMP extends XMP {
@@ -21,7 +20,7 @@ public class PngXMP extends XMP {
     // TODO Auto-generated constructor stub
   }
 
-  public void write(OutputStream os) throws IOException {
+  public void write(OutputStream os) {
     // TODO: add code to write XMP to PNG image
     throw new UnsupportedOperationException("PngXMP.write() is not implemented.");
   }

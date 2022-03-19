@@ -54,6 +54,7 @@ import com.icafe4j.image.tiff.TIFFTweaker;
 import com.icafe4j.image.tiff.Tag;
 import com.icafe4j.image.tiff.TiffField;
 import com.icafe4j.image.tiff.TiffFieldEnum;
+import com.icafe4j.image.tiff.TiffFieldEnum.Compression;
 import com.icafe4j.image.tiff.TiffFieldEnum.PhotoMetric;
 import com.icafe4j.image.tiff.TiffTag;
 import com.icafe4j.image.tiff.UndefinedField;
@@ -178,8 +179,8 @@ public class TIFFReader extends ImageReader {
   // De-predictor for PLANARY_CONFIGURATION value 2
   private static byte[] applyDePredictor2(byte[] input, int offset, int imageWidth,
       int imageHeight) {
-    for (int i = imageHeight - 1, inc = imageWidth, maxVal = offset + inc - 1, minVal = offset + 1;
-        i >= 0; maxVal += inc, minVal += inc, i--) {
+    for (int i = imageHeight - 1, maxVal = offset + imageWidth - 1, minVal = offset + 1;
+        i >= 0; maxVal += imageWidth, minVal += imageWidth, i--) {
       for (int j = minVal; j < maxVal; j++) {
         input[j] += input[j - 1];
       }
@@ -327,6 +328,7 @@ public class TIFFReader extends ImageReader {
       }
     }
 
+    int bytesPerScanLine1 = samplesPerPixel * ((imageWidth * bitsPerSample + 7) / 8);
     switch (e_photoMetric) {
       case PALETTE_COLOR:
         short[] colorMap = (short[]) ifd.getField(TiffTag.COLORMAP).getData();
@@ -397,7 +399,7 @@ public class TIFFReader extends ImageReader {
         return new BufferedImage(cm, raster, false, null);
       case SEPARATED:
         // Hopefully CMYK
-        bytesPerScanLine = samplesPerPixel * ((imageWidth * bitsPerSample + 7) / 8);
+        bytesPerScanLine = bytesPerScanLine1;
         int totalBytes = bytesPerScanLine * imageHeight;
         if (planaryConfiguration == 2) {
           bytesPerScanLine = (imageWidth * bitsPerSample + 7) / 8;
@@ -471,6 +473,8 @@ public class TIFFReader extends ImageReader {
           trans = Transparency.TRANSLUCENT;
           transparent = true;
         }
+        int i1 = count[0] + count[1] + count[2];
+        int i2 = count[0] + count[1] + count[2] + count[3];
         if (bitsPerSample == 16) {
           short[] spixels = ArrayUtils.toShortArray(pixels, endian == IOUtils.BIG_ENDIAN);
           db = new DataBufferUShort(spixels, spixels.length);
@@ -479,11 +483,11 @@ public class TIFFReader extends ImageReader {
           if (planaryConfiguration == 2) {
             bandoff = new int[] {0, count[0] * 8 / bitsPerSample,
                 (count[0] + count[1]) * 8 / bitsPerSample,
-                (count[0] + count[1] + count[2]) * 8 / bitsPerSample};
+                i1 * 8 / bitsPerSample};
             int[] bankIndices = new int[] {0, 0, 0, 0};
             if (samplesPerPixel >= 5) {
-              bandoff = new int[] {0, count[0], count[0] + count[1], count[0] + count[1] + count[2],
-                  count[0] + count[1] + count[2] + count[3]};
+              bandoff = new int[] {0, count[0], count[0] + count[1], i1,
+                  i2};
               bankIndices = new int[] {0, 0, 0, 0, 0};
             }
             raster = Raster.createBandedRaster(db, imageWidth, imageHeight,
@@ -502,11 +506,11 @@ public class TIFFReader extends ImageReader {
           cm = new ComponentColorModel(colorSpace, nBits, transparent, isAssociatedAlpha, trans,
               DataBuffer.TYPE_BYTE);
           if (planaryConfiguration == 2) {
-            bandoff = new int[] {0, count[0], count[0] + count[1], count[0] + count[1] + count[2]};
+            bandoff = new int[] {0, count[0], count[0] + count[1], i1};
             int[] bankIndices = new int[] {0, 0, 0, 0};
             if (samplesPerPixel >= 5) {
-              bandoff = new int[] {0, count[0], count[0] + count[1], count[0] + count[1] + count[2],
-                  count[0] + count[1] + count[2] + count[3]};
+              bandoff = new int[] {0, count[0], count[0] + count[1], i1,
+                  i2};
               bankIndices = new int[] {0, 0, 0, 0, 0};
             }
             raster = Raster.createBandedRaster(db, imageWidth, imageHeight, bytesPerScanLine,
@@ -670,89 +674,87 @@ public class TIFFReader extends ImageReader {
 
           bytesPerScanLine = (expandedImageWidth * bitsPerSample + 7) / 8;
 
-          switch (compression) {
-            case NONE:
-              int stripsPerSample = stripByteCounts.length / samplesPerPixel;
-              byte[][] buf = new byte[samplesPerPixel][];
-              ByteArrayOutputStream bout = new ByteArrayOutputStream();
-              for (int i = 0, index = 0; i < samplesPerPixel; i++) {
-                for (int j = 0; j < stripsPerSample; j++, index++) {
-                  randIS.seek(stripOffsets[index]);
-                  int len = stripByteCounts[index];
-                  if (len == 0) {
-                    temp = IOUtils.readFully(randIS, 4096);
-                  } else {
-                    temp = new byte[len];
-                    randIS.readFully(temp);
-                  }
-                  bout.write(temp);
+          if (compression == Compression.NONE) {
+            int stripsPerSample = stripByteCounts.length / samplesPerPixel;
+            byte[][] buf = new byte[samplesPerPixel][];
+            ByteArrayOutputStream bout = new ByteArrayOutputStream();
+            for (int i = 0, index = 0; i < samplesPerPixel; i++) {
+              for (int j = 0; j < stripsPerSample; j++, index++) {
+                randIS.seek(stripOffsets[index]);
+                int len = stripByteCounts[index];
+                if (len == 0) {
+                  temp = IOUtils.readFully(randIS, 4096);
+                } else {
+                  temp = new byte[len];
+                  randIS.readFully(temp);
                 }
-                buf[i] = bout.toByteArray();
-                bout.reset();
+                bout.write(temp);
               }
+              buf[i] = bout.toByteArray();
+              bout.reset();
+            }
 
-              int yPos = 0;
-              int CbPos = 0;
-              int CrPos = 0;
-              int yOffset = 0;
+            int yPos = 0;
+            int CbPos = 0;
+            int CrPos = 0;
+            int yOffset = 0;
 
-              int stride = samplingFactor[0] * samplingFactor[1];
-              int counter = 1;
+            int stride = samplingFactor[0] * samplingFactor[1];
+            int counter = 1;
 
-              for (int i = 0; i < expandedImageHeight; i++) {
-                for (int j = 0; j < expandedImageWidth; j++, yPos++, yOffset++, counter++) {
-                  // Populate the pixels array
-                  int Y = buf[0][yPos] & 0xff;
-                  int Cb = buf[1][CbPos] & 0xff;
-                  int Cr = buf[2][CrPos] & 0xff;
-                  if (counter % stride == 0) {
-                    CbPos++;
-                    CrPos++;
-                  }
-                  // Convert YCbCr code to full-range YCbCr.
-                  float fY =
-                      (Y - referenceBlackY) * codingRangeY / (referenceWhiteY - referenceBlackY);
-                  float fCb = (Cb - referenceBlackCb) * codingRangeCbCr / (referenceWhiteCb
-                      - referenceBlackCb);
-                  float fCr = (Cr - referenceBlackCr) * codingRangeCbCr / (referenceWhiteCr
-                      - referenceBlackCr);
-                  /*
-                   * R, G, and B may be computed from YCbCr as follows:
-                   * R = Cr * ( 2 - 2 * LumaRed ) + Y
-                   * G = ( Y - LumaBlue * B - LumaRed * R ) / LumaGreen
-                   * B = Cb * ( 2 - 2 * LumaBlue ) + Y
-                   */
-                  float R = (fCr * (2 - 2 * lumaRed) + fY);
-                  float B = (fCb * (2 - 2 * lumaBlue) + fY);
-                  float G = ((fY - lumaBlue * B - lumaRed * R) / lumaGreen);
-                  // This is very important!!!
-                  if (R < 0) {
-                    R = 0;
-                  }
-                  if (R > 255) {
-                    R = 255;
-                  }
-                  if (G < 0) {
-                    G = 0;
-                  }
-                  if (G > 255) {
-                    G = 255;
-                  }
-                  if (B < 0) {
-                    B = 0;
-                  }
-                  if (B > 255) {
-                    B = 255;
-                  }
-                  //
-                  int redPos = 3 * yOffset;
-
-                  pixels[redPos] = (byte) R;
-                  pixels[redPos + 1] = (byte) G;
-                  pixels[redPos + 2] = (byte) B;
+            for (int i = 0; i < expandedImageHeight; i++) {
+              for (int j = 0; j < expandedImageWidth; j++, yPos++, yOffset++, counter++) {
+                // Populate the pixels array
+                int Y = buf[0][yPos] & 0xff;
+                int Cb = buf[1][CbPos] & 0xff;
+                int Cr = buf[2][CrPos] & 0xff;
+                if (counter % stride == 0) {
+                  CbPos++;
+                  CrPos++;
                 }
+                // Convert YCbCr code to full-range YCbCr.
+                float fY =
+                    (Y - referenceBlackY) * codingRangeY / (referenceWhiteY - referenceBlackY);
+                float fCb = (Cb - referenceBlackCb) * codingRangeCbCr / (referenceWhiteCb
+                    - referenceBlackCb);
+                float fCr = (Cr - referenceBlackCr) * codingRangeCbCr / (referenceWhiteCr
+                    - referenceBlackCr);
+                /*
+                 * R, G, and B may be computed from YCbCr as follows:
+                 * R = Cr * ( 2 - 2 * LumaRed ) + Y
+                 * G = ( Y - LumaBlue * B - LumaRed * R ) / LumaGreen
+                 * B = Cb * ( 2 - 2 * LumaBlue ) + Y
+                 */
+                float R = (fCr * (2 - 2 * lumaRed) + fY);
+                float B = (fCb * (2 - 2 * lumaBlue) + fY);
+                float G = ((fY - lumaBlue * B - lumaRed * R) / lumaGreen);
+                // This is very important!!!
+                if (R < 0) {
+                  R = 0;
+                }
+                if (R > 255) {
+                  R = 255;
+                }
+                if (G < 0) {
+                  G = 0;
+                }
+                if (G > 255) {
+                  G = 255;
+                }
+                if (B < 0) {
+                  B = 0;
+                }
+                if (B > 255) {
+                  B = 255;
+                }
+                //
+                int redPos = 3 * yOffset;
+
+                pixels[redPos] = (byte) R;
+                pixels[redPos + 1] = (byte) G;
+                pixels[redPos + 2] = (byte) B;
               }
-            default:
+            }
           }
         }
         //Create a BufferedImage
@@ -772,7 +774,7 @@ public class TIFFReader extends ImageReader {
         return new BufferedImage(cm, raster, false, null).getSubimage(0, 0, imageWidth,
             imageHeight);
       case RGB:
-        bytesPerScanLine = samplesPerPixel * ((imageWidth * bitsPerSample + 7) / 8);
+        bytesPerScanLine = bytesPerScanLine1;
         int totalBytes2Read = imageHeight * bytesPerScanLine;
         if (planaryConfiguration == 2) {
           bytesPerScanLine = (imageWidth * bitsPerSample + 7) / 8;
@@ -848,7 +850,7 @@ public class TIFFReader extends ImageReader {
         numOfBands = samplesPerPixel;
         int[] bankIndices = new int[samplesPerPixel];
 
-        Arrays.fill(nBits, bitsPerSample <= 32 ? bitsPerSample : 32);
+        Arrays.fill(nBits, Math.min(bitsPerSample, 32));
 
         if (planaryConfiguration == 2) {
           for (int i = 0; i < samplesPerPixel; i++) {
@@ -1028,7 +1030,7 @@ public class TIFFReader extends ImageReader {
         return new BufferedImage(cm, raster, false, null);
       case BLACK_IS_ZERO:
       case WHITE_IS_ZERO:
-        bytesPerScanLine = samplesPerPixel * ((imageWidth * bitsPerSample + 7) / 8);
+        bytesPerScanLine = bytesPerScanLine1;
         totalBytes2Read = imageHeight * bytesPerScanLine;
         if (planaryConfiguration == 2) {
           bytesPerScanLine = (imageWidth * bitsPerSample + 7) / 8;
@@ -1710,7 +1712,7 @@ public class TIFFReader extends ImageReader {
       return null;
     }
 
-    frames = new ArrayList<BufferedImage>();
+    frames = new ArrayList<>();
 
     BufferedImage frame = null;
 
@@ -1933,7 +1935,7 @@ public class TIFFReader extends ImageReader {
       return false;
     }
 
-    ifds = new ArrayList<IFD>();
+    ifds = new ArrayList<>();
 
     int offset = randIS.readInt();
     int ifd = 0;

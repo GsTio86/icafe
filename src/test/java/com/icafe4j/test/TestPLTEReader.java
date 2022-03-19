@@ -13,7 +13,7 @@ public class TestPLTEReader extends TestBase {
     new TestPLTEReader().test();
   }
 
-  public void test(String... args) throws Exception {
+  public void test(String... args) {
     PLTEReader reader = new PLTEReader(
         new PLTEBuilder().redMap(new byte[] {1, 4, 7}).greenMap(new byte[] {2, 5, 8})
             .blueMap(new byte[] {3, 6, 9}).build());

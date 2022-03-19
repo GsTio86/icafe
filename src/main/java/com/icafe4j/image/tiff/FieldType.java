@@ -39,7 +39,7 @@ public enum FieldType {
 
   UNKNOWN("Unknown", (short) 0x0000);
 
-  private static final Map<Short, FieldType> typeMap = new HashMap<Short, FieldType>();
+  private static final Map<Short, FieldType> typeMap = new HashMap<>();
 
   static {
 		for (FieldType fieldType : values()) {

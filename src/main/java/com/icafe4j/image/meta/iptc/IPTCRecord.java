@@ -25,7 +25,7 @@ public enum IPTCRecord {
   POST_OBJECTDATA(9, "PostObjectData"),
   FOTOSTATION(240, "FotoStation"), UNKNOWN(999, "Unknown IPTC Record");
 
-  private static final Map<Integer, IPTCRecord> recordMap = new HashMap<Integer, IPTCRecord>();
+  private static final Map<Integer, IPTCRecord> recordMap = new HashMap<>();
 
   static {
     for (IPTCRecord record : values()) {

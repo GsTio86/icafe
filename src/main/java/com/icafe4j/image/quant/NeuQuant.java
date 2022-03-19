@@ -515,25 +515,6 @@ public class NeuQuant {
 		}
   }
 
-    /*
-    private int not_used_slow_inxsearch(int b, int g, int r) {
-        // Search for BGR values 0..255 and return colour index
-    	int bestd = 1000;		// biggest possible dist is 256*3
-    	int best = -1;
-    	for (int i = 0; i<netsize; i++) {
- 			int [] p = colormap[i];
-			int dist = p[1] - g;
-			if (dist<0) dist = -dist;
-			int a = p[0] - b;   if (a<0) a = -a;
-			dist += a;
-			a = p[2] - r;   if (a<0) a = -a;
-			dist += a;
-			if (dist<bestd) {bestd=dist; best=i;}
-		}
-		return best;
-    }
-    */
-
   private int inxsearch(int b, int g, int r) {
     // Search for BGR values 0..255 and return colour index
     int bestd = 1000;    // biggest possible dist is 256*3

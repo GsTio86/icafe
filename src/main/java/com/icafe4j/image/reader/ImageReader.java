@@ -40,7 +40,7 @@ public abstract class ImageReader {
   protected int bytesPerScanLine;
   protected int[] rgbColorPalette;
 
-  protected ImageParam param = ImageParam.DEFAULT_IMAGE_PARAM;
+  protected final ImageParam param = ImageParam.DEFAULT_IMAGE_PARAM;
 
   public int getFrameCount() {
     return 0;

@@ -100,7 +100,7 @@ public class PCXReader extends ImageReader {
     return null;
   }
 
-  private void readPalette(byte[] buf) throws Exception {
+  private void readPalette(byte[] buf) {
     int index = 0, nindex = 0;
 
     for (int i = 0; i < buf.length; i += 3) {
@@ -127,10 +127,10 @@ public class PCXReader extends ImageReader {
     byte[] brgb = IOUtils.readFully(is, 4096);
     byte[] pixels = new byte[bytesPerLine * NPlanes * height];
 
-    /**
-     * A BufferedInputStream could have been constructed from the InputStream,
-     * but for maximum decoding speed, one time reading of the image data
-     * into memory is ideal though this is memory consuming.
+    /*
+      A BufferedInputStream could have been constructed from the InputStream,
+      but for maximum decoding speed, one time reading of the image data
+      into memory is ideal though this is memory consuming.
      */
     LOGGER.info("true color pcx image!");
 
@@ -149,7 +149,7 @@ public class PCXReader extends ImageReader {
     return new BufferedImage(cm, raster, false, null);
   }
 
-  private void readScanLines(byte[] brgb, int buf_len, byte[] pixels) throws Exception {
+  private void readScanLines(byte[] brgb, int buf_len, byte[] pixels) {
     int counter = 0, bt = 0, bt1 = 0, index = 0, nindex = 0, num_of_rep = 0;
     int totalBytes = NPlanes * bytesPerLine;
 
@@ -164,15 +164,12 @@ public class PCXReader extends ImageReader {
           for (int k = 0; k < num_of_rep && counter < totalBytes; k++, counter++) {
             pixels[index++] = (byte) bt1;
           }
-          if (nindex >= buf_len) {
-            break image;
-          }
         } else {
           pixels[index++] = (byte) bt;
           counter++;
-          if (nindex >= buf_len) {
-            break image;
-          }
+        }
+        if (nindex >= buf_len) {
+          break image;
         }
       } while (counter < totalBytes);
     }
@@ -194,28 +191,28 @@ public class PCXReader extends ImageReader {
 
     readPalette(ArrayUtils.subArray(data, buf_len, color_tb_bytes));
 
-    /**
-     * If a BufferedInputStream is used for a 256-color image, we have to use
-     * mark(int), skip(long) and reset() methods to put the stream pointer to
-     * the beginning of the color palette, fill the color palette and reset the pointer to
-     * the beginning of the image data. This is awkward and equally memory consuming since
-     * the system must maintain a buffer for the reset() method and we have to keep track
-     * of the skip(long) method to ensure reading of the required bytes as shown below:
-     *
-     * <p>
-     * is.mark(available);
-     * long i = 0, count = 0;
-     *
-     * while(count < buf_len)
-     *  {
-     *     i = is.skip(buf_len-count);
-     *     count += i;
-     *  }
-     *
-     * readPalette(is, color_tb_bytes);
-     * is.reset();
-     *
-     * @see java.io.BufferedInputStream
+    /*
+      If a BufferedInputStream is used for a 256-color image, we have to use
+      mark(int), skip(long) and reset() methods to put the stream pointer to
+      the beginning of the color palette, fill the color palette and reset the pointer to
+      the beginning of the image data. This is awkward and equally memory consuming since
+      the system must maintain a buffer for the reset() method and we have to keep track
+      of the skip(long) method to ensure reading of the required bytes as shown below:
+
+      <p>
+      is.mark(available);
+      long i = 0, count = 0;
+
+      while(count < buf_len)
+       {
+          i = is.skip(buf_len-count);
+          count += i;
+       }
+
+      readPalette(is, color_tb_bytes);
+      is.reset();
+
+      @see java.io.BufferedInputStream
      */
 
     LOGGER.info("256 color pcx image!");
@@ -261,15 +258,12 @@ public class PCXReader extends ImageReader {
           for (int k = 0; k < num_of_rep && index < totalBytes; k++) {
             buf[index++] = bt1;
           }
-          if (nindex >= buf_len) {
-            break image;
-          }
         } else {
           buf[index++] = bt;
 
-          if (nindex >= buf_len) {
-            break image;
-          }
+        }
+        if (nindex >= buf_len) {
+          break image;
         }
       } while (index < totalBytes);
 
@@ -349,12 +343,12 @@ public class PCXReader extends ImageReader {
     short xmax, ymax;
     short hres;
     short vres;
-    int[] colorPalette = new int[16];
+    final int[] colorPalette = new int[16];
     byte reserved;
     byte color_plane;
     short bytes_per_line;
     short palette_type;
-    byte[] filler = new byte[58];
+    final byte[] filler = new byte[58];
 
     void readHeader(InputStream is) throws Exception {
       int nindex = 0;

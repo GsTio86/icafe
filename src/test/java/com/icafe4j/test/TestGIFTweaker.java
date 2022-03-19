@@ -54,8 +54,8 @@ public class TestGIFTweaker extends TestBase {
     animatedGIFWriter.setImageParam(builder.applyDither(true).build());
     // Set logical screen width and height to zero to use first frame width and height
     GIFTweaker.prepareForWrite(animatedGIFWriter, fout, 0, 0);
-    for (int i = 0; i < images.length; i++) {
-      GIFTweaker.writeFrame(animatedGIFWriter, fout, images[i]);
+    for (GIFFrame image : images) {
+      GIFTweaker.writeFrame(animatedGIFWriter, fout, image);
     }
     // wrap it up
     GIFTweaker.finishWrite(fout);

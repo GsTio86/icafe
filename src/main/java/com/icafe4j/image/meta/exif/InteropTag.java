@@ -54,7 +54,7 @@ public enum InteropTag implements Tag {
   UNKNOWN("Unknown", (short) 0xffff);
   // End of IneropSubIFD tags
 
-  private static final Map<Short, InteropTag> tagMap = new HashMap<Short, InteropTag>();
+  private static final Map<Short, InteropTag> tagMap = new HashMap<>();
 
   static {
     for (InteropTag tag : values()) {

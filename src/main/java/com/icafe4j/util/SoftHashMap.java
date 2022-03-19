@@ -21,14 +21,14 @@ public class SoftHashMap<K, V> extends AbstractMap<K, V> {
   /**
    * The internal HashMap that will hold the SoftReference.
    */
-  private final Map<K, SoftReference<V>> hash = new HashMap<K, SoftReference<V>>();
+  private final Map<K, SoftReference<V>> hash = new HashMap<>();
 
-  private final Map<SoftReference<V>, K> reverseLookup = new HashMap<SoftReference<V>, K>();
+  private final Map<SoftReference<V>, K> reverseLookup = new HashMap<>();
 
   /**
    * Reference queue for cleared SoftReference objects.
    */
-  private final ReferenceQueue<V> queue = new ReferenceQueue<V>();
+  private final ReferenceQueue<V> queue = new ReferenceQueue<>();
 
   public V get(Object key) {
     expungeStaleEntries();
@@ -58,7 +58,7 @@ public class SoftHashMap<K, V> extends AbstractMap<K, V> {
 
   public V put(K key, V value) {
     expungeStaleEntries();
-    SoftReference<V> soft_ref = new SoftReference<V>(value, queue);
+    SoftReference<V> soft_ref = new SoftReference<>(value, queue);
     reverseLookup.put(soft_ref, key);
     SoftReference<V> result = hash.put(key, soft_ref);
     if (result == null) {
@@ -93,11 +93,11 @@ public class SoftHashMap<K, V> extends AbstractMap<K, V> {
    */
   public Set<Entry<K, V>> entrySet() {
     expungeStaleEntries();
-    Set<Entry<K, V>> result = new LinkedHashSet<Entry<K, V>>();
+    Set<Entry<K, V>> result = new LinkedHashSet<>();
     for (final Entry<K, SoftReference<V>> entry : hash.entrySet()) {
       final V value = entry.getValue().get();
       if (value != null) {
-        result.add(new Entry<K, V>() {
+        result.add(new Entry<>() {
           public K getKey() {
             return entry.getKey();
           }
@@ -107,7 +107,7 @@ public class SoftHashMap<K, V> extends AbstractMap<K, V> {
           }
 
           public V setValue(V v) {
-            entry.setValue(new SoftReference<V>(v, queue));
+            entry.setValue(new SoftReference<>(v, queue));
             return value;
           }
         });

@@ -111,7 +111,6 @@ import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -315,7 +314,7 @@ public class JPGTweaker {
           }
           try {
             byte[] image = Base64.decodeToByteArray(data);
-            FileOutputStream fout = new FileOutputStream(new File(outpath));
+            FileOutputStream fout = new FileOutputStream(outpath);
             fout.write(image);
             fout.close();
           } catch (Exception e) {
@@ -337,7 +336,7 @@ public class JPGTweaker {
           }
           try {
             byte[] image = Base64.decodeToByteArray(data);
-            FileOutputStream fout = new FileOutputStream(new File(outpath));
+            FileOutputStream fout = new FileOutputStream(outpath);
             fout.write(image);
             fout.close();
           } catch (Exception e) {
@@ -1388,7 +1387,7 @@ public class JPGTweaker {
       throw new IllegalArgumentException("Input thumbnail is null");
     }
     _8BIM bim = new ThumbnailResource(thumbnail);
-    insertIRB(is, os, Arrays.asList(bim), true); // Set true to keep other IRB blocks
+    insertIRB(is, os, List.of(bim), true); // Set true to keep other IRB blocks
   }
 
   /**
@@ -1466,9 +1465,7 @@ public class JPGTweaker {
         {
           segments.get(i).write(os);
         }
-        if (jfif != null) {
-          //placeholder - writeAPP0;
-        }
+        //placeholder - writeAPP0;
         // Insert all the other items from the segment until we come to EXIF
         int index = Math.max(app0Index, exifIndex);
         for (int i = (Math.max(app0Index, 0)); i < index; i++) {
@@ -1742,20 +1739,20 @@ public class JPGTweaker {
     hufTable.append("Huffman table information =>:\n");
 
     for (HTable table : hTables) {
-      hufTable.append(
-          "Class: " + table.getClazz() + " (" + HT_class_table[table.getClazz()] + ")\n");
-      hufTable.append("Huffman table #: " + table.getID() + "\n");
+      hufTable.append("Class: ").append(table.getClazz()).append(" (")
+          .append(HT_class_table[table.getClazz()]).append(")\n");
+      hufTable.append("Huffman table #: ").append(table.getID()).append("\n");
 
       byte[] bits = table.getBits();
       byte[] values = table.getValues();
 
       int count = 0;
 
-      for (int i = 0; i < bits.length; i++) {
-        count += (bits[i] & 0xff);
+      for (byte bit : bits) {
+        count += (bit & 0xff);
       }
 
-      hufTable.append("Number of codes: " + count + "\n");
+      hufTable.append("Number of codes: ").append(count).append("\n");
 
       if (count > 256) {
         throw new RuntimeException("Invalid huffman code count: " + count);
@@ -1765,10 +1762,11 @@ public class JPGTweaker {
 
       for (int i = 0; i < 16; i++) {
 
-        hufTable.append("Codes of length " + (i + 1) + " (" + (bits[i] & 0xff) + " total): [ ");
+        hufTable.append("Codes of length ").append(i + 1).append(" (").append(bits[i] & 0xff)
+            .append(" total): [ ");
 
         for (int k = 0; k < (bits[i] & 0xff); k++) {
-          hufTable.append((values[j++] & 0xff) + " ");
+          hufTable.append(values[j++] & 0xff).append(" ");
         }
 
         hufTable.append("]\n");
@@ -1790,15 +1788,15 @@ public class JPGTweaker {
     for (QTable table : qTables) {
       int QT_precision = table.getPrecision();
       int[] qTable = table.getData();
-      qtTables.append("precision of QT is " + QT_precision + "\n");
-      qtTables.append("Quantization table #" + table.getID() + ":\n");
+      qtTables.append("precision of QT is ").append(QT_precision).append("\n");
+      qtTables.append("Quantization table #").append(table.getID()).append(":\n");
 
       if (QT_precision == 0) {
         for (int j = 0; j < 64; j++) {
           if (j != 0 && j % 8 == 0) {
             qtTables.append("\n");
           }
-          qtTables.append(qTable[j] + " ");
+          qtTables.append(qTable[j]).append(" ");
         }
       } else { // 16 bit big-endian
 
@@ -1806,7 +1804,7 @@ public class JPGTweaker {
           if (j != 0 && j % 8 == 0) {
             qtTables.append("\n");
           }
-          qtTables.append(qTable[j] + " ");
+          qtTables.append(qTable[j]).append(" ");
         }
       }
 
@@ -1816,7 +1814,7 @@ public class JPGTweaker {
       qtTables.append("***************************\n");
     }
 
-    qtTables.append("Total number of Quantation tables: " + count + "\n");
+    qtTables.append("Total number of Quantation tables: ").append(count).append("\n");
     qtTables.append("End of quantization table information\n");
 
     return qtTables.toString();
@@ -1825,20 +1823,20 @@ public class JPGTweaker {
   private static String sofToString(SOFReader reader) {
     StringBuilder sof = new StringBuilder();
     sof.append("SOF information =>\n");
-    sof.append("Precision: " + reader.getPrecision() + "\n");
-    sof.append("Image height: " + reader.getFrameHeight() + "\n");
-    sof.append("Image width: " + reader.getFrameWidth() + "\n");
-    sof.append("# of Components: " + reader.getNumOfComponents() + "\n");
+    sof.append("Precision: ").append(reader.getPrecision()).append("\n");
+    sof.append("Image height: ").append(reader.getFrameHeight()).append("\n");
+    sof.append("Image width: ").append(reader.getFrameWidth()).append("\n");
+    sof.append("# of Components: ").append(reader.getNumOfComponents()).append("\n");
     sof.append("(1 = grey scaled, 3 = color YCbCr or YIQ, 4 = color CMYK)\n");
 
     for (Component component : reader.getComponents()) {
       sof.append("\n");
-      sof.append("Component ID: " + component.getId() + "\n");
-      sof.append("Herizontal sampling factor: " + component.getHSampleFactor() + "\n");
-      sof.append("Vertical sampling factor: " + component.getVSampleFactor() + "\n");
-      sof.append("Quantization table #: " + component.getQTableNumber() + "\n");
-      sof.append("DC table number: " + component.getDCTableNumber() + "\n");
-      sof.append("AC table number: " + component.getACTableNumber() + "\n");
+      sof.append("Component ID: ").append(component.getId()).append("\n");
+      sof.append("Herizontal sampling factor: ").append(component.getHSampleFactor()).append("\n");
+      sof.append("Vertical sampling factor: ").append(component.getVSampleFactor()).append("\n");
+      sof.append("Quantization table #: ").append(component.getQTableNumber()).append("\n");
+      sof.append("DC table number: ").append(component.getDCTableNumber()).append("\n");
+      sof.append("AC table number: ").append(component.getACTableNumber()).append("\n");
     }
 
     sof.append("<= End of SOF information");
@@ -2054,9 +2052,8 @@ public class JPGTweaker {
     IOUtils.readFully(is, buf);
 
     Segment segment = new Segment(marker, len, buf);
-    SOFReader reader = new SOFReader(segment);
 
-    return reader;
+    return new SOFReader(segment);
   }
 
   // This method is very slow if not wrapped in some kind of cache stream but it works for multiple
