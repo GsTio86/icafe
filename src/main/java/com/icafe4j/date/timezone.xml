@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zones>
+  <zone abbr="A" name="Alpha Time Zone" utcOffset="+1000"/>
+  <zone abbr="ACDT" name="Australian Central Daylight Time" utcOffset="+1030"/>
+  <zone abbr="ACST" name="Australian Central Standard Time" utcOffset="+0930"/>
+  <zone abbr="ACT" name="ASEAN Common Time" utcOffset="+0800"/>
+  <zone abbr="ADT" name="Atlantic Daylight Time" utcOffset="-0300"/>
+  <zone abbr="AEDT" name="Australian Eastern Daylight Time or Australian Eastern Summer Time"
+    utcOffset="+1100"/>
+  <zone abbr="AEST" name="Australian Eastern Standard Time" utcOffset="+1000"/>
+  <zone abbr="AFT" name="Afghanistan Time" utcOffset="+0430"/>
+  <zone abbr="AKDT" name="Alaska Daylight Time" utcOffset="-0800"/>
+  <zone abbr="AKST" name="Alaska Standard Time" utcOffset="-0900"/>
+  <zone abbr="AMST" name="Armenia Summer Time" utcOffset="+0500"/>
+  <zone abbr="AMT" name="Armenia Time" utcOffset="+0400"/>
+  <zone abbr="ART" name="Argentina Time" utcOffset="-0300"/>
+  <zone abbr="AST" name="Atlantic Standard Time" utcOffset="-0400"/>
+  <zone abbr="AWDT" name="Australian Western Daylight Time" utcOffset="+0900"/>
+  <zone abbr="AWST" name="Australian Western Standard Time" utcOffset="+0800"/>
+  <zone abbr="AZOST" name="Azores Standard Time" utcOffset="-0100"/>
+  <zone abbr="AZT" name="Azerbaijan Time" utcOffset="+0400"/>
+  <zone abbr="B" name="Bravo Time Zone" utcOffset="+0200"/>
+  <zone abbr="BDT" name="Brunei Time" utcOffset="+0800"/>
+  <zone abbr="BIOT" name="British Indian Ocean Time" utcOffset="+0600"/>
+  <zone abbr="BIT" name="Baker Island Time" utcOffset="-1200"/>
+  <zone abbr="BOT" name="Bolivia Time" utcOffset="-0400"/>
+  <zone abbr="BRT" name="Brasilia Time" utcOffset="-0300"/>
+  <zone abbr="BST" name="British Summer Time" utcOffset="+1000"/>
+  <zone abbr="BST" name="Bangladesh Standard Time" utcOffset="+0600"/>
+  <zone abbr="BTT" name="Bhutan Time" utcOffset="+0600"/>
+  <zone abbr="C" name="Charlie Time Zone" utcOffset="+0300"/>
+  <zone abbr="CAT" name="Central Africa Time" utcOffset="+0200"/>
+  <zone abbr="CCT" name="Cocos Islands Time" utcOffset="+0630"/>
+  <zone abbr="CDT" name="Central Daylight Time" utcOffset="+1030"/>
+  <zone abbr="CDT" name="Central Daylight Time" utcOffset="-0500"/>
+  <zone abbr="CDT" name="Central Daylight Time (North America)" utcOffset="-0500"/>
+  <zone abbr="CEDT" name="Central European Daylight Time" utcOffset="+0200"/>
+  <zone abbr="CEST" name="Central European Summer Time" utcOffset="+0200"/>
+  <zone abbr="CET" name="Central European Time" utcOffset="+1000"/>
+  <zone abbr="CET" name="Central European Time" utcOffset="+0100"/>
+  <zone abbr="CHAST" name="Chatham Standard Time" utcOffset="+1245"/>
+  <zone abbr="ChST" name="Chamorro Standard Time" utcOffset="+1000"/>
+  <zone abbr="CIST" name="Clipperton Island Standard Time" utcOffset="-0800"/>
+  <zone abbr="CKT" name="Cook Island Time" utcOffset="-1000"/>
+  <zone abbr="CLST" name="Chile Summer Time" utcOffset="-0300"/>
+  <zone abbr="CLT" name="Chile Standard Time" utcOffset="-0400"/>
+  <zone abbr="COST" name="Colombia Summer Time" utcOffset="-0400"/>
+  <zone abbr="COT" name="Colombia Time" utcOffset="-0500"/>
+  <zone abbr="CST" name="Central Standard Time" utcOffset="+0930"/>
+  <zone abbr="CST" name="Central Summer Time" utcOffset="+1030"/>
+  <zone abbr="CST" name="Central Standard Time" utcOffset="-0600"/>
+  <zone abbr="CST" name="China Standard Time" utcOffset="+0800"/>
+  <zone abbr="CST" name="Central Standard Time (North America)" utcOffset="-0600"/>
+  <zone abbr="CVT" name="Cape Verde Time" utcOffset="-0100"/>
+  <zone abbr="CXT" name="Christmas Island Time" utcOffset="+0700"/>
+  <zone abbr="D" name="Delta Time Zone" utcOffset="+0400"/>
+  <zone abbr="E" name="Echo Time Zone" utcOffset="+0500"/>
+  <zone abbr="EAST" name="Easter Island Standard Time" utcOffset="-0600"/>
+  <zone abbr="EAT" name="East Africa Time" utcOffset="+0300"/>
+  <zone abbr="ECT" name="Eastern Caribbean Time" utcOffset="-0400"/>
+  <zone abbr="ECT" name="Ecuador Time" utcOffset="-0500"/>
+  <zone abbr="EDT" name="Eastern Daylight Time" utcOffset="+1100"/>
+  <zone abbr="EDT" name="Eastern Daylight Time" utcOffset="-0400"/>
+  <zone abbr="EDT" name="Eastern Daylight Time (North America)" utcOffset="-0400"/>
+  <zone abbr="EEDT" name="Eastern European Daylight Time" utcOffset="+0300"/>
+  <zone abbr="EEST" name="Eastern European Summer Time" utcOffset="+0300"/>
+  <zone abbr="EET" name="Eastern European Time" utcOffset="+0200"/>
+  <zone abbr="EST" name="Eastern Standard Time" utcOffset="+1000"/>
+  <zone abbr="EST" name="Eastern Summer Time" utcOffset="+1100"/>
+  <zone abbr="EST" name="Eastern Standard Time" utcOffset="-0500"/>
+  <zone abbr="EST" name="Eastern Standard Time (North America)" utcOffset="-0500"/>
+  <zone abbr="F" name="Foxtrot Time Zone" utcOffset="+0600"/>
+  <zone abbr="FJT" name="Fiji Time" utcOffset="+1200"/>
+  <zone abbr="FKST" name="Falkland Islands Standard Time" utcOffset="-0400"/>
+  <zone abbr="G" name="Golf Time Zone" utcOffset="+0700"/>
+  <zone abbr="GALT" name="Galapagos Time" utcOffset="-0600"/>
+  <zone abbr="GET" name="Georgia Standard Time" utcOffset="+0400"/>
+  <zone abbr="GFT" name="French Guiana Time" utcOffset="-0300"/>
+  <zone abbr="GILT" name="Gilbert Island Time" utcOffset="+1200"/>
+  <zone abbr="GIT" name="Gambier Island Time" utcOffset="-0900"/>
+  <zone abbr="GMT" name="Greenwich Mean Time" utcOffset="+0000"/>
+  <zone abbr="GST" name="South Georgia and the South Sandwich Islands" utcOffset="-0200"/>
+  <zone abbr="GYT" name="Guyana Time" utcOffset="-0400"/>
+  <zone abbr="H" name="Hotel Time Zone" utcOffset="+0800"/>
+  <zone abbr="HAA" name="Heure Avanc�e de l'Atlantique" utcOffset="-0300"/>
+  <zone abbr="HAC" name="Heure Avanc�e du Centre" utcOffset="-0500"/>
+  <zone abbr="HADT" name="Hawaii-Aleutian Daylight Time" utcOffset="-0900"/>
+  <zone abbr="HAE" name="Heure Avanc�e de l'Est" utcOffset="-0400"/>
+  <zone abbr="HAP" name="Heure Avanc�e du Pacifique" utcOffset="-0700"/>
+  <zone abbr="HAR" name="Heure Avanc�e des Rocheuses" utcOffset="-0600"/>
+  <zone abbr="HAST" name="Hawaii-Aleutian Standard Time" utcOffset="-10"/>
+  <zone abbr="HAST" name="Hawaii-Aleutian Standard Time" utcOffset="-1000"/>
+  <zone abbr="HAT" name="Heure Avanc�e de Terre-Neuve" utcOffset="-0230"/>
+  <zone abbr="HAY" name="Heure Avanc�e du Yukon" utcOffset="-0800"/>
+  <zone abbr="HKT" name="Hong Kong Time" utcOffset="+0800"/>
+  <zone abbr="HMT" name="Heard and McDonald Islands Time" utcOffset="+0500"/>
+  <zone abbr="HNA" name="Heure Normale de l'Atlantique" utcOffset="-0400"/>
+  <zone abbr="HNC" name="Heure Normale du Centre" utcOffset="-0600"/>
+  <zone abbr="HNE" name="Heure Normale de l'Est" utcOffset="-0500"/>
+  <zone abbr="HNP" name="Heure Normale du Pacifique" utcOffset="-0800"/>
+  <zone abbr="HNR" name="Heure Normale des Rocheuses" utcOffset="-0700"/>
+  <zone abbr="HNT" name="Heure Normale de Terre-Neuve" utcOffset="-0330"/>
+  <zone abbr="HNY" name="Heure Normale du Yukon" utcOffset="-0900"/>
+  <zone abbr="HST" name="Hawaii Standard Time" utcOffset="-10"/>
+  <zone abbr="I" name="India Time Zone" utcOffset="+0900"/>
+  <zone abbr="IRKT" name="Irkutsk Time" utcOffset="+0800"/>
+  <zone abbr="IRST" name="Iran Standard Time" utcOffset="+0330"/>
+  <zone abbr="IST" name="Irish Summer Time" utcOffset="+1000"/>
+  <zone abbr="IST" name="Israel Standard Time" utcOffset="+0200"/>
+  <zone abbr="IST" name="Indian Standard Time" utcOffset="+0530"/>
+  <zone abbr="JST" name="Japan Standard Time" utcOffset="+0900"/>
+  <zone abbr="K" name="Kilo Time Zone" utcOffset="+1000"/>
+  <zone abbr="KRAT" name="Krasnoyarsk Time" utcOffset="+0700"/>
+  <zone abbr="KST" name="Korea Standard Time" utcOffset="+0900"/>
+  <zone abbr="L" name="Lima Time Zone" utcOffset="+1100"/>
+  <zone abbr="LHST" name="Lord Howe Standard Time" utcOffset="+1030"/>
+  <zone abbr="LINT" name="Line Islands Time" utcOffset="+1400"/>
+  <zone abbr="M" name="Mike Time Zone" utcOffset="+1200"/>
+  <zone abbr="MAGT" name="Magadan Time" utcOffset="+1100"/>
+  <zone abbr="MDT" name="Mountain Daylight Time" utcOffset="-0600"/>
+  <zone abbr="MDT" name="Mountain Daylight Time (North America)" utcOffset="-0600"/>
+  <zone abbr="MESZ" name="Mitteleuro�ische Sommerzeit" utcOffset="+0200"/>
+  <zone abbr="MEZ" name="Mitteleurop�ische Zeit" utcOffset="+1000"/>
+  <zone abbr="MIT" name="Marquesas Islands Time" utcOffset="-0930"/>
+  <zone abbr="MSD" name="Moscow Daylight Time" utcOffset="+0400"/>
+  <zone abbr="MSK" name="Moscow Standard Time" utcOffset="+0300"/>
+  <zone abbr="MST" name="Mountain Standard Time" utcOffset="-0700"/>
+  <zone abbr="MST" name="Myanmar Standard Time" utcOffset="+0630"/>
+  <zone abbr="MST" name="Malaysian Standard Time" utcOffset="+0800"/>
+  <zone abbr="MST" name="Mountain Standard Time (North America)" utcOffset="-0700"/>
+  <zone abbr="MUT" name="Mauritius Time" utcOffset="+0400"/>
+  <zone abbr="N" name="November Time Zone" utcOffset="-1000"/>
+  <zone abbr="NDT" name="Newfoundland Daylight Time" utcOffset="-0230"/>
+  <zone abbr="NFT" name="Norfolk (Island) Time" utcOffset="+1130"/>
+  <zone abbr="NFT" name="Norfolk Time" utcOffset="+1130"/>
+  <zone abbr="NPT" name="Nepal Time" utcOffset="+0545"/>
+  <zone abbr="NST" name="Newfoundland Standard Time" utcOffset="-0330"/>
+  <zone abbr="NT" name="Newfoundland Time" utcOffset="-0330"/>
+  <zone abbr="O" name="Oscar Time Zone" utcOffset="-0200"/>
+  <zone abbr="OMST" name="Omsk Time" utcOffset="+0600"/>
+  <zone abbr="P" name="Papa Time Zone" utcOffset="-0300"/>
+  <zone abbr="PDT" name="Pacific Daylight Time" utcOffset="-0700"/>
+  <zone abbr="PDT" name="Pacific Daylight Time (North America)" utcOffset="-0700"/>
+  <zone abbr="PETT" name="Kamchatka Time" utcOffset="+1200"/>
+  <zone abbr="PHOT" name="Phoenix Island Time" utcOffset="+1300"/>
+  <zone abbr="PKT" name="Pakistan Standard Time" utcOffset="+0500"/>
+  <zone abbr="PST" name="Pacific Standard Time" utcOffset="-0800"/>
+  <zone abbr="PST" name="Philippine Standard Time" utcOffset="+0800"/>
+  <zone abbr="PST" name="Pacific Standard Time (North America)" utcOffset="-0800"/>
+  <zone abbr="Q" name="Quebec Time Zone" utcOffset="-0400"/>
+  <zone abbr="R" name="Romeo Time Zone" utcOffset="-0500"/>
+  <zone abbr="RET" name="R�union Time" utcOffset="+0400"/>
+  <zone abbr="S" name="Sierra Time Zone" utcOffset="-0600"/>
+  <zone abbr="SAMT" name="Samara Time" utcOffset="+0400"/>
+  <zone abbr="SAST" name="South African Standard Time" utcOffset="+0200"/>
+  <zone abbr="SBT" name="Solomon Islands Time" utcOffset="+1100"/>
+  <zone abbr="SCT" name="Seychelles Time" utcOffset="+0400"/>
+  <zone abbr="SLT" name="Sri Lanka Time" utcOffset="+0530"/>
+  <zone abbr="SST" name="Singapore Standard Time" utcOffset="+0800"/>
+  <zone abbr="SST" name="Samoa Standard Time" utcOffset="-1100"/>
+  <zone abbr="T" name="Tango Time Zone" utcOffset="-0700"/>
+  <zone abbr="TAHT" name="Tahiti Time" utcOffset="-1000"/>
+  <zone abbr="THA" name="Thailand Standard Time" utcOffset="-0700"/>
+  <zone abbr="U" name="Uniform Time Zone" utcOffset="-0800"/>
+  <zone abbr="UTC" name="Coordinated Universal Time" utcOffset="+0000"/>
+  <zone abbr="UYST" name="Uruguay Summer Time" utcOffset="-0200"/>
+  <zone abbr="UYT" name="Uruguay Standard Time" utcOffset="-0300"/>
+  <zone abbr="V" name="Victor Time Zone" utcOffset="-0900"/>
+  <zone abbr="VET" name="Venezuelan Standard Time" utcOffset="-0430"/>
+  <zone abbr="VLAT" name="Vladivostok Time" utcOffset="+1000"/>
+  <zone abbr="W" name="Whiskey Time Zone" utcOffset="-1000"/>
+  <zone abbr="WAT" name="West Africa Time" utcOffset="+0100"/>
+  <zone abbr="WDT" name="Western Daylight Time" utcOffset="+0900"/>
+  <zone abbr="WEDT" name="Western European Daylight Time" utcOffset="+1000"/>
+  <zone abbr="WEST" name="Western European Summer Time" utcOffset="+1000"/>
+  <zone abbr="WEST" name="Western European Summer Time" utcOffset="+0100"/>
+  <zone abbr="WET" name="Western European Time" utcOffset="+0000"/>
+  <zone abbr="WST" name="Western Standard Time" utcOffset="+0800"/>
+  <zone abbr="WST" name="Western Summer Time" utcOffset="+0900"/>
+  <zone abbr="X" name="X-ray Time Zone" utcOffset="-1100"/>
+  <zone abbr="Y" name="Yankee Time Zone" utcOffset="-1200"/>
+  <zone abbr="YAKT" name="Yakutsk Time" utcOffset="+0900"/>
+  <zone abbr="YEKT" name="Yekaterinburg Time" utcOffset="+0500"/>
+  <zone abbr="Z" name="Zulu Time Zone" utcOffset="+0000"/>
+</zones>

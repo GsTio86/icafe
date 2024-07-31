@@ -57,7 +57,7 @@ Last modified on 06/21/2019
 26Sep2015  Revised IO classes and added PeekHeadInputStream
 24Sep2015  Added transparency support to WuQuant and NeuQuant
 20Sep2015  Added LZW and DEFLATE compression for TIFF BW images
-20Sep2015  !Changed package name to start with com.icafe4j
+20Sep2015  !Changed package name to start with main.java.icafe4j
 19Sep2015  Added closeAll() to random access stream
 16Sep2015  Added insertComment() to GIFTweaker to insert comment block
 15Sep2015  Added parameter to ImageParam to set quantization method
